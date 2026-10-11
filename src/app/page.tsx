@@ -9,6 +9,7 @@ import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
+import { HomeHero } from '@/components/home/HomeHero';
 import { getSiteConfig, getRoundtables, getAudienceData, getHomeContent } from '@/lib/content';
 import {
   ArrowRight,
@@ -66,88 +67,8 @@ export default function HomePage() {
 
   return (
     <>
-      {/* S1: Hero Section with Official Circuit Board & Ray Visuals */}
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-bg-base pt-16 pb-20">
-        {/* Visual asset layers from official brand guidelines */}
-        <div className="pointer-events-none absolute inset-0 z-0">
-          {/* Circuit board neon visual layer */}
-          <div className="absolute inset-0 opacity-25 mix-blend-screen bg-fixed bg-cover bg-center" style={{ backgroundImage: "url('/brand/circuit-board-hero.jpg')" }}>
-          </div>
-          {/* Original image hidden, replaced with bg-fixed for parallax */}
-          <div className="hidden">
-            <Image
-              src="/brand/circuit-board-hero.jpg"
-              alt=""
-              fill
-              priority
-              className="object-cover object-center"
-            />
-          </div>
-
-          {/* Ray beam overlay */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full opacity-35 mix-blend-color-dodge">
-            <Image
-              src="/brand/ray-overlay.avif"
-              alt=""
-              fill
-              className="object-cover object-top"
-            />
-          </div>
-
-          {/* Radial ambient glow */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-brand-neonFuchsia/15 blur-[120px]" />
-          <div className="absolute top-1/3 left-1/3 h-[400px] w-[500px] rounded-full bg-brand-brightAqua/12 blur-[140px]" />
-          
-          {/* Gradient mask to seamlessly blend into bg-base */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg-base/60 to-bg-base" />
-        </div>
-
-        <Container size="default" className="relative z-10 text-center">
-          {/* Eyebrow: Date and public location in prominent pill container */}
-          <FadeIn delay={100}>
-            <div className="mb-8 inline-flex items-center gap-3 sm:gap-4 rounded-pill border border-border-subtle/80 bg-bg-raised/90 px-6 py-2.5 sm:px-8 sm:py-3.5 backdrop-blur-xl shadow-raised hover:border-brand-secondary/60 transition-all">
-              <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-brand-secondary shrink-0" />
-              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-display">
-                <span className="text-sm sm:text-base md:text-lg font-bold uppercase tracking-wider text-text-primary">
-                  {config.event.date}
-                </span>
-                <span className="hidden sm:inline text-text-muted/60">•</span>
-                <span className="text-xs sm:text-sm md:text-base font-semibold uppercase tracking-wider text-brand-secondary">
-                  {config.event.locationPublic}
-                </span>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* H1: Server-rendered verbatim tagline */}
-          <FadeIn delay={300}><h1 className="mx-auto max-w-5xl font-display text-4xl font-extrabold tracking-tight text-text-primary sm:text-6xl lg:text-7xl leading-[1.08]">
-            Where AI moves from{' '}
-            <span className="bg-gradient-to-r from-text-primary via-brand-neonFuchsia to-brand-mediumSlateBlue bg-clip-text text-transparent">
-              ambition to action.
-            </span>
-          </h1></FadeIn>
-
-          {/* Standfirst */}
-          <FadeIn delay={500}><p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-text-secondary sm:text-lg lg:text-xl">
-            {homeData.hero.description}
-          </p></FadeIn>
-
-          {/* Dual CTAs in Pill Style */}
-          <FadeIn delay={700}><div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-            <Button href="/request-an-invitation" variant="gradient" size="lg">
-              Register
-            </Button>
-            <Button href="/roundtables" variant="secondary" size="lg">
-              See the six roundtables
-            </Button>
-          </div></FadeIn>
-
-          {/* Attribution line */}
-          <FadeIn delay={900}><p className="mt-12 text-xs font-medium uppercase tracking-widest text-text-muted">
-            Organised by {config.event.organiser}
-          </p></FadeIn>
-        </Container>
-      </section>
+      {/* S1: Hero Section — Left Aligned with Parallax Skyline & Interactive Twinkling Stars */}
+      <HomeHero config={config} homeData={homeData} />
 
       {/* S2: The Proposition */}
       <Section variant="surface">

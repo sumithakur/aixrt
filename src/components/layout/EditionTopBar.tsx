@@ -50,7 +50,7 @@ export function EditionTopBar() {
                   aria-current={isActive ? 'page' : undefined}
                 >
                   <span>{edition.name}</span>
-                  {isActive && (
+                  {edition.slug === 'qatar' && (
                     <span className="hidden md:inline text-[10px] font-medium text-brand-secondary/90 normal-case ml-0.5">
                       (Active Edition)
                     </span>

@@ -20,10 +20,18 @@ import {
   ChevronDown,
   Clock,
 } from 'lucide-react';
+import {
+  SponsorshipTiersModal,
+  SPONSORSHIP_TIERS,
+  type SponsorshipTier,
+} from '@/components/sponsors/SponsorshipTiersModal';
 
 export default function BecomeAPartnerPage() {
   const roundtables = getRoundtables();
   const audience = getAudienceData();
+
+  // Tier modal state
+  const [selectedTier, setSelectedTier] = useState<SponsorshipTier | null>(null);
 
   // Prospectus form state
   const [prospectusSubmitted, setProspectusSubmitted] = useState(false);
@@ -356,7 +364,7 @@ export default function BecomeAPartnerPage() {
         </Container>
       </Section>
 
-      {/* 5. Other Partnership Assets */}
+      {/* 5. Additional Sponsorship Tiers */}
       <Section variant="surface">
         <Container size="default">
           <div className="mb-10 text-center">
@@ -364,23 +372,41 @@ export default function BecomeAPartnerPage() {
               Additional Assets
             </Eyebrow>
             <Heading level={2} size="lg">
-              Complementary Partnership Tiers
+              Complementary Sponsorship Tiers
             </Heading>
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary max-w-xl mx-auto">
+              Select any tier below to inspect detailed deliverables, audience reach, and direct contact options.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {otherAssets.map((asset) => (
-              <div
-                key={asset.tier}
-                className="rounded-md border border-border-subtle bg-bg-raised/60 p-6 transition-colors hover:border-border-prominent"
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {SPONSORSHIP_TIERS.map((asset) => (
+              <button
+                key={asset.id}
+                type="button"
+                onClick={() => setSelectedTier(asset)}
+                className="group relative flex flex-col justify-between rounded-xl border border-purple-500/25 bg-bg-raised/70 p-6 text-left backdrop-blur-sm transition-all duration-300 hover:border-brand-secondary hover:shadow-[0_15px_35px_-10px_rgba(168,85,247,0.35)] hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-brand-primary"
               >
-                <span className="font-display text-xs font-bold text-brand-primary uppercase tracking-wider">
-                  {asset.tier}
-                </span>
-                <p className="mt-3 text-xs leading-relaxed text-text-secondary">
-                  {asset.headline}
-                </p>
-              </div>
+                <div>
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-primary/30 bg-brand-primary/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-primary">
+                    <Sparkles className="h-3 w-3" />
+                    <span>{asset.badge}</span>
+                  </div>
+
+                  <h3 className="mt-3 font-display text-base font-bold text-text-primary group-hover:text-brand-secondary transition-colors">
+                    {asset.tier}
+                  </h3>
+
+                  <p className="mt-2 text-xs leading-relaxed text-text-secondary">
+                    {asset.tagline}
+                  </p>
+                </div>
+
+                <div className="mt-6 flex items-center justify-between border-t border-border-subtle/70 pt-4 text-[11px] font-semibold text-brand-secondary">
+                  <span>View Details & Enquire</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                </div>
+              </button>
             ))}
           </div>
         </Container>
@@ -646,6 +672,17 @@ export default function BecomeAPartnerPage() {
       </Section>
 
       <CTABand />
+
+      {/* Interactive Sponsorship Tiers Depth Modal */}
+      <SponsorshipTiersModal
+        selectedTier={selectedTier}
+        onClose={() => setSelectedTier(null)}
+        onContactClick={(tier) => {
+          setSelectedTier(null);
+          setEnquiryForm((prev) => ({ ...prev, interest: tier.tier }));
+          document.getElementById('enquiry')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
     </>
   );
 }

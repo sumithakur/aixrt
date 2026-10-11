@@ -1,0 +1,104 @@
+{
+  "items": [
+    {
+      "category": "Attending & Invitations",
+      "items": [
+        {
+          "id": "how-are-guests-selected",
+          "question": "How are guests selected for AIX Summit 2026?",
+          "answer": "Attendance is invitation-led to ensure peer-level dialogue across each strategic domain. The majority of seats are curated directly by Risin Ventures and roundtable chairs from leadership across enterprise, financial institutions, and government. A limited allocation (roughly 10% of seats) is reserved for qualified senior applicants via our 'Request an invitation' process."
+        },
+        {
+          "id": "can-i-purchase-a-ticket",
+          "question": "Can I purchase a ticket or pass to attend?",
+          "answer": "No. There are no public ticket sales or pass tiers for AIX Summit 2026. The summit is strictly invitation-led to maintain a curated, closed-door room of 110 senior decision-makers."
+        },
+        {
+          "id": "can-i-send-a-colleague",
+          "question": "Can I nominate or send a colleague in my place?",
+          "answer": "Invitations are issued to named individuals based on seniority and functional domain. If you are unable to attend, you may propose a senior colleague (C-suite or department head) for review by the curatorial team, but transfers are not automatic."
+        }
+      ]
+    },
+    {
+      "category": "The Roundtables",
+      "items": [
+        {
+          "id": "how-roundtables-work",
+          "question": "How do the executive roundtables function?",
+          "answer": "Five roundtables run concurrently from 13:15 to 15:00. Each table accommodates exactly 15 participants: a chair, up to two sponsor executives, and twelve invited peers. An AIX moderator and rapporteur facilitate each table under Chatham House principles to ensure candid, substantive exchange."
+        },
+        {
+          "id": "can-i-choose-my-roundtable",
+          "question": "Can I choose which roundtable I join?",
+          "answer": "Invited guests indicate their preferred roundtable upon accepting their invitation. When requesting an invitation, you can specify your primary area of focus. AIX balances table composition to ensure diverse perspectives and prevent competitor overlap."
+        },
+        {
+          "id": "chatham-house-rule",
+          "question": "What are Chatham House principles and how do they apply?",
+          "answer": "Under the Chatham House Rule, participants are free to use the information received, but neither the identity nor the affiliation of the speaker, nor that of any other participant, may be revealed. Rapporteurs record high-level strategic observations without attribution for the plenary synthesis and the AIX Roundtable Signals publication."
+        }
+      ]
+    },
+    {
+      "category": "Programme & Format",
+      "items": [
+        {
+          "id": "is-there-a-hackathon",
+          "question": "Is there a hackathon at AIX Summit 2026?",
+          "answer": "No. AIX Summit 2026 is a standalone, one-day executive summit focused entirely on strategic enterprise adoption, governance, risk, and deployment. There is no hackathon component."
+        },
+        {
+          "id": "what-is-the-schedule",
+          "question": "What are the event timings?",
+          "answer": "The summit convenes at 10:00 with arrival networking and showcase demonstrations. The core programme runs from 10:30 to 16:30, followed by an evening networking reception concluding at 18:00."
+        }
+      ]
+    },
+    {
+      "category": "AI Showcase & Connections",
+      "items": [
+        {
+          "id": "what-is-the-ai-showcase",
+          "question": "What is the AI Showcase?",
+          "answer": "The AI Showcase features 4–6 vetted enterprise AI companies presenting working software solving real operational problems. It is explicitly not a pitch competition: demonstrations must prove production utility, measurable business value, and verifiable deployments."
+        },
+        {
+          "id": "what-are-enterprise-connections",
+          "question": "What are Enterprise Connections?",
+          "answer": "During lunch, executive guests can request 1-on-1 introductions with Showcase companies that address their immediate technological priorities. Pre-booked 15-minute briefings take place from 15:00 to 15:30, with additional connections facilitated post-event."
+        }
+      ]
+    },
+    {
+      "category": "Partnerships & Sponsorship",
+      "items": [
+        {
+          "id": "what-is-a-roundtable-chair",
+          "question": "What does a Roundtable Chair partnership include?",
+          "answer": "The Roundtable Chair is the flagship summit partnership after Strategic Partner. The chairing organisation leads one of the five strategic conversations, delivers a 5–7 minute opening perspective, nominates guest participants, joins the plenary synthesis panel, and co-authors the lane findings in the post-event AIX Roundtable Signals report."
+        },
+        {
+          "id": "are-commercial-pitches-permitted",
+          "question": "Are sales presentations permitted at the roundtables?",
+          "answer": "No. Strict guardrails ensure roundtables remain substantive peer discussions. While chairs frame the challenge, sessions are facilitated by independent AIX moderators and cannot be used for product sales."
+        }
+      ]
+    },
+    {
+      "category": "Venue & Media",
+      "items": [
+        {
+          "id": "where-is-the-summit-held",
+          "question": "Where is AIX Summit 2026 taking place?",
+          "answer": "The summit takes place in Doha, Qatar on Monday 14 December 2026. Specific hotel venue coordinates, arrival directions, and dedicated delegate room rates are distributed to confirmed invitees upon formal registration confirmation."
+        },
+        {
+          "id": "is-the-event-open-to-media",
+          "question": "Is the event open to journalists and media?",
+          "answer": "Media attendance is strictly limited to accredited press for the morning plenary sessions and AI Showcase demonstrations. The afternoon executive roundtables operate strictly under Chatham House principles and are closed to media."
+        }
+      ]
+    }
+  ]
+}

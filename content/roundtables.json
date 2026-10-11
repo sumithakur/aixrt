@@ -1,0 +1,233 @@
+{
+  "items": [
+    {
+      "slug": "ai-in-bfsi",
+      "shortTitle": "AI in BFSI",
+      "title": "The AI-Powered Financial Institution",
+      "coreQuestion": "Where is AI creating real competitive advantage in financial services, and what is still hype?",
+      "lane": "AI in financial products, customer relationships, operations, risk and regulation. Security controls and AI governance sit with AI Security & Governance.",
+      "themes": [
+        "AI in customer experience",
+        "Fraud and financial crime",
+        "Credit and predictive analytics",
+        "AI agents in banking operations",
+        "Wealth management",
+        "Payments and FinTech",
+        "Regulatory technology",
+        "AI investment and ROI"
+      ],
+      "participantProfile": [
+        "Qatar Central Bank / regulatory voice",
+        "Second bank",
+        "Insurance / takaful company",
+        "Wealth manager / private bank",
+        "Investment / asset-management firm",
+        "Family office",
+        "Institutional investor / VC",
+        "Exchange house / remittance company",
+        "FinTech & Payments",
+        "Large corporate CFOs / CROs",
+        "Enterprise AI & Cloud providers"
+      ],
+      "chair": {
+        "status": "pending",
+        "proposed": "TBD",
+        "organisation": "TBD"
+      },
+      "accent": "fintech",
+      "order": 1,
+      "session": 1
+    },
+    {
+      "slug": "ai-in-government",
+      "shortTitle": "AI in Government",
+      "title": "Building an AI-Ready State",
+      "coreQuestion": "How do governments move from AI strategy to AI-powered public services and economic value at scale?",
+      "lane": "AI adoption in government and public services: citizen services, government productivity, public-sector data and procurement. National compute and sovereign models sit with AI Infrastructure & Sovereign AI; AI regulation and policy sit with AI Security & Governance.",
+      "themes": [
+        "AI in public services",
+        "Government productivity",
+        "Citizen experience",
+        "Digital identity",
+        "Government data sharing",
+        "AI procurement",
+        "Public-sector workforce and skills",
+        "Public trust"
+      ],
+      "participantProfile": [
+        "Government CIO / transformation leader",
+        "Digital government services leader",
+        "Digital identity leader",
+        "Government data office lead",
+        "Ministry service-delivery leader",
+        "Municipality / smart-city leader",
+        "Education & Health ministry leaders",
+        "GCC government representative",
+        "Enterprise AI & Cloud providers"
+      ],
+      "chair": {
+        "status": "pending",
+        "proposed": "TBD",
+        "organisation": "TBD"
+      },
+      "accent": "state",
+      "order": 2,
+      "session": 1
+    },
+    {
+      "slug": "ai-and-sustainability",
+      "shortTitle": "AI & Sustainability",
+      "title": "AI for a Lower-Carbon Economy",
+      "coreQuestion": "Where is AI measurably cutting energy use, emissions and resource waste, and how do organisations prove it?",
+      "lane": "AI for energy efficiency, emissions, water, resources and climate reporting, including industrial operations and asset performance. Data-centre power and cooling sit with AI Infrastructure & Sovereign AI.",
+      "themes": [
+        "Energy efficiency and grid optimisation",
+        "Emissions measurement, reporting and verification",
+        "Predictive maintenance and asset optimisation",
+        "Water and cooling",
+        "Smart buildings and districts",
+        "Supply-chain and Scope 3 emissions",
+        "Environmental monitoring",
+        "ESG data and disclosure"
+      ],
+      "participantProfile": [
+        "Utilities and Water/desalination operator",
+        "GCC energy company",
+        "Qatar Airways (sustainability / operations)",
+        "Major logistics / ports operator",
+        "Manufacturing / industrial company",
+        "Real-estate developer / construction company",
+        "Smart-district / facilities operator",
+        "Environment ministry / regulator",
+        "Climate-tech investor & ESG assurance"
+      ],
+      "chair": {
+        "status": "pending",
+        "proposed": "TBD",
+        "organisation": "TBD"
+      },
+      "accent": "industrial",
+      "order": 3,
+      "session": 1
+    },
+    {
+      "slug": "ai-security-and-governance",
+      "shortTitle": "AI Security & Governance",
+      "title": "Can We Trust AI to Act?",
+      "coreQuestion": "What security controls and governance does an organisation need before it lets AI touch sensitive data, systems and decisions?",
+      "lane": "Security, assurance, risk and governance of AI systems, including responsible-AI policy, regulatory compliance, and identity and permissions for AI agents.",
+      "themes": [
+        "AI governance frameworks and policy",
+        "Regulatory compliance",
+        "Model risk management",
+        "Identity and permissions for AI agents",
+        "Prompt injection and model abuse",
+        "Data leakage and privacy",
+        "Third-party AI risk",
+        "AI-enabled cyber defence",
+        "Incident response",
+        "Assurance and audit"
+      ],
+      "participantProfile": [
+        "Major bank / Energy / Telecom / Healthcare / Aviation CISO",
+        "Government security leader",
+        "Critical infrastructure operator",
+        "Regional GCC CISO",
+        "Chief risk / compliance officer",
+        "Government AI governance office",
+        "Data-protection regulator / AI policy voice",
+        "Privacy / legal specialist",
+        "Cybersecurity & AI security companies"
+      ],
+      "chair": {
+        "status": "pending",
+        "proposed": "TBD",
+        "organisation": "TBD"
+      },
+      "accent": "cybersecurity",
+      "order": 4,
+      "session": 2
+    },
+    {
+      "slug": "ai-infrastructure-and-sovereign-ai",
+      "shortTitle": "AI Infrastructure & Sovereign AI",
+      "title": "Building Qatar's AI Stack",
+      "coreQuestion": "What compute, data and model foundations does Qatar need to own, and what can it rent, to run AI at national scale?",
+      "lane": "Compute, data centres, sovereign cloud, data residency, Arabic and sovereign models, and the power AI needs.",
+      "themes": [
+        "Sovereign compute and data centres",
+        "Sovereign cloud and data residency",
+        "GPU capacity and access",
+        "Arabic LLMs and sovereign models",
+        "Data platforms and data sharing",
+        "Power and cooling for AI",
+        "Build, buy or partner",
+        "Talent for AI infrastructure"
+      ],
+      "participantProfile": [
+        "Government digital / data leader",
+        "National AI programme representative",
+        "Communications / data regulator",
+        "Bank / Energy / Large enterprise CIO / CTO",
+        "Telecom / network leader",
+        "Hyperscaler & Data-centre operator",
+        "Compute / GPU provider",
+        "Cooling / data-centre engineering company",
+        "Power / utility provider",
+        "Sovereign / infrastructure investor",
+        "AI research institution"
+      ],
+      "chair": {
+        "status": "pending",
+        "proposed": "TBD",
+        "organisation": "TBD"
+      },
+      "accent": "agentic",
+      "order": 5,
+      "session": 2
+    },
+    {
+      "slug": "ai-in-healthcare",
+      "shortTitle": "AI in Healthcare",
+      "title": "From Pilot to Patient",
+      "coreQuestion": "Where is AI improving patient outcomes and clinical capacity today, and what stops it scaling safely across a health system?",
+      "lane": "AI in clinical care, hospital operations, life sciences and health insurance. Health-data security sits with AI Security & Governance.",
+      "themes": [
+        "Clinical decision support and imaging",
+        "Hospital operations and capacity",
+        "Patient experience and virtual care",
+        "Health data and interoperability",
+        "Clinical validation and regulation",
+        "Population health and prevention",
+        "Pharma and research",
+        "Clinical workforce"
+      ],
+      "participantProfile": [
+        "Health system CIO / CDO",
+        "Chief medical information officer / clinical informatics lead",
+        "Hospital chief operating or nursing officer",
+        "Private hospital group executive",
+        "Primary-care operator",
+        "Public / population health leader",
+        "Ministry of health / regulator (digital health)",
+        "Health-data / interoperability lead",
+        "Health insurer & Pharma / life-sciences leader",
+        "Medical research institution",
+        "Digital health / innovation leader",
+        "Cloud / enterprise AI provider (health)"
+      ],
+      "chair": {
+        "status": "pending",
+        "proposed": "TBD",
+        "organisation": "TBD"
+      },
+      "accent": "state",
+      "order": 6,
+      "session": 2
+    }
+  ],
+  "hero": {
+    "title": "Six Executive Roundtables",
+    "description": "Six parallel conversations, 75 minutes, fifteen seats each. Each table owns a distinct strategic lane, ensuring focused depth without convergence into generic debate."
+  }
+}

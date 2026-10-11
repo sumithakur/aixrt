@@ -1,0 +1,86 @@
+backend:
+  name: proxy
+  proxy_url: http://localhost:8081/api/v1
+local_backend: true
+media_folder: "public/brand"
+public_folder: "/brand"
+
+collections:
+  - name: "site"
+    label: "Site Settings"
+    file: "content/site.json"
+    fields:
+      - label: "Event Details"
+        name: "event"
+        widget: "object"
+        fields:
+          - {label: "Event Name", name: "name", widget: "string"}
+          - {label: "Tagline", name: "tagline", widget: "string"}
+          - {label: "Date", name: "date", widget: "string"}
+          - {label: "Organiser", name: "organiser", widget: "string"}
+          - {label: "Total Seats", name: "seats", widget: "number"}
+          - {label: "Roundtables Count", name: "roundtablesCount", widget: "number"}
+          - {label: "Showcase Count", name: "showcaseCount", widget: "number"}
+
+  - name: "programme"
+    label: "Event Programme (Agenda)"
+    file: "content/programme.json"
+    fields:
+      - label: "Schedule Items"
+        name: "items"
+        widget: "list"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Start Time", name: "start", widget: "string"}
+          - {label: "End Time", name: "end", widget: "string"}
+          - {label: "Description", name: "description", widget: "text"}
+          - {label: "Format", name: "format", widget: "string"}
+
+  - name: "roundtables"
+    label: "Roundtables"
+    file: "content/roundtables.json"
+    fields:
+      - label: "Roundtables"
+        name: "items"
+        widget: "list"
+        fields:
+          - {label: "Table Name", name: "title", widget: "string"}
+          - {label: "Short Title", name: "shortTitle", widget: "string"}
+          - {label: "Core Question", name: "coreQuestion", widget: "text"}
+          - {label: "Themes to Discuss", name: "themes", widget: "list"}
+          - {label: "Target Participant Profiles", name: "participantProfile", widget: "list"}
+          - label: "Chair Sponsor"
+            name: "chair"
+            widget: "object"
+            fields:
+              - {label: "Status (confirmed/pending)", name: "status", widget: "string"}
+              - {label: "Proposed Chair Organization", name: "proposed", widget: "string", required: false}
+
+  - name: "partners"
+    label: "Partners"
+    file: "content/partners.json"
+    fields:
+      - label: "Partners"
+        name: "items"
+        widget: "list"
+        fields:
+          - {label: "Partner Name", name: "name", widget: "string"}
+          - {label: "Tier (e.g., roundtable-chair)", name: "tier", widget: "string"}
+          - {label: "Status (confirmed/pending)", name: "status", widget: "string"}
+          - {label: "Assigned Roundtable Slug", name: "roundtableSlug", widget: "string", required: false}
+
+  - name: "faq"
+    label: "FAQs"
+    file: "content/faq.json"
+    fields:
+      - label: "Categories"
+        name: "items"
+        widget: "list"
+        fields:
+          - {label: "Category Name", name: "category", widget: "string"}
+          - label: "Questions"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Question", name: "question", widget: "string"}
+              - {label: "Answer", name: "answer", widget: "text"}

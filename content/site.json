@@ -1,0 +1,55 @@
+{
+  "event": {
+    "name": "AIX Summit 2026",
+    "edition": "2026",
+    "tagline": "Where AI moves from ambition to action.",
+    "date": "Monday 14 December 2026",
+    "dateIso": "2026-12-14",
+    "programmeStart": "14:00",
+    "programmeEnd": "18:00",
+    "receptionEnd": "18:30",
+    "timezone": "Asia/Qatar",
+    "locationPublic": "Doha, Qatar",
+    "organiser": "Risin Ventures",
+    "seats": 90,
+    "totalRoom": 150,
+    "roundtablesCount": 6,
+    "showcaseCount": 12,
+    "linkedinPartnerId": "7811612"
+  },
+  "venue": {
+    "status": "pending",
+    "name": "Doha, Qatar",
+    "address": "",
+    "mapUrl": ""
+  },
+  "features": {
+    "showSpeakers": false,
+    "showRecognition": false,
+    "showShowcaseCompanies": false,
+    "showPartnerWall": false,
+    "showMedia": false,
+    "showSignalsEdition": false,
+    "invitationRequestsOpen": true
+  },
+  "contacts": {
+    "general": "info@aixsummit.com",
+    "partnerships": "partners@aixsummit.com",
+    "showcase": "showcase@aixsummit.com",
+    "press": "press@aixsummit.com"
+  },
+  "socials": {
+    "linkedin": "https://www.linkedin.com/company/aixsummit",
+    "x": "https://x.com/aixsummit",
+    "instagram": "https://instagram.com/aixsummit",
+    "youtube": "https://youtube.com/@aixsummit"
+  },
+  "prospectus": {
+    "pdfUrl": "/documents/AIX-Summit-2026-Partnership-Prospectus.pdf"
+  },
+  "brand": {
+    "logo": "/brand/aix-roundtables-dark-transparent.png",
+    "logoDark": "/brand/aix-roundtables-dark-transparent.png",
+    "logoLight": "/brand/aix-roundtables-light-transparent.png"
+  }
+}

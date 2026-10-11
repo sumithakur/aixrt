@@ -1,0 +1,41 @@
+{
+  "seniority": [
+    { "label": "C-Suite (CEOs, CIOs, CTOs, CDOs, COOs, CISOs)", "percentage": 45 },
+    { "label": "Managing Directors, Partners & Institutional Investors", "percentage": 25 },
+    { "label": "Government Leadership, Regulators & Policy Directors", "percentage": 20 },
+    { "label": "Enterprise AI Principals & Technology Founders", "percentage": 10 }
+  ],
+  "sectors": [
+    { "label": "Financial Services, Banking & Capital", "percentage": 30 },
+    { "label": "Energy, Utilities, Aviation & Logistics", "percentage": 25 },
+    { "label": "Government & Digital Public Infrastructure", "percentage": 20 },
+    { "label": "Enterprise Software, Cloud & Cybersecurity", "percentage": 15 },
+    { "label": "Research & Ecosystem Leadership", "percentage": 10 }
+  ],
+  "segments": [
+    {
+      "title": "Enterprise Decision-Makers",
+      "roles": "CEOs, CIOs, CTOs, CDOs, COOs, CHROs, CISOs, Heads of AI & Transformation"
+    },
+    {
+      "title": "Financial Capital",
+      "roles": "Banks, insurers, sovereign wealth, private equity, family offices and institutional investors"
+    },
+    {
+      "title": "Government & Policy",
+      "roles": "Government transformation leaders, regulators, digital government, AI policy leadership"
+    },
+    {
+      "title": "Industrial Operators",
+      "roles": "Energy, utilities, telecom, aviation, logistics, healthcare, manufacturing and construction"
+    },
+    {
+      "title": "Technology Providers",
+      "roles": "Enterprise AI platforms, hyperscale cloud, cybersecurity, identity and data infrastructure"
+    },
+    {
+      "title": "Innovation Ecosystem",
+      "roles": "Scaleup founders, research institutions, regional accelerators and national innovation hubs"
+    }
+  ]
+}

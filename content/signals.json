@@ -1,0 +1,14 @@
+{
+  "hero": {
+    "title": "AIX Roundtable Signals",
+    "description": "The official intelligence report from the AIX Summit."
+  },
+  "content": {
+    "title": "The Output",
+    "paragraphs": [
+      "Mass conferences produce soundbites. AIX Summit produces the Roundtable Signals report.",
+      "Under the Chatham House Rule, participants can share the information received, but neither the identity nor the affiliation of the speaker(s). This allows us to publish the most critical insights, bottlenecks, and strategies discussed across the six lanes.",
+      "The report is circulated to all attendees and chairs post-summit."
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+#!/bin/bash
+sed -i '' 's/const roundtables = JSON.parse(fs.readFileSync(roundtablesPath, '\''utf8'\''));/const roundtables = JSON.parse(fs.readFileSync(roundtablesPath, '\''utf8'\'')).items || JSON.parse(fs.readFileSync(roundtablesPath, '\''utf8'\''));/g' scripts/validate-content.js
+sed -i '' 's/const partners = JSON.parse(fs.readFileSync(partnersPath, '\''utf8'\''));/const partners = JSON.parse(fs.readFileSync(partnersPath, '\''utf8'\'')).items || JSON.parse(fs.readFileSync(partnersPath, '\''utf8'\''));/g' scripts/validate-content.js
+sed -i '' 's/const speakers = JSON.parse(fs.readFileSync(speakersPath, '\''utf8'\''));/const speakers = JSON.parse(fs.readFileSync(speakersPath, '\''utf8'\'')).items || JSON.parse(fs.readFileSync(speakersPath, '\''utf8'\''));/g' scripts/validate-content.js
+sed -i '' 's/const showcase = JSON.parse(fs.readFileSync(showcasePath, '\''utf8'\''));/const showcase = JSON.parse(fs.readFileSync(showcasePath, '\''utf8'\'')).items || JSON.parse(fs.readFileSync(showcasePath, '\''utf8'\''));/g' scripts/validate-content.js

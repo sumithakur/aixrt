@@ -1,0 +1,418 @@
+{
+  "colors": [
+    [
+      "rgb(0, 0, 0)",
+      631
+    ],
+    [
+      "rgb(255, 255, 255)",
+      554
+    ],
+    [
+      "rgb(209, 213, 219)",
+      180
+    ],
+    [
+      "rgb(96, 165, 250)",
+      3
+    ],
+    [
+      "rgb(229, 231, 235)",
+      2
+    ],
+    [
+      "rgb(158, 76, 201)",
+      2
+    ],
+    [
+      "rgba(0, 0, 0, 0)",
+      1
+    ]
+  ],
+  "backgrounds": [
+    [
+      "rgba(0, 0, 0, 0)",
+      1231
+    ],
+    [
+      "rgb(42, 35, 68)",
+      32
+    ],
+    [
+      "rgba(255, 255, 255, 0.1)",
+      32
+    ],
+    [
+      "rgba(255, 255, 255, 0.3)",
+      23
+    ],
+    [
+      "rgb(52, 45, 82)",
+      14
+    ],
+    [
+      "rgba(139, 92, 246, 0.3)",
+      14
+    ],
+    [
+      "rgb(43, 32, 76)",
+      11
+    ],
+    [
+      "rgba(126, 34, 206, 0.2)",
+      5
+    ],
+    [
+      "rgb(29, 21, 54)",
+      2
+    ],
+    [
+      "rgba(34, 211, 238, 0.3)",
+      2
+    ],
+    [
+      "rgba(244, 114, 182, 0.3)",
+      2
+    ],
+    [
+      "rgba(192, 132, 252, 0.3)",
+      2
+    ],
+    [
+      "rgba(0, 0, 0, 0.35)",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.75)",
+      1
+    ],
+    [
+      "rgb(205, 58, 140)",
+      1
+    ]
+  ],
+  "gradients": [
+    [
+      "linear-gradient(to right, rgb(202, 82, 149), rgb(61, 216, 216))",
+      28
+    ],
+    [
+      "linear-gradient(to right, rgb(236, 72, 153), rgb(59, 130, 246))",
+      15
+    ],
+    [
+      "linear-gradient(to right, rgb(236, 72, 153), rgb(168, 85, 247), rgb(34, 211, 238))",
+      12
+    ],
+    [
+      "linear-gradient(rgb(43, 32, 76), rgb(22, 12, 53) 50%)",
+      2
+    ],
+    [
+      "linear-gradient(to right, rgb(236, 72, 153), rgb(168, 85, 247), rgb(99, 102, 241))",
+      2
+    ],
+    [
+      "linear-gradient(to right, rgb(115, 86, 203), rgb(131, 90, 203), rgb(158, 76, 201))",
+      1
+    ],
+    [
+      "linear-gradient(to right, rgb(255, 255, 255), rgb(255, 78, 142), rgb(160, 124, 255))",
+      1
+    ],
+    [
+      "linear-gradient(to right, rgb(236, 72, 153), rgb(168, 85, 247))",
+      1
+    ]
+  ],
+  "fonts": [
+    [
+      "Montserrat, sans-serif",
+      1266
+    ],
+    [
+      "Inter, sans-serif",
+      103
+    ],
+    [
+      "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+      4
+    ]
+  ],
+  "weights": [
+    [
+      "400",
+      1266
+    ],
+    [
+      "700",
+      63
+    ],
+    [
+      "600",
+      36
+    ],
+    [
+      "300",
+      4
+    ],
+    [
+      "800",
+      3
+    ],
+    [
+      "500",
+      1
+    ]
+  ],
+  "sizes": [
+    [
+      "16px",
+      1203
+    ],
+    [
+      "14px",
+      98
+    ],
+    [
+      "12px",
+      34
+    ],
+    [
+      "18px",
+      17
+    ],
+    [
+      "11px",
+      6
+    ],
+    [
+      "20px",
+      6
+    ],
+    [
+      "36px",
+      5
+    ],
+    [
+      "60px",
+      2
+    ],
+    [
+      "24px",
+      1
+    ],
+    [
+      "48px",
+      1
+    ]
+  ],
+  "lineHeights": [
+    [
+      "24px",
+      1179
+    ],
+    [
+      "20px",
+      98
+    ],
+    [
+      "16px",
+      34
+    ],
+    [
+      "26px",
+      24
+    ],
+    [
+      "28px",
+      23
+    ],
+    [
+      "16.5px",
+      6
+    ],
+    [
+      "40px",
+      5
+    ],
+    [
+      "60px",
+      2
+    ],
+    [
+      "32px",
+      1
+    ],
+    [
+      "48px",
+      1
+    ]
+  ],
+  "letterSpace": [
+    [
+      "normal",
+      1373
+    ]
+  ],
+  "radii": [
+    [
+      "0px",
+      1112
+    ],
+    [
+      "9999px",
+      82
+    ],
+    [
+      "12px",
+      43
+    ],
+    [
+      "6px",
+      39
+    ],
+    [
+      "16px",
+      29
+    ],
+    [
+      "10px",
+      28
+    ],
+    [
+      "8px",
+      16
+    ],
+    [
+      "8px 8px 0px 0px",
+      14
+    ],
+    [
+      "4px",
+      6
+    ],
+    [
+      "8px 0px 0px 8px",
+      2
+    ],
+    [
+      "28px",
+      1
+    ],
+    [
+      "24px",
+      1
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(236, 72, 153, 0.5) 0px 16px 40px 0px",
+      12
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+      1
+    ]
+  ],
+  "borders": [
+    [
+      "rgb(229, 231, 235)",
+      1325
+    ],
+    [
+      "rgba(255, 255, 255, 0.1)",
+      42
+    ],
+    [
+      "rgba(255, 255, 255, 0.5)",
+      2
+    ],
+    [
+      "rgba(255, 255, 255, 0.2)",
+      2
+    ],
+    [
+      "rgba(0, 0, 0, 0)",
+      1
+    ],
+    [
+      "rgb(255, 255, 255)",
+      1
+    ]
+  ],
+  "transitions": [
+    [
+      "all",
+      1007
+    ],
+    [
+      "0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      234
+    ],
+    [
+      "color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), fill 0.3s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1), -webkit-backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      42
+    ],
+    [
+      "opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      16
+    ],
+    [
+      "color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), fill 0.3s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      15
+    ],
+    [
+      "max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+      14
+    ],
+    [
+      "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
+      12
+    ],
+    [
+      "color 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), fill 0.15s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+      8
+    ],
+    [
+      "transform",
+      6
+    ],
+    [
+      "1s cubic-bezier(0, 0, 0.2, 1)",
+      5
+    ],
+    [
+      "0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+      4
+    ],
+    [
+      "1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
+      3
+    ],
+    [
+      "0.7s cubic-bezier(0, 0, 0.2, 1)",
+      2
+    ],
+    [
+      "opacity 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
+      1
+    ],
+    [
+      "opacity 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
+      1
+    ],
+    [
+      "0.7s cubic-bezier(0.4, 0, 0.2, 1)",
+      1
+    ],
+    [
+      "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+      1
+    ],
+    [
+      "1.2s cubic-bezier(0.4, 0, 0.2, 1)",
+      1
+    ]
+  ]
+}

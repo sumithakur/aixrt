@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "title": "Enterprise AI Showcase",
+    "description": "Twelve heavily-vetted Series A+ enterprise AI startups present live, working software directly to the roundtable executives."
+  },
+  "opportunity": {
+    "title": "Six Minutes to Prove It Works",
+    "paragraphs": [
+      "The Showcase is strictly for enterprise-grade AI applications with verified deployments. Foundational models are table stakes; we are interested in applied layers, orchestration, security, and measurable ROI.",
+      "Startups are integrated directly into the roundtable sessions. Each table (15 executives) will receive two 6-minute live demonstrations relevant to their specific lane.",
+      "Showcase stations are active in the central summit foyer during arrival (14:00–14:30) and the networking break (16:00–16:30). Delegates can interact directly with the software and interrogate technical principals."
+    ]
+  },
+  "criteria": [
+    {
+      "title": "Enterprise Grade",
+      "desc": "Demonstrable SOC2/ISO compliance or pathway. Built for institutional data."
+    },
+    {
+      "title": "Live Software Only",
+      "desc": "No slide decks on stage. Demos must be live, working software."
+    },
+    {
+      "title": "Verifiable ROI",
+      "desc": "Clear metrics on how the application improves margins, security, or capability."
+    }
+  ],
+  "items": []
+}

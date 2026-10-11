@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title": "Contact the Organising Team",
+    "description": "Direct lines to the team managing AIX Summit 2026."
+  },
+  "emails": [
+    {
+      "name": "General Enquiries",
+      "address": "hello@aix-summit.com"
+    },
+    {
+      "name": "Partnership & Chairs",
+      "address": "partners@aix-summit.com"
+    },
+    {
+      "name": "Press & Media",
+      "address": "press@aix-summit.com"
+    }
+  ]
+}

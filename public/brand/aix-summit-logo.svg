@@ -1,0 +1,21 @@
+<svg width="220" height="64" viewBox="0 0 220 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aix_frame_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F746A9" />
+      <stop offset="50%" stop-color="#8B68F6" />
+      <stop offset="100%" stop-color="#3DD8D8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Perspective Trapezoid Frame (Brand Guidelines) -->
+  <polygon points="4,2 198,13 198,51 4,62" fill="none" stroke="url(#aix_frame_grad)" stroke-width="2.75" stroke-linejoin="round" />
+
+  <!-- AI Text -->
+  <text x="24" y="42" font-family="'Montserrat', sans-serif" font-size="24" font-weight="900" fill="#FFFFFF" letter-spacing="1">AI</text>
+
+  <!-- Stylized X -->
+  <path d="M60 22 L69 22 L77 34 L85 22 L94 22 L83 37 L95 53 L86 53 L77 40 L68 53 L59 53 L71 37 Z" fill="#FFFFFF" />
+
+  <!-- SUMMIT Text -->
+  <text x="102" y="41" font-family="'Montserrat', sans-serif" font-size="20" font-weight="800" fill="#FFFFFF" letter-spacing="2">SUMMIT</text>
+</svg>

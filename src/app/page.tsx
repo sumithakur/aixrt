@@ -87,7 +87,7 @@ export default function HomePage() {
           {/* Ray beam overlay */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full opacity-35 mix-blend-color-dodge">
             <Image
-              src="/brand/ray-overlay.svg"
+              src="/brand/ray-overlay.avif"
               alt=""
               fill
               className="object-cover object-top"
@@ -121,9 +121,9 @@ export default function HomePage() {
 
           {/* H1: Server-rendered verbatim tagline */}
           <FadeIn delay={300}><h1 className="mx-auto max-w-5xl font-display text-4xl font-extrabold tracking-tight text-text-primary sm:text-6xl lg:text-7xl leading-[1.08]">
-            {homeData.hero.eyebrow}{' '}
+            Where AI moves from{' '}
             <span className="bg-gradient-to-r from-text-primary via-brand-neonFuchsia to-brand-mediumSlateBlue bg-clip-text text-transparent">
-              {homeData.hero.title}
+              ambition to action.
             </span>
           </h1></FadeIn>
 
@@ -230,7 +230,7 @@ export default function HomePage() {
           <div className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <Eyebrow accent="secondary" className="mb-2">
-                13:15 – 15:00 · Six Concurrent Rooms
+                Two Parallel Sessions · 14:30 – 18:00
               </Eyebrow>
               <Heading level={2} size="xl">
                 {homeData.roundtablesIntro.title}

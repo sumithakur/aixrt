@@ -208,8 +208,9 @@ export default function ShowcaseApplyPage() {
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div>
-                    <label className="block text-xs font-semibold text-text-primary">Can a pre-recorded demo video be supplied for technical review? *</label>
+                    <label htmlFor="showcase-video-demo" className="block text-xs font-semibold text-text-primary">Can a pre-recorded demo video be supplied for technical review? *</label>
                     <select
+                      id="showcase-video-demo"
                       value={formData.hasVideoDemo}
                       onChange={(e) => setFormData({ ...formData, hasVideoDemo: e.target.value })}
                       className="mt-2 w-full rounded-sm border border-border-subtle bg-bg-base px-4 py-2.5 text-sm text-text-primary focus:border-brand-primary focus:outline-none"
@@ -221,8 +222,9 @@ export default function ShowcaseApplyPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-text-primary">Most Relevant Summit Roundtable Lane *</label>
+                    <label htmlFor="showcase-roundtable-focus" className="block text-xs font-semibold text-text-primary">Most Relevant Summit Roundtable Lane *</label>
                     <select
+                      id="showcase-roundtable-focus"
                       required
                       value={formData.roundtableFocus}
                       onChange={(e) => setFormData({ ...formData, roundtableFocus: e.target.value })}

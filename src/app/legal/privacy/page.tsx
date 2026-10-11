@@ -52,7 +52,7 @@ export default function PrivacyPage() {
             <h2 className="font-display text-base font-bold text-text-primary">4. Data Retention & Your Rights</h2>
             <p>
               Delegate records are retained for the duration necessary to deliver the summit and post-event research briefings. You may request data inspection or deletion by contacting{' '}
-              <a href="mailto:info@aixsummit.com" className="text-brand-secondary hover:underline">
+              <a href="mailto:info@aixsummit.com" className="text-brand-secondary underline hover:text-brand-secondary-hover">
                 info@aixsummit.com
               </a>.
             </p>

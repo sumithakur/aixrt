@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { verifySessionTokenEdge } from '@/lib/edge-auth';
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get('aix_admin_token')?.value;
-  const isAuthenticated = token === 'aix_secure_session_token_2026';
+  const isAuthenticated = await verifySessionTokenEdge(token);
 
   const isLoginPage = req.nextUrl.pathname === '/admin/login';
   const isLoginApi = req.nextUrl.pathname === '/api/admin/login';

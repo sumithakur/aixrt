@@ -38,7 +38,7 @@ export default function TermsPage() {
             <h2 className="font-display text-base font-bold text-text-primary">2. Chatham House Rule Adherence</h2>
             <p>
               By entering any executive roundtable suite, delegates unconditionally agree to comply with the Chatham House Rule as outlined in our{' '}
-              <a href="/legal/confidentiality" className="text-brand-secondary hover:underline">
+              <a href="/legal/confidentiality" className="text-brand-secondary underline hover:text-brand-secondary-hover">
                 Confidentiality Protocol
               </a>. Violation of these terms will result in immediate credential revocation.
             </p>

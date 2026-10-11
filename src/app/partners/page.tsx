@@ -133,33 +133,46 @@ export default function PartnersPage() {
             }
           `}} />
 
-          {(!rawData.items || rawData.items.length < 5) ? (
-            <div className="flex flex-wrap gap-6 justify-center">
-              {(rawData.items || []).map((partner: any, idx: number) => (
-                <div key={idx} className="flex h-28 w-48 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-bg-surface p-4">
-                  {partner.logo ? (
-                    <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
-                  ) : (
-                    <span className="text-sm font-semibold text-text-primary text-center">{partner.name}</span>
-                  )}
+          {(() => {
+            const confirmedPartners = (rawData.items || []).filter((p: any) => p.status === 'confirmed');
+            if (confirmedPartners.length === 0) {
+              return (
+                <div className="rounded-md border border-dashed border-border-subtle p-8 text-center">
+                  <p className="text-sm text-text-muted">Partnership announcements for the 2026 edition are currently under curatorial review.</p>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="relative flex overflow-hidden carousel-container w-full">
-              <div className="animate-marquee space-x-6 pr-6">
-                {[...(rawData.items || []), ...(rawData.items || [])].map((partner: any, idx: number) => (
-                  <div key={idx} className="flex h-28 w-48 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-bg-surface p-4">
-                    {partner.logo ? (
-                      <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
-                    ) : (
-                      <span className="text-sm font-semibold text-text-primary text-center">{partner.name}</span>
-                    )}
-                  </div>
-                ))}
+              );
+            }
+            if (confirmedPartners.length < 5) {
+              return (
+                <div className="flex flex-wrap gap-6 justify-center">
+                  {confirmedPartners.map((partner: any, idx: number) => (
+                    <div key={idx} className="flex h-28 w-48 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-bg-surface p-4">
+                      {partner.logo ? (
+                        <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
+                      ) : (
+                        <span className="text-sm font-semibold text-text-primary text-center">{partner.name}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+            return (
+              <div className="relative flex overflow-hidden carousel-container w-full">
+                <div className="animate-marquee space-x-6 pr-6">
+                  {[...confirmedPartners, ...confirmedPartners].map((partner: any, idx: number) => (
+                    <div key={idx} className="flex h-28 w-48 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-bg-surface p-4">
+                      {partner.logo ? (
+                        <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
+                      ) : (
+                        <span className="text-sm font-semibold text-text-primary text-center">{partner.name}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </Container>
       </Section>
 

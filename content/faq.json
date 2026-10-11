@@ -26,7 +26,7 @@
         {
           "id": "how-roundtables-work",
           "question": "How do the executive roundtables function?",
-          "answer": "Five roundtables run concurrently from 13:15 to 15:00. Each table accommodates exactly 15 participants: a chair, up to two sponsor executives, and twelve invited peers. An AIX moderator and rapporteur facilitate each table under Chatham House principles to ensure candid, substantive exchange."
+          "answer": "Six roundtables run across two parallel afternoon sessions (14:30–16:00 and 16:30–18:00). Each table accommodates exactly 15 participants: a chair, up to two sponsor executives, and twelve invited peers. An AIX moderator and rapporteur facilitate each table under Chatham House principles to ensure candid, substantive exchange."
         },
         {
           "id": "can-i-choose-my-roundtable",
@@ -36,7 +36,7 @@
         {
           "id": "chatham-house-rule",
           "question": "What are Chatham House principles and how do they apply?",
-          "answer": "Under the Chatham House Rule, participants are free to use the information received, but neither the identity nor the affiliation of the speaker, nor that of any other participant, may be revealed. Rapporteurs record high-level strategic observations without attribution for the plenary synthesis and the AIX Roundtable Signals publication."
+          "answer": "Under the Chatham House Rule, participants are free to use the information received, but neither the identity nor the affiliation of the speaker, nor that of any other participant, may be revealed. Rapporteurs record high-level strategic observations without attribution for the published AIX Roundtable Signals research report."
         }
       ]
     },
@@ -51,7 +51,7 @@
         {
           "id": "what-is-the-schedule",
           "question": "What are the event timings?",
-          "answer": "The summit convenes at 10:00 with arrival networking and showcase demonstrations. The core programme runs from 10:30 to 16:30, followed by an evening networking reception concluding at 18:00."
+          "answer": "The summit convenes at 14:00 with arrival networking and showcase demonstrations. Roundtable Session 1 runs 14:30–16:00, followed by a networking break from 16:00–16:30, Roundtable Session 2 from 16:30–18:00, and informal networking concluding at 18:30."
         }
       ]
     },
@@ -61,12 +61,12 @@
         {
           "id": "what-is-the-ai-showcase",
           "question": "What is the AI Showcase?",
-          "answer": "The AI Showcase features 4–6 vetted enterprise AI companies presenting working software solving real operational problems. It is explicitly not a pitch competition: demonstrations must prove production utility, measurable business value, and verifiable deployments."
+          "answer": "The AI Showcase features vetted enterprise AI companies presenting working software solving real operational problems. It is explicitly not a pitch competition: demonstrations must prove production utility, measurable business value, and verifiable deployments."
         },
         {
           "id": "what-are-enterprise-connections",
           "question": "What are Enterprise Connections?",
-          "answer": "During lunch, executive guests can request 1-on-1 introductions with Showcase companies that address their immediate technological priorities. Pre-booked 15-minute briefings take place from 15:00 to 15:30, with additional connections facilitated post-event."
+          "answer": "During networking intervals, executive guests can interact directly with Showcase stations and explore technical walkthroughs with founding teams addressing immediate enterprise deployment priorities."
         }
       ]
     },
@@ -76,7 +76,7 @@
         {
           "id": "what-is-a-roundtable-chair",
           "question": "What does a Roundtable Chair partnership include?",
-          "answer": "The Roundtable Chair is the flagship summit partnership after Strategic Partner. The chairing organisation leads one of the five strategic conversations, delivers a 5–7 minute opening perspective, nominates guest participants, joins the plenary synthesis panel, and co-authors the lane findings in the post-event AIX Roundtable Signals report."
+          "answer": "The Roundtable Chair is the flagship summit partnership. The chairing organisation leads one of the six strategic conversations, delivers a 5–7 minute opening perspective, nominates guest participants, and co-authors the lane findings in the post-event AIX Roundtable Signals research report."
         },
         {
           "id": "are-commercial-pitches-permitted",
@@ -96,7 +96,7 @@
         {
           "id": "is-the-event-open-to-media",
           "question": "Is the event open to journalists and media?",
-          "answer": "Media attendance is strictly limited to accredited press for the morning plenary sessions and AI Showcase demonstrations. The afternoon executive roundtables operate strictly under Chatham House principles and are closed to media."
+          "answer": "Media attendance is strictly limited to accredited press for the public AI Showcase area. The afternoon executive roundtables operate strictly under Chatham House principles and are closed to media."
         }
       ]
     }

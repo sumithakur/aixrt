@@ -28,7 +28,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-display font-semibold transition-all duration-fast select-none relative min-h-[44px] min-w-[44px] focus-visible:outline-2 focus-visible:outline-brand-primary focus-visible:outline-offset-2';
+      'inline-flex items-center justify-center font-display font-semibold transition-all duration-fast select-none relative min-h-[44px] min-w-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base';
 
     const sizeStyles = {
       sm: 'text-xs px-4 py-2 rounded-pill gap-1.5',
@@ -38,9 +38,9 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
 
     const variantStyles = {
       primary:
-        'bg-brand-primary hover:bg-brand-primary-hover text-text-primary shadow-raised active:translate-y-0 hover:-translate-y-0.5 border border-border-subtle hover:shadow-glow',
+        'bg-brand-primary hover:bg-brand-primary-hover text-text-inverse shadow-raised active:translate-y-0 hover:-translate-y-0.5 border border-border-subtle hover:shadow-glow',
       gradient:
-        'bg-gradient-to-r from-brand-secondary to-brand-primary hover:from-brand-secondary-hover hover:to-brand-primary-hover text-text-primary shadow-glow active:translate-y-0 hover:-translate-y-0.5 border border-border-prominent',
+        'bg-gradient-to-r from-brand-secondary to-brand-primary hover:from-brand-secondary-hover hover:to-brand-primary-hover text-text-inverse shadow-glow active:translate-y-0 hover:-translate-y-0.5 border border-border-prominent',
       secondary:
         'bg-bg-raised hover:bg-bg-surface text-text-primary border border-border-subtle hover:border-brand-secondary active:translate-y-0 hover:-translate-y-0.5',
       ghost:

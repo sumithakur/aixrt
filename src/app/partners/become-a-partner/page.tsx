@@ -70,7 +70,7 @@ export default function BecomeAPartnerPage() {
     'Direct input into the core question and discussion framing',
     'Nomination of up to six senior enterprise guests for AIX curatorial consideration',
     'Curated, closed-door access to twelve senior enterprise decision-makers',
-    'Guaranteed seat on the afternoon plenary synthesis stage panel',
+    'Opening perspective and thought-leadership positioning across summit communications',
     'Co-authorship and brand recognition in the published AIX Roundtable Signals research',
     'Priority 1-on-1 Enterprise Connections with relevant AI Showcase companies',
   ];
@@ -109,7 +109,7 @@ export default function BecomeAPartnerPage() {
     },
     {
       tier: 'AI Showcase Partner',
-      headline: 'Sponsorship of the 45-minute live working demonstration plenary.',
+      headline: 'Sponsorship of the live working demonstration stages and showcase lounge.',
     },
     {
       tier: 'Networking Partner',
@@ -546,8 +546,9 @@ export default function BecomeAPartnerPage() {
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="block text-xs font-semibold text-text-primary">Partnership Interest *</label>
+                    <label htmlFor="partner-interest" className="block text-xs font-semibold text-text-primary">Partnership Interest *</label>
                     <select
+                      id="partner-interest"
                       value={enquiryForm.interest}
                       onChange={(e) => setEnquiryForm({ ...enquiryForm, interest: e.target.value })}
                       className="mt-1 w-full rounded-sm border border-border-subtle bg-bg-base px-3 py-2 text-sm text-text-primary focus:border-brand-primary focus:outline-none"
@@ -563,8 +564,9 @@ export default function BecomeAPartnerPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-text-primary">Preferred Roundtable Lane</label>
+                    <label htmlFor="partner-roundtable-lane" className="block text-xs font-semibold text-text-primary">Preferred Roundtable Lane</label>
                     <select
+                      id="partner-roundtable-lane"
                       value={enquiryForm.roundtable}
                       onChange={(e) => setEnquiryForm({ ...enquiryForm, roundtable: e.target.value })}
                       className="mt-1 w-full rounded-sm border border-border-subtle bg-bg-base px-3 py-2 text-sm text-text-primary focus:border-brand-primary focus:outline-none"

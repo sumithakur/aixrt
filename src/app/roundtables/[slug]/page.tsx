@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: RoundtablePageProps): Promise
 
   return {
     title: `${rt.shortTitle} | Executive Roundtable`,
-    description: `AIX Summit 2026 Executive Roundtable: "${rt.title}". Addressing: "${rt.coreQuestion}". 105 minutes, 15 participants, Chatham House Rule.`,
+    description: `AIX Summit 2026 Executive Roundtable: "${rt.title}". Addressing: "${rt.coreQuestion}". 75 minutes, 15 participants, Chatham House Rule.`,
     openGraph: {
       title: `${rt.shortTitle} — AIX Summit 2026 Roundtable`,
       description: rt.coreQuestion,
@@ -95,8 +95,8 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
     '@type': 'Event',
     name: `${rt.shortTitle}: ${rt.title}`,
     description: rt.coreQuestion,
-    startDate: '2026-12-14T13:15:00+03:00',
-    endDate: '2026-12-14T15:00:00+03:00',
+    startDate: rt.session === 2 ? '2026-12-14T16:30:00+03:00' : '2026-12-14T14:30:00+03:00',
+    endDate: rt.session === 2 ? '2026-12-14T18:00:00+03:00' : '2026-12-14T16:00:00+03:00',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
       '@type': 'Place',
@@ -108,6 +108,8 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
       },
     },
   };
+
+  const sessionTiming = rt.session === 2 ? '16:30 – 18:00' : '14:30 – 16:00';
 
   return (
     <>
@@ -135,9 +137,9 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
           <div className="max-w-4xl">
             <div className="mb-4 inline-flex items-center gap-2">
               <span className={`rounded-pill border px-3 py-1 font-display text-xs font-bold uppercase tracking-wider ${currentAccent.badge}`}>
-                Table {rt.order} · {rt.shortTitle}
+                Table {rt.order} · {rt.shortTitle} · Session {rt.session || 1}
               </span>
-              <span className="text-xs text-text-muted">105 Minutes · 15 Seats</span>
+              <span className="text-xs text-text-muted">75 Minutes · 15 Seats</span>
             </div>
 
             <Heading level={1} size="hero" className="mb-6">
@@ -267,8 +269,8 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
                   <li className="flex items-start gap-3">
                     <Clock className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold text-text-primary">105 Minutes Duration</span>
-                      <p className="text-text-muted mt-0.5">13:15 – 15:00 in dedicated suite.</p>
+                      <span className="font-semibold text-text-primary">75 Minutes Discussion</span>
+                      <p className="text-text-muted mt-0.5">{sessionTiming} in dedicated suite.</p>
                     </div>
                   </li>
 

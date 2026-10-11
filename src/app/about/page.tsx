@@ -131,7 +131,7 @@ export default function AboutPage() {
                     {aboutData.rationale.paragraphs[0]}
                   </p>
                   <p>
-                    The day closes with an executive plenary synthesis where chairs debate consensus takeaways on stage, followed by an evening reception so relationships established at the tables can deepen in an informal environment.
+                    Rather than superficial stage read-outs, discussions flow directly into the published Chatham House <em>AIX Roundtable Signals</em> research, followed by an evening reception so executive relationships established at the tables can deepen in an informal environment.
                   </p>
                 </div>
               </div>

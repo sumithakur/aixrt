@@ -155,8 +155,9 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-text-primary">Department / Enquiry Type *</label>
+                  <label htmlFor="contact-department" className="block text-xs font-semibold text-text-primary">Department / Enquiry Type *</label>
                   <select
+                    id="contact-department"
                     value={form.department}
                     onChange={(e) => setForm({ ...form, department: e.target.value })}
                     className="mt-1 w-full rounded-sm border border-border-subtle bg-bg-base px-3 py-2 text-sm text-text-primary focus:border-brand-primary focus:outline-none"

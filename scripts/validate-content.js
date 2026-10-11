@@ -75,8 +75,8 @@ const partnersPath = path.join(CONTENT_DIR, 'partners.json');
 if (fs.existsSync(partnersPath)) {
   const partners = JSON.parse(fs.readFileSync(partnersPath, 'utf8')).items || JSON.parse(fs.readFileSync(partnersPath, 'utf8'));
   partners.forEach((p, i) => {
-    if (p.status && p.status === 'rejected' && p.name && p.name.trim() !== '') {
-      errors.push(`[CONFIRMATION GATE FAIL] Rejected partner name "${p.name}" present in partners[${i}].`);
+    if (p.status !== 'confirmed' && p.name && p.name.trim() !== '') {
+      errors.push(`[CONFIRMATION GATE FAIL] Unconfirmed partner name "${p.name}" present in partners[${i}] while status is "${p.status}". Must be 'confirmed'.`);
     }
   });
 }

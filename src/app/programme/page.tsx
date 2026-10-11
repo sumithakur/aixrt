@@ -131,7 +131,7 @@ export default function ProgrammePage() {
                   <span>Chatham House Governance</span>
                 </div>
                 <p className="text-xs leading-relaxed text-text-secondary">
-                  The 13:15 – 15:00 roundtables operate strictly under Chatham House principles. Stage moments are open to accredited media; roundtables are strictly closed-door.
+                  The executive roundtables (14:30 – 18:00) operate strictly under Chatham House principles. Stage moments are open to accredited media; roundtables are strictly closed-door.
                 </p>
               </div>
             </div>

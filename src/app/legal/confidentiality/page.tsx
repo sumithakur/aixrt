@@ -46,7 +46,7 @@ export default function ConfidentialityPage() {
               <span>1. Application to Executive Roundtables</span>
             </h3>
             <p>
-              The six concurrent afternoon roundtables (13:15–15:00) operate strictly under the Chatham House Rule. All remarks, case experiences, internal challenges, and risk observations shared during the 75-minute session are completely non-attributable.
+              The executive roundtables across both afternoon sessions (14:30–16:00 and 16:30–18:00) operate strictly under the Chatham House Rule. All remarks, case experiences, internal challenges, and risk observations shared during each 75-minute session are completely non-attributable.
             </p>
             <p>
               Participants are encouraged to speak openly regarding deployment bottlenecks, regulatory hurdles, technical failures, and audited ROI without concern that specific remarks will be cited outside the suite.
@@ -63,7 +63,7 @@ export default function ConfidentialityPage() {
               Each roundtable suite includes an independent AIX rapporteur. The rapporteur is tasked with recording strategic arguments, cross-cutting themes, and structural industry bottlenecks — <strong>strictly without personal or organisational attribution</strong>.
             </p>
             <p>
-              The resulting synthesis forms the basis of the afternoon plenary synthesis panel and the published <em>AIX Roundtable Signals</em> report in mid-January 2027. Any sponsor perspectives included in the report are explicitly demarcated as partner contributions.
+              The resulting synthesis forms the basis of the published <em>AIX Roundtable Signals</em> research report in mid-January 2027. Any sponsor perspectives included in the report are explicitly demarcated as partner contributions.
             </p>
           </div>
 
@@ -90,7 +90,7 @@ export default function ConfidentialityPage() {
               <span>4. Photography & Media Access</span>
             </h3>
             <p>
-              Accredited media are permitted only within the morning plenary sessions and the public AI Showcase area. <strong>Media representatives are strictly barred from entering the afternoon executive roundtables.</strong>
+              Accredited media are permitted only within the public AI Showcase area and designated foyer moments. <strong>Media representatives are strictly barred from entering the executive roundtables.</strong>
             </p>
             <p>
               Official summit photographers are prohibited from capturing identifiable discussion documents, laptop screens, or confidential participant notes during roundtable sessions.
@@ -100,7 +100,7 @@ export default function ConfidentialityPage() {
           {/* Contact */}
           <div className="pt-6 border-t border-border-subtle text-xs text-text-muted">
             For specific governance questions, contact the secretariat at{' '}
-            <a href="mailto:info@aixsummit.com" className="text-brand-secondary hover:underline">
+            <a href="mailto:info@aixsummit.com" className="text-brand-secondary underline hover:text-brand-secondary-hover">
               info@aixsummit.com
             </a>
             .

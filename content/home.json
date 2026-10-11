@@ -1,11 +1,10 @@
 {
   "hero": {
-    "eyebrow": "Where AI moves from ambition to action",
-    "title": "Working AI",
+    "headline": "Where AI Moves from Ambition to Action",
     "location": "Doha, Qatar",
     "date": "14 December 2026",
-    "description": "AIX Summit 2026 is a one-day executive summit in Doha, featuring around 60 senior leaders, six sponsored roundtables, and a small number of high-value stage moments designed for the people responsible for deploying, governing, funding, and scaling AI.",
-    "quote": "AI has evolved from experimental stages to practical implementation. The current challenges involve deployment strategies, redesigning work processes, security measures, governance, and converting investments into tangible results. AIX facilitates collaboration by bringing decision-makers together, guiding them through six targeted discussions."
+    "description": "AIX Summit 2026 is a one-day executive summit in Doha, bringing together around 110 senior enterprise leaders across six sponsored roundtables and focused stage moments designed for leaders deploying, governing, and scaling production AI.",
+    "quote": "AI has evolved from experimental stages to practical implementation. The current challenges involve deployment strategies, redesigning work processes, security measures, governance, and converting investments into tangible results. AIX facilitates collaboration by bringing decision-makers together across two focused 75-minute sessions."
   },
   "positioning": {
     "title": "A Room Designed for Real Deployment Challenges",

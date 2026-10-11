@@ -26,7 +26,11 @@ export const metadata: Metadata = {
   },
   description:
     'AIX Summit 2026 is an invitation-led executive summit in Doha, Qatar on Monday 14 December 2026. Convening 110 senior decision-makers across six sponsored roundtables to move AI from ambition to action.',
-  metadataBase: new URL('https://www.aixsummit.com'),
+  metadataBase: new URL(
+    process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'https://www.aixsummit.com'
+  ),
   icons: {
     icon: '/brand/favicon.svg',
     shortcut: '/brand/favicon.svg',

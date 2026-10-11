@@ -54,7 +54,7 @@ export default function RoundtablesHubPage() {
       step: '06',
       title: 'Synthesis & Consensus Observations',
       time: '18 Mins',
-      desc: 'Agreeing 3–5 anonymised strategic takeaways carried into the afternoon plenary.',
+      desc: 'Agreeing 3–5 anonymised strategic takeaways captured for the published AIX Roundtable Signals report.',
     },
   ];
 
@@ -65,13 +65,13 @@ export default function RoundtablesHubPage() {
         <Container size="default">
           <div className="max-w-3xl">
             <Eyebrow accent="secondary" className="mb-3">
-              The Summit Core · 13:15 – 15:00
+              The Summit Core · Two Sessions · 14:30 – 18:00
             </Eyebrow>
             <Heading level={1} size="xl" className="mb-4">
               Six Executive Roundtables
             </Heading>
             <Standfirst>
-              Six parallel conversations, 75 minutes, fifteen seats each. Each table owns a distinct strategic lane, ensuring focused depth without convergence into generic debate.
+              Two parallel sessions of three roundtables each, 75 minutes of discussion, fifteen seats per table. Each table owns a distinct strategic lane, ensuring focused depth without convergence into generic debate.
             </Standfirst>
           </div>
 
@@ -87,7 +87,7 @@ export default function RoundtablesHubPage() {
 
             <div className="rounded-md border border-border-subtle bg-bg-raised/60 p-6">
               <Clock className="mb-3 h-6 w-6 text-brand-secondary" />
-              <h3 className="font-display text-sm font-bold text-text-primary">105 Minutes of Focused Depth</h3>
+              <h3 className="font-display text-sm font-bold text-text-primary">75 Minutes of Focused Depth</h3>
               <p className="mt-1.5 text-xs leading-relaxed text-text-secondary">
                 Long enough for substantive interrogation; structured to avoid drifting into generic remarks.
               </p>
@@ -153,7 +153,7 @@ export default function RoundtablesHubPage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-brand-secondary shrink-0" />
-                    <span>Seat on the afternoon plenary synthesis panel</span>
+                    <span>Lead strategic findings in the published AIX Roundtable Signals research</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-brand-secondary shrink-0" />

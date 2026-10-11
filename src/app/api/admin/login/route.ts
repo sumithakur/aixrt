@@ -1,18 +1,19 @@
 import { NextResponse } from 'next/server';
+import { verifyAdminCredentials, generateSessionToken } from '@/lib/auth';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { username, password } = body;
 
-    // Hardcoded credentials
-    if (username === 'admin' && password === 'aix2026') {
+    if (verifyAdminCredentials(username, password)) {
       const response = NextResponse.json({ success: true });
+      const token = generateSessionToken();
       
-      // Set a secure, HTTP-only cookie
+      // Set a secure, HTTP-only cookie with expiring HMAC token
       response.cookies.set({
         name: 'aix_admin_token',
-        value: 'aix_secure_session_token_2026',
+        value: token,
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',

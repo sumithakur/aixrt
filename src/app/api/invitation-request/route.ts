@@ -22,13 +22,25 @@ export async function POST(request: Request) {
     }
 
     // In production, forward to CRM/Resend/SendGrid/Email
-    console.log('[INVITATION REQUEST RECEIVED]', {
-      name: data.fullName,
-      email: data.workEmail,
-      org: data.organisation,
-      title: data.jobTitle,
-      table1: data.priority1Roundtable, table2: data.priority2Roundtable, table3: data.priority3Roundtable,
-    });
+    if (data.applicantType === 'cxo') {
+      console.log('[CXO INVITATION REQUEST RECEIVED]', {
+        name: data.fullName,
+        email: data.workEmail,
+        org: data.organisation,
+        title: data.jobTitle,
+        table1: data.priority1Roundtable,
+        table2: data.priority2Roundtable,
+      });
+    } else {
+      console.log('[STARTUP SHOWCASE APPLICATION RECEIVED]', {
+        company: data.companyName,
+        contact: data.fullName,
+        email: data.workEmail,
+        website: data.website,
+        stage: data.stage,
+        roundtableFocus: data.roundtableFocus,
+      });
+    }
 
     return NextResponse.json({
       success: true,

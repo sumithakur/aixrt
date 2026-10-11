@@ -128,13 +128,13 @@ export default function BecomeAPartnerPage() {
         <Container size="default">
           <div className="max-w-4xl">
             <Eyebrow accent="secondary" className="mb-3">
-              Partnership & Executive Leadership
+              Sponsorship & Executive Leadership
             </Eyebrow>
             <Heading level={1} size="hero" className="mb-6">
               Chair the conversation.
             </Heading>
             <Standfirst className="max-w-3xl">
-              A topic, a room, twelve senior enterprise guests, and an enduring thought-leadership outcome that continues after the day. Roundtable Chair partnerships represent the flagship commercial asset for AIX Summit 2026.
+              A topic, a room, twelve senior enterprise guests, and an enduring thought-leadership outcome that continues after the day. Roundtable Chair sponsorships represent the flagship commercial asset for AIX Summit 2026.
             </Standfirst>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">

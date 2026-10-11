@@ -136,7 +136,7 @@ export function SiteFooter() {
                   href="/request-an-invitation"
                   className="font-medium text-brand-secondary hover:underline"
                 >
-                  Request an Invitation
+                  Register
                 </Link>
               </li>
               <li>
@@ -144,7 +144,7 @@ export function SiteFooter() {
                   href="/partners/become-a-partner"
                   className="font-medium text-brand-primary hover:underline"
                 >
-                  Become a Partner (Chair a Table)
+                  Become a Sponsor (Chair a Table)
                 </Link>
               </li>
               <li>
@@ -173,7 +173,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link href="/partners" className="hover:text-brand-secondary">
-                  Partners & Chairs
+                  Sponsors & Chairs
                 </Link>
               </li>
               <li>

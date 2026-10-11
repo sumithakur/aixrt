@@ -10,9 +10,9 @@ import { getPartners, getRoundtables, getPartnersDataRaw } from '@/lib/content';
 import { ShieldCheck, ArrowRight, CheckCircle2, Award } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Our Partners & Roundtable Chairs',
+  title: 'Our Sponsors & Roundtable Chairs',
   description:
-    'Institutional and strategic partners powering AIX Summit 2026. Executive leadership across six dedicated roundtable discussion lanes in Doha, Qatar.',
+    'Institutional and strategic sponsors powering AIX Summit 2026. Executive leadership across six dedicated roundtable discussion lanes in Doha, Qatar.',
 };
 
 export default function PartnersPage() {
@@ -29,10 +29,10 @@ export default function PartnersPage() {
               Strategic Collaboration
             </Eyebrow>
             <Heading level={1} size="xl" className="mb-4">
-              Partners & Roundtable Chairs
+              Sponsors & Roundtable Chairs
             </Heading>
             <Standfirst>
-              Partnership at AIX Summit means substantive access to a curated executive room, not exposure to a crowd. Our partners lead the strategic agenda across sovereign AI deployment, critical infrastructure, and capital investment.
+              Sponsorship at AIX Summit means substantive access to a curated executive room, not exposure to a crowd. Our sponsors lead the strategic agenda across sovereign AI deployment, critical infrastructure, and capital investment.
             </Standfirst>
           </div>
         </Container>
@@ -44,10 +44,10 @@ export default function PartnersPage() {
           <div className="rounded-lg border border-brand-primary/40 bg-gradient-to-br from-bg-raised to-bg-surface p-8 sm:p-12 shadow-card">
             <div className="max-w-3xl space-y-4">
               <span className="rounded-pill border border-brand-primary/40 bg-brand-primary/10 px-3 py-1 font-display text-xs font-bold uppercase tracking-wider text-brand-primary">
-                2026 Partnership Opportunities
+                2026 Sponsorship Opportunities
               </span>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                Six Roundtable Chair Partnerships are Open for 2026
+                Six Roundtable Chair Sponsorships are Open for 2026
               </h2>
               <p className="text-sm sm:text-base leading-relaxed text-text-secondary">
                 Confirmed chairs and summit sponsors are announced in sequence as agreements are finalized. Each partner owns a strategic conversation, leads 15 curated peer executives, and co-authors the published AIX Roundtable Signals research report.

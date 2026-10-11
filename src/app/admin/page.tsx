@@ -106,7 +106,7 @@ export default function AdminPage() {
               onClick={() => setActiveTab(tab)}
               className={`whitespace-nowrap px-6 py-3 rounded-md font-semibold transition-colors border ${activeTab === tab ? 'bg-brand-primary text-white border-brand-primary' : 'bg-bg-raised hover:bg-bg-surface border-border-subtle text-text-secondary'}`}
             >
-              {tab === 'site' ? 'Global Settings' : tab === 'home' ? 'Home' : tab === 'about' ? 'About' : tab === 'programme' ? 'Programme' : tab === 'roundtables' ? 'Roundtables' : tab === 'partners' ? 'Partners' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tab === 'site' ? 'Global Settings' : tab === 'home' ? 'Home' : tab === 'about' ? 'About' : tab === 'programme' ? 'Programme' : tab === 'roundtables' ? 'Roundtables' : tab === 'partners' ? 'Sponsors' : tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
           ))}
         </div>
@@ -232,6 +232,518 @@ export default function AdminPage() {
               </div>
 
               <button onClick={() => saveFile('about.json', aboutData)} className="px-6 py-3 bg-brand-primary text-text-primary rounded font-bold shadow-glow">Save About Page</button>
+            </div>
+          )}
+
+          {activeTab === 'programme' && (
+            <div className="space-y-8">
+              <h2 className="text-xl font-bold mb-4 border-b border-border-subtle pb-2">Programme Content & Schedule</h2>
+
+              <div className="space-y-4">
+                <h3 className="font-semibold text-brand-secondary mb-3 border-b border-border-subtle pb-2">Hero Section</h3>
+                <label className="block text-xs font-semibold text-text-muted">Title</label>
+                <input
+                  type="text"
+                  value={programmeData.hero?.title || ''}
+                  onChange={(e) => setProgrammeData({ ...programmeData, hero: { ...programmeData.hero, title: e.target.value } })}
+                  className="w-full p-2 bg-bg-surface border border-border-subtle rounded font-bold text-lg text-text-primary"
+                />
+                <label className="block text-xs font-semibold text-text-muted">Description</label>
+                <textarea
+                  value={programmeData.hero?.description || ''}
+                  onChange={(e) => setProgrammeData({ ...programmeData, hero: { ...programmeData.hero, description: e.target.value } })}
+                  className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary h-24"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-border-subtle pb-2">
+                  <h3 className="font-semibold text-brand-secondary">Schedule Items ({programmeData.items?.length || 0})</h3>
+                  <button
+                    onClick={() => {
+                      const newItems = [
+                        ...(programmeData.items || []),
+                        { start: '18:30', end: '19:00', format: 'reception', title: 'New Schedule Item', description: 'Schedule description' }
+                      ];
+                      setProgrammeData({ ...programmeData, items: newItems });
+                    }}
+                    className="px-4 py-1.5 bg-brand-secondary/20 text-brand-secondary rounded text-xs font-bold hover:bg-brand-secondary/30 transition-colors"
+                  >
+                    + Add Schedule Item
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {programmeData.items?.map((item: any, i: number) => (
+                    <div key={i} className="p-4 bg-bg-base border border-border-subtle rounded-lg space-y-3">
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="text-xs font-bold text-text-muted uppercase">Item #{i + 1}</span>
+                        <button
+                          onClick={() => {
+                            const newItems = programmeData.items.filter((_: any, idx: number) => idx !== i);
+                            setProgrammeData({ ...programmeData, items: newItems });
+                          }}
+                          className="px-2.5 py-1 bg-brand-rose/20 text-brand-rose rounded text-xs font-bold hover:bg-brand-rose/30"
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                          <label className="block text-[11px] font-semibold text-text-muted mb-1">Start Time</label>
+                          <input
+                            type="text"
+                            value={item.start}
+                            onChange={(e) => {
+                              const newItems = [...programmeData.items];
+                              newItems[i].start = e.target.value;
+                              setProgrammeData({ ...programmeData, items: newItems });
+                            }}
+                            className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-semibold text-text-muted mb-1">End Time</label>
+                          <input
+                            type="text"
+                            value={item.end}
+                            onChange={(e) => {
+                              const newItems = [...programmeData.items];
+                              newItems[i].end = e.target.value;
+                              setProgrammeData({ ...programmeData, items: newItems });
+                            }}
+                            className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-semibold text-text-muted mb-1">Format</label>
+                          <select
+                            value={item.format}
+                            onChange={(e) => {
+                              const newItems = [...programmeData.items];
+                              newItems[i].format = e.target.value;
+                              setProgrammeData({ ...programmeData, items: newItems });
+                            }}
+                            className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                          >
+                            <option value="arrival">arrival</option>
+                            <option value="opening">opening</option>
+                            <option value="keynote">keynote</option>
+                            <option value="roundtables">roundtables</option>
+                            <option value="connections">connections</option>
+                            <option value="reception">reception</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">Title</label>
+                        <input
+                          type="text"
+                          value={item.title}
+                          onChange={(e) => {
+                            const newItems = [...programmeData.items];
+                            newItems[i].title = e.target.value;
+                            setProgrammeData({ ...programmeData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded font-semibold text-text-primary text-sm"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">Description</label>
+                        <textarea
+                          value={item.description}
+                          onChange={(e) => {
+                            const newItems = [...programmeData.items];
+                            newItems[i].description = e.target.value;
+                            setProgrammeData({ ...programmeData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary h-16"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => saveFile('programme.json', programmeData)}
+                className="px-6 py-3 bg-brand-primary text-text-primary rounded font-bold shadow-glow"
+              >
+                Save Programme
+              </button>
+            </div>
+          )}
+
+          {activeTab === 'roundtables' && (
+            <div className="space-y-8">
+              <div className="flex items-center justify-between border-b border-border-subtle pb-2">
+                <div>
+                  <h2 className="text-xl font-bold">Roundtable Tracks & Topics</h2>
+                  <p className="text-xs text-text-secondary mt-1">Manage themes, questions, participant profiles, and sessions.</p>
+                </div>
+                <button
+                  onClick={() => {
+                    const newItems = [
+                      ...(roundtablesData.items || []),
+                      {
+                        slug: `roundtable-${Date.now()}`,
+                        shortTitle: 'New Topic',
+                        title: 'New Roundtable Title',
+                        coreQuestion: 'What is the strategic question?',
+                        lane: 'Strategic domain and scope.',
+                        themes: ['Key Theme 1', 'Key Theme 2'],
+                        participantProfile: ['Target Executive 1'],
+                        accent: 'industrial',
+                        order: (roundtablesData.items?.length || 0) + 1,
+                        session: 1,
+                        chair: { status: 'pending', proposed: 'TBD', organisation: 'TBD' }
+                      }
+                    ];
+                    setRoundtablesData({ ...roundtablesData, items: newItems });
+                  }}
+                  className="px-4 py-2 bg-brand-secondary text-white rounded text-xs font-bold shadow-glow"
+                >
+                  + Add New Roundtable
+                </button>
+              </div>
+
+              <div className="space-y-8">
+                {roundtablesData.items?.map((rt: any, i: number) => (
+                  <div key={i} className="p-6 bg-bg-base border border-border-subtle rounded-xl space-y-4">
+                    <div className="flex items-center justify-between border-b border-border-subtle pb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="px-2.5 py-0.5 rounded bg-brand-primary/20 text-brand-primary font-mono text-xs font-bold">
+                          Table #{rt.order || i + 1}
+                        </span>
+                        <span className="text-xs font-semibold text-text-muted">
+                          Session {rt.session || 1}
+                        </span>
+                        <h4 className="font-display font-bold text-base text-text-primary">{rt.shortTitle}</h4>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const newItems = roundtablesData.items.filter((_: any, idx: number) => idx !== i);
+                          setRoundtablesData({ ...roundtablesData, items: newItems });
+                        }}
+                        className="px-3 py-1 bg-brand-rose/20 text-brand-rose rounded text-xs font-bold hover:bg-brand-rose/30"
+                      >
+                        Delete Roundtable
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-text-muted mb-1">Short Title (Nav & Badges)</label>
+                        <input
+                          type="text"
+                          value={rt.shortTitle || ''}
+                          onChange={(e) => {
+                            const newItems = [...roundtablesData.items];
+                            newItems[i].shortTitle = e.target.value;
+                            setRoundtablesData({ ...roundtablesData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary font-semibold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-text-muted mb-1">URL Slug</label>
+                        <input
+                          type="text"
+                          value={rt.slug || ''}
+                          onChange={(e) => {
+                            const newItems = [...roundtablesData.items];
+                            newItems[i].slug = e.target.value;
+                            setRoundtablesData({ ...roundtablesData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary font-mono"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="block text-xs font-semibold text-text-muted mb-1">Session</label>
+                          <select
+                            value={rt.session || 1}
+                            onChange={(e) => {
+                              const newItems = [...roundtablesData.items];
+                              newItems[i].session = Number(e.target.value);
+                              setRoundtablesData({ ...roundtablesData, items: newItems });
+                            }}
+                            className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                          >
+                            <option value={1}>Session 1</option>
+                            <option value={2}>Session 2</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-text-muted mb-1">Order</label>
+                          <input
+                            type="number"
+                            value={rt.order || i + 1}
+                            onChange={(e) => {
+                              const newItems = [...roundtablesData.items];
+                              newItems[i].order = Number(e.target.value);
+                              setRoundtablesData({ ...roundtablesData, items: newItems });
+                            }}
+                            className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-text-muted mb-1">Full Title</label>
+                      <input
+                        type="text"
+                        value={rt.title || ''}
+                        onChange={(e) => {
+                          const newItems = [...roundtablesData.items];
+                          newItems[i].title = e.target.value;
+                          setRoundtablesData({ ...roundtablesData, items: newItems });
+                        }}
+                        className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary font-bold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-text-muted mb-1">Core Strategic Question</label>
+                      <textarea
+                        value={rt.coreQuestion || ''}
+                        onChange={(e) => {
+                          const newItems = [...roundtablesData.items];
+                          newItems[i].coreQuestion = e.target.value;
+                          setRoundtablesData({ ...roundtablesData, items: newItems });
+                        }}
+                        className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary h-16"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-text-muted mb-1">Domain Scope & Lane</label>
+                      <textarea
+                        value={rt.lane || ''}
+                        onChange={(e) => {
+                          const newItems = [...roundtablesData.items];
+                          newItems[i].lane = e.target.value;
+                          setRoundtablesData({ ...roundtablesData, items: newItems });
+                        }}
+                        className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary h-16"
+                      />
+                    </div>
+
+                    {/* Themes */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-xs font-semibold text-text-muted">Discussion Themes</label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newItems = [...roundtablesData.items];
+                            newItems[i].themes = [...(newItems[i].themes || []), 'New Theme'];
+                            setRoundtablesData({ ...roundtablesData, items: newItems });
+                          }}
+                          className="text-xs text-brand-secondary hover:underline"
+                        >
+                          + Add Theme
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {rt.themes?.map((th: string, thIdx: number) => (
+                          <div key={thIdx} className="flex gap-1.5">
+                            <input
+                              type="text"
+                              value={th}
+                              onChange={(e) => {
+                                const newItems = [...roundtablesData.items];
+                                newItems[i].themes[thIdx] = e.target.value;
+                                setRoundtablesData({ ...roundtablesData, items: newItems });
+                              }}
+                              className="flex-1 p-1.5 bg-bg-surface border border-border-subtle rounded text-xs text-text-primary"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newItems = [...roundtablesData.items];
+                                newItems[i].themes = newItems[i].themes.filter((_: any, idx: number) => idx !== thIdx);
+                                setRoundtablesData({ ...roundtablesData, items: newItems });
+                              }}
+                              className="px-2 bg-brand-rose/20 text-brand-rose rounded text-xs"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Participant Profile */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-xs font-semibold text-text-muted">Target Participant Profile</label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newItems = [...roundtablesData.items];
+                            newItems[i].participantProfile = [...(newItems[i].participantProfile || []), 'Target Role / Company'];
+                            setRoundtablesData({ ...roundtablesData, items: newItems });
+                          }}
+                          className="text-xs text-brand-secondary hover:underline"
+                        >
+                          + Add Participant Profile
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {rt.participantProfile?.map((prof: string, profIdx: number) => (
+                          <div key={profIdx} className="flex gap-1.5">
+                            <input
+                              type="text"
+                              value={prof}
+                              onChange={(e) => {
+                                const newItems = [...roundtablesData.items];
+                                newItems[i].participantProfile[profIdx] = e.target.value;
+                                setRoundtablesData({ ...roundtablesData, items: newItems });
+                              }}
+                              className="flex-1 p-1.5 bg-bg-surface border border-border-subtle rounded text-xs text-text-primary"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newItems = [...roundtablesData.items];
+                                newItems[i].participantProfile = newItems[i].participantProfile.filter((_: any, idx: number) => idx !== profIdx);
+                                setRoundtablesData({ ...roundtablesData, items: newItems });
+                              }}
+                              className="px-2 bg-brand-rose/20 text-brand-rose rounded text-xs"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={() => saveFile('roundtables.json', roundtablesData)}
+                className="px-6 py-3 bg-brand-primary text-text-primary rounded font-bold shadow-glow"
+              >
+                Save All Roundtables
+              </button>
+            </div>
+          )}
+
+          {activeTab === 'partners' && (
+            <div className="space-y-8">
+              <h2 className="text-xl font-bold mb-4 border-b border-border-subtle pb-2">Sponsors & Roundtable Chairs</h2>
+              
+              <div className="space-y-4">
+                <h3 className="font-semibold text-brand-secondary mb-3 border-b border-border-subtle pb-2">Hero Section</h3>
+                <label className="block text-xs font-semibold text-text-muted">Title</label>
+                <input
+                  type="text"
+                  value={partnersData.hero?.title || ''}
+                  onChange={(e) => setPartnersData({ ...partnersData, hero: { ...partnersData.hero, title: e.target.value } })}
+                  className="w-full p-2 bg-bg-surface border border-border-subtle rounded font-bold text-lg text-text-primary"
+                />
+                <label className="block text-xs font-semibold text-text-muted">Description</label>
+                <textarea
+                  value={partnersData.hero?.description || ''}
+                  onChange={(e) => setPartnersData({ ...partnersData, hero: { ...partnersData.hero, description: e.target.value } })}
+                  className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary h-24"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-border-subtle pb-2">
+                  <h3 className="font-semibold text-brand-secondary">Sponsors ({partnersData.items?.length || 0})</h3>
+                  <button
+                    onClick={() => {
+                      const newItems = [
+                        ...(partnersData.items || []),
+                        { name: 'New Sponsor', logo: '/brand/WhiteLogo.png', status: 'confirmed' }
+                      ];
+                      setPartnersData({ ...partnersData, items: newItems });
+                    }}
+                    className="px-4 py-1.5 bg-brand-secondary/20 text-brand-secondary rounded text-xs font-bold hover:bg-brand-secondary/30 transition-colors"
+                  >
+                    + Add Sponsor
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {partnersData.items?.map((item: any, i: number) => (
+                    <div key={i} className="p-4 bg-bg-base border border-border-subtle rounded-lg space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-text-muted uppercase">Sponsor #{i + 1}</span>
+                        <button
+                          onClick={() => {
+                            const newItems = partnersData.items.filter((_: any, idx: number) => idx !== i);
+                            setPartnersData({ ...partnersData, items: newItems });
+                          }}
+                          className="px-2.5 py-1 bg-brand-rose/20 text-brand-rose rounded text-xs font-bold hover:bg-brand-rose/30"
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">Company / Sponsor Name</label>
+                        <input
+                          type="text"
+                          value={item.name}
+                          onChange={(e) => {
+                            const newItems = [...partnersData.items];
+                            newItems[i].name = e.target.value;
+                            setPartnersData({ ...partnersData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary font-semibold"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">Status</label>
+                        <select
+                          value={item.status}
+                          onChange={(e) => {
+                            const newItems = [...partnersData.items];
+                            newItems[i].status = e.target.value;
+                            setPartnersData({ ...partnersData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                        >
+                          <option value="confirmed">confirmed</option>
+                          <option value="pending">pending</option>
+                          <option value="target">target</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">Logo URL</label>
+                        <input
+                          type="text"
+                          value={item.logo}
+                          onChange={(e) => {
+                            const newItems = [...partnersData.items];
+                            newItems[i].logo = e.target.value;
+                            setPartnersData({ ...partnersData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-xs text-text-primary font-mono"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => saveFile('partners.json', partnersData)}
+                className="px-6 py-3 bg-brand-primary text-text-primary rounded font-bold shadow-glow"
+              >
+                Save Sponsors
+              </button>
             </div>
           )}
 

@@ -245,7 +245,7 @@ export default function AboutPage() {
 
                 <div className="pt-4 border-t border-border-subtle">
                   <Button href="/request-an-invitation" variant="primary" size="md" className="w-full">
-                    Request an Invitation
+                    Register
                   </Button>
                 </div>
               </div>

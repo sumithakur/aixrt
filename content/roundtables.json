@@ -75,31 +75,30 @@
       "session": 1
     },
     {
-      "slug": "ai-and-sustainability",
-      "shortTitle": "AI & Sustainability",
-      "title": "AI for a Lower-Carbon Economy",
-      "coreQuestion": "Where is AI measurably cutting energy use, emissions and resource waste, and how do organisations prove it?",
-      "lane": "AI for energy efficiency, emissions, water, resources and climate reporting, including industrial operations and asset performance. Data-centre power and cooling sit with AI Infrastructure & Sovereign AI.",
+      "slug": "investment-in-ai",
+      "shortTitle": "Investment in AI",
+      "title": "Capital, Valuation & Enterprise ROI",
+      "coreQuestion": "Where is institutional capital flowing across the AI stack, and how are enterprise buyers measuring genuine return on investment?",
+      "lane": "Sovereign wealth allocation, venture capital, private equity, infrastructure financing, and enterprise balance sheet allocation into AI systems and companies.",
       "themes": [
-        "Energy efficiency and grid optimisation",
-        "Emissions measurement, reporting and verification",
-        "Predictive maintenance and asset optimisation",
-        "Water and cooling",
-        "Smart buildings and districts",
-        "Supply-chain and Scope 3 emissions",
-        "Environmental monitoring",
-        "ESG data and disclosure"
+        "Sovereign wealth fund AI mandates",
+        "Venture capital & growth equity in regional AI",
+        "Enterprise CapEx vs OpEx in AI transformation",
+        "Infrastructure and compute financing",
+        "Measuring verifiable enterprise AI ROI",
+        "M&A, consolidation, and strategic buyouts",
+        "Cross-border technology co-investments",
+        "Valuation metrics for generative & agentic AI"
       ],
       "participantProfile": [
-        "Utilities and Water/desalination operator",
-        "GCC energy company",
-        "Qatar Airways (sustainability / operations)",
-        "Major logistics / ports operator",
-        "Manufacturing / industrial company",
-        "Real-estate developer / construction company",
-        "Smart-district / facilities operator",
-        "Environment ministry / regulator",
-        "Climate-tech investor & ESG assurance"
+        "Sovereign Wealth Fund senior director",
+        "Regional Venture Capital partner",
+        "Private Equity tech investor",
+        "Family Office Chief Investment Officer",
+        "Enterprise CFO / Head of Corporate Development",
+        "Development Bank / Institutional Capital voice",
+        "Global AI fund managing director",
+        "Tech Investment Banking leader"
       ],
       "chair": {
         "status": "pending",

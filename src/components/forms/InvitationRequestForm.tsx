@@ -253,11 +253,11 @@ export function InvitationRequestForm() {
             </div>
             <div>
               <div className="font-display text-sm font-bold text-text-primary flex items-center gap-2">
-                Enterprise AI Startup / Showcase
+                AI Vendor / Startup
                 {applicantType === 'startup' && <CheckCircle2 className="h-4 w-4 text-brand-secondary" />}
               </div>
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                For founders and enterprise AI companies applying to demonstrate live working software to the executive room.
+                For founders, AI vendors, and enterprise startups applying to demonstrate live working software to the executive room.
               </p>
             </div>
           </button>
@@ -587,7 +587,7 @@ export function InvitationRequestForm() {
           <>
             <div>
               <h3 className="border-b border-border-subtle pb-3 font-display text-base font-bold uppercase tracking-wider text-brand-secondary">
-                1. Startup & Founder Details
+                1. AI Vendor / Startup Details
               </h3>
 
               <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -924,7 +924,7 @@ export function InvitationRequestForm() {
               isLoading={isSubmitting}
               className="w-full sm:w-auto"
             >
-              {applicantType === 'cxo' ? 'Submit Invitation Request' : 'Submit Startup Showcase Application'}
+              {applicantType === 'cxo' ? 'Register for Executive Seat' : 'Register AI Vendor / Startup'}
             </Button>
             <span className="text-[11px] text-text-muted">
               Evaluated strictly against domain seniority and balance.

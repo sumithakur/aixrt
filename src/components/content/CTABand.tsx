@@ -28,10 +28,10 @@ export function CTABand({
 
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <Button href="/request-an-invitation" variant="gradient" size="lg">
-            Request an invitation
+            Register
           </Button>
           <Button href="/partners/become-a-partner" variant="secondary" size="lg">
-            Partner with us (Chair a Table)
+            Become a Sponsor (Chair a Table)
           </Button>
         </div>
       </Container>

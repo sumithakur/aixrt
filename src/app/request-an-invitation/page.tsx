@@ -7,9 +7,9 @@ import { InvitationRequestForm } from '@/components/forms/InvitationRequestForm'
 import { Info, ShieldAlert } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Request an Invitation',
+  title: 'Register',
   description:
-    'AIX Summit 2026 is an invitation-led executive summit in Doha, Qatar. Request a delegate seat for review by our curatorial committee.',
+    'AIX Summit 2026 is an invitation-led executive summit in Doha, Qatar. Register for an executive delegate seat or AI vendor / startup showcase.',
 };
 
 export default function RequestInvitationPage() {
@@ -21,10 +21,10 @@ export default function RequestInvitationPage() {
             Invitation-Led Executive Summit
           </Eyebrow>
           <Heading level={1} size="xl" className="mb-4">
-            Request an Invitation
+            Register for AIX Summit 2026
           </Heading>
           <Standfirst className="mx-auto max-w-2xl text-center">
-            AIX Summit 2026 is an invitation-led summit in Doha. The majority of seats are allocated directly from our curated list, and a limited number are available by application.
+            AIX Summit 2026 is an invitation-led summit in Doha. The majority of seats are allocated directly from our curated list, and a limited number are available by registration.
           </Standfirst>
 
           {/* Honest odds card per Section 7.8 */}

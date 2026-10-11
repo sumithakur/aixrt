@@ -59,7 +59,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className="w-full"
             onClick={onClose}
           >
-            Request an Invitation
+            Register
           </Button>
         </div>
 
@@ -128,14 +128,14 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
           <div className="space-y-3 border-t border-border-subtle pt-6">
             <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
-              Partnerships & Info
+              Sponsorships & Info
             </p>
             <Link
               href="/partners/become-a-partner"
               onClick={onClose}
               className="block font-display text-base font-medium text-brand-primary hover:underline"
             >
-              Become a Partner (Chair a Table)
+              Become a Sponsor (Chair a Table)
             </Link>
             <Link
               href="/venue"

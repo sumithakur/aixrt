@@ -135,7 +135,7 @@ export default function HomePage() {
           {/* Dual CTAs in Pill Style */}
           <FadeIn delay={700}><div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
             <Button href="/request-an-invitation" variant="gradient" size="lg">
-              Request an invitation
+              Register
             </Button>
             <Button href="/roundtables" variant="secondary" size="lg">
               See the six roundtables
@@ -263,13 +263,13 @@ export default function HomePage() {
                   Chair a Roundtable
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                  A dedicated room, 12 invited senior leaders, and strategic ownership of a key enterprise AI domain. Roundtable Chair partnerships are the primary commercial product for 2026.
+                  A dedicated room, 12 invited senior leaders, and strategic ownership of a key enterprise AI domain. Roundtable Chair sponsorships are the primary commercial product for 2026.
                 </p>
               </div>
 
               <div className="mt-8 pt-6 border-t border-border-subtle">
                 <Button href="/partners/become-a-partner" variant="primary" size="md">
-                  <span>Explore Partnership Opportunities</span>
+                  <span>Explore Sponsorship Opportunities</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>

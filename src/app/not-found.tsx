@@ -30,7 +30,7 @@ export default function NotFound() {
             Programme
           </Button>
           <Button href="/request-an-invitation" variant="secondary" size="md">
-            Request an Invitation
+            Register
           </Button>
         </div>
       </Container>

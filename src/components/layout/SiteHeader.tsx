@@ -8,6 +8,7 @@ import { Logo } from '@/components/brand/Logo';
 import { Button } from '@/components/ui/Button';
 import { MegaMenu } from '@/components/layout/MegaMenu';
 import { MobileNav } from '@/components/layout/MobileNav';
+import { EditionTopBar } from '@/components/layout/EditionTopBar';
 
 export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -56,11 +57,13 @@ export function SiteHeader() {
       <header
         className={`sticky top-0 w-full z-40 transition-all duration-base ${
           isScrolled
-            ? 'border-b border-border-subtle bg-bg-base/92 py-2 shadow-card backdrop-blur-xl'
-            : 'border-b border-transparent bg-transparent py-3'
+            ? 'border-b border-border-subtle bg-bg-base/92 shadow-card backdrop-blur-xl'
+            : 'border-b border-transparent bg-transparent'
         }`}
       >
-        <div className="mx-auto flex max-w-[1536px] items-center justify-between px-4 sm:px-6 lg:px-8">
+        <EditionTopBar />
+        <div className={`transition-all duration-base ${isScrolled ? 'py-2' : 'py-3'}`}>
+          <div className="mx-auto flex max-w-[1536px] items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <div className="flex shrink-0 items-center gap-4 sm:gap-6">
             <Logo size="md" className="w-[130px] sm:w-[160px] lg:w-[190px] transition-all" />
@@ -137,7 +140,7 @@ export function SiteHeader() {
                 aria-expanded={isPartnersOpen}
                 aria-haspopup="true"
               >
-                <span>Partners</span>
+                <span>Sponsors</span>
                 <ChevronDown
                   className={`h-4 w-4 transition-transform duration-fast ${
                     isPartnersOpen ? 'rotate-180 text-brand-secondary' : 'text-text-muted'
@@ -151,13 +154,13 @@ export function SiteHeader() {
                     href="/partners"
                     className="block rounded-sm px-3 py-2 text-xs font-medium text-text-primary hover:bg-bg-surface hover:text-brand-secondary"
                   >
-                    Our Partners
+                    Our Sponsors
                   </Link>
                   <Link
                     href="/partners/become-a-partner"
                     className="block rounded-sm px-3 py-2 text-xs font-medium text-brand-primary hover:bg-bg-surface hover:text-brand-primary-hover"
                   >
-                    Become a Partner (Chair a Table)
+                    Become a Sponsor (Chair a Table)
                   </Link>
                 </div>
               )}
@@ -175,15 +178,23 @@ export function SiteHeader() {
             </Link>
           </nav>
 
-          {/* Right Action: Request an invitation (ALWAYS visible at all breakpoints!) */}
-          <div className="flex items-center gap-3">
+          {/* Right Action: Become a Sponsor & Register */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button
+              href="/partners/become-a-partner"
+              variant="secondary"
+              size="sm"
+              className="hidden md:inline-flex text-xs font-semibold hover:border-brand-secondary hover:text-brand-secondary transition-colors"
+            >
+              Become a Sponsor
+            </Button>
             <Button
               href="/request-an-invitation"
               variant="primary"
               size="sm"
-              className="text-xs font-semibold sm:text-sm"
+              className="text-xs font-semibold sm:text-sm shadow-glow"
             >
-              Request an invitation
+              Register
             </Button>
 
             {/* Mobile Hamburger toggle */}
@@ -195,6 +206,7 @@ export function SiteHeader() {
               <Menu className="h-6 w-6" />
             </button>
           </div>
+        </div>
         </div>
 
         {/* Desktop MegaMenu portal */}

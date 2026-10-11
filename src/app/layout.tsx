@@ -21,29 +21,40 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | AIX Summit 2026',
-    default: 'AIX Summit 2026 | Executive AI Summit, Doha, 14 December 2026',
+    template: '%s | AIX Roundtables 2026',
+    default: 'AIX Roundtables 2026 | Executive AI Summit, Doha, 14 December 2026',
   },
   description:
-    'AIX Summit 2026 is an invitation-led executive summit in Doha, Qatar on Monday 14 December 2026. Convening 110 senior decision-makers across six sponsored roundtables to move AI from ambition to action.',
-  metadataBase: new URL(
-    process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'https://www.aixsummit.com'
-  ),
+    'AIX Roundtables 2026 is an invitation-led executive summit in Doha, Qatar on Monday 14 December 2026. Convening 110 senior decision-makers across six sponsored roundtables to move AI from ambition to action.',
+  metadataBase: new URL('https://aixrt-sigma.vercel.app'),
   icons: {
     icon: '/brand/favicon.svg',
     shortcut: '/brand/favicon.svg',
     apple: '/brand/favicon.svg',
   },
   openGraph: {
-    title: 'AIX Summit 2026 | Where AI moves from ambition to action',
+    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
     description:
       'A one-day executive summit in Doha. Six sponsored roundtables, working AI demonstrations, and Chatham House discussions for senior leaders.',
-    url: 'https://www.aixsummit.com',
-    siteName: 'AIX Summit 2026',
-    locale: 'en_GB',
+    url: 'https://aixrt-sigma.vercel.app',
+    siteName: 'AIX Roundtables 2026',
+    locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1024,
+        height: 537,
+        alt: 'AIX Roundtables Doha 2026 - Where AI moves from ambition to action',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
+    description:
+      'A one-day executive summit in Doha. Six sponsored roundtables, working AI demonstrations, and Chatham House discussions for senior leaders.',
+    images: ['/og-image.png'],
   },
 };
 

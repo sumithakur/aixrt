@@ -66,7 +66,7 @@ export function SiteHeader() {
             <Logo size="md" className="w-[130px] sm:w-[160px] lg:w-[190px] transition-all" />
             <div className="hidden sm:flex flex-col border-l border-text-muted/30 pl-4 sm:pl-6 justify-center">
               <span className="text-[10px] font-medium text-text-muted leading-tight mb-0.5">Powered by</span>
-              <a href="https://risinventures.com" target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-text-primary leading-tight underline hover:text-brand-secondary transition-colors">
+              <a href="https://www.risin.ventures" target="_blank" rel="noopener noreferrer" className="text-[11px] font-bold text-text-primary leading-tight underline hover:text-brand-secondary transition-colors">
                 Risin Ventures
               </a>
             </div>

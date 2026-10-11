@@ -164,10 +164,26 @@ export default function AboutPage() {
               <div className="space-y-3 border-t border-border-subtle pt-8">
                 <Eyebrow accent="primary">The Organiser</Eyebrow>
                 <h3 className="font-display text-lg font-bold text-text-primary">
-                  Risin Ventures
+                  <a
+                    href="https://www.risin.ventures"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-brand-secondary transition-colors underline decoration-brand-secondary/40 underline-offset-4"
+                  >
+                    Risin Ventures
+                  </a>
                 </h3>
                 <p className="text-xs sm:text-sm leading-relaxed text-text-secondary">
-                  AIX Summit is designed, curated, and produced by Risin Ventures, an innovation and enterprise venture studio active across the GCC ecosystem. Risin Ventures convenes senior institutional leadership to turn technological ambition into operational enterprise capability.
+                  AIX Summit is designed, curated, and produced by{' '}
+                  <a
+                    href="https://www.risin.ventures"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary underline hover:text-brand-secondary transition-colors"
+                  >
+                    Risin Ventures
+                  </a>
+                  , an innovation and enterprise venture studio active across the GCC ecosystem. Risin Ventures convenes senior institutional leadership to turn technological ambition into operational enterprise capability.
                 </p>
               </div>
             </div>

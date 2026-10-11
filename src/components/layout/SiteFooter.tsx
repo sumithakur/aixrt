@@ -81,7 +81,7 @@ export function SiteFooter() {
             </p>
             <p className="text-sm text-text-muted mt-2">
               Organised by{' '}
-              <a href="https://www.risin.ventures" target="_blank" rel="noopener noreferrer" className="font-bold text-base text-brand-primary hover:text-brand-secondary transition-colors underline">
+              <a href={config.event.organiserUrl || "https://www.risin.ventures"} target="_blank" rel="noopener noreferrer" className="font-bold text-base text-brand-primary hover:text-brand-secondary transition-colors underline">
                 {config.event.organiser}
               </a>
             </p>
@@ -202,7 +202,7 @@ export function SiteFooter() {
 
         {/* Utility bottom bar */}
         <div className="flex flex-col items-center justify-between border-t border-border-subtle py-8 text-xs text-text-muted sm:flex-row">
-          <p className="text-sm">© 2026 AIX Summit. Organised by <a href="https://www.risin.ventures" target="_blank" rel="noopener noreferrer" className="font-bold text-brand-primary hover:text-brand-secondary transition-colors underline">Risin Ventures</a>. All rights reserved.</p>
+          <p className="text-sm">© 2026 AIX Summit. Organised by <a href={config.event.organiserUrl || "https://www.risin.ventures"} target="_blank" rel="noopener noreferrer" className="font-bold text-brand-primary hover:text-brand-secondary transition-colors underline">Risin Ventures</a>. All rights reserved.</p>
           <div className="mt-4 flex flex-wrap gap-4 sm:mt-0">
             <Link href="/legal/confidentiality" className="hover:text-text-secondary">
               Chatham House Conduct

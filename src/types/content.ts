@@ -116,6 +116,7 @@ export interface SiteConfig {
     timezone: string;
     locationPublic: string;
     organiser: string;
+    organiserUrl?: string;
     seats: number;
     totalRoom: number;
     roundtablesCount: number;

@@ -11,6 +11,7 @@
     "timezone": "Asia/Qatar",
     "locationPublic": "Doha, Qatar",
     "organiser": "Risin Ventures",
+    "organiserUrl": "https://www.risin.ventures",
     "seats": 90,
     "totalRoom": 110,
     "roundtablesCount": 6,

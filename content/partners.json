@@ -2,7 +2,8 @@
   "items": [
     {
       "name": "Hyperthink Technologies",
-      "logo": "/brand/WhiteLogo.png"
+      "logo": "/brand/WhiteLogo.png",
+      "status": "confirmed"
     }
   ],
   "hero": {

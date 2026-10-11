@@ -105,94 +105,92 @@ export default async function EditionPage({
         </Container>
       </div>
 
-      {/* -------------------- HERO SECTION (LEFT ALIGNED) -------------------- */}
-      <Section variant="hero" className="relative z-10 pt-16 pb-20 sm:pt-24 sm:pb-32">
-        <Container size="wide">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Content (Strictly Left Aligned per Design Request) */}
-            <div className="lg:col-span-7 text-left space-y-6">
-              {/* Eyebrow */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-950/40 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-purple-300">
-                <Sparkles className="h-3.5 w-3.5 text-brand-secondary" />
-                <span>STAY TUNED FOR THE NEXT EDITION!</span>
-              </div>
+      {/* -------------------- HERO SECTION (COVERING HERO BACKGROUND LIKE QATAR) -------------------- */}
+      <section className="relative min-h-[88vh] flex items-center justify-center overflow-hidden bg-bg-base pt-16 pb-20 sm:pt-24 sm:pb-32">
+        {/* Parallax / Vector Skyline Background covering the entire hero */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <div className="absolute inset-0">
+            <Image
+              src={edition.skyline}
+              alt={`${edition.city}, ${edition.country} Skyline Silhouette`}
+              fill
+              priority
+              className="object-cover object-bottom sm:object-right-bottom opacity-85"
+            />
+          </div>
 
-              {/* Huge Display Heading */}
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-                JOIN THE ULTIMATE{' '}
-                <span className="block bg-gradient-to-r from-[#FF007A] via-[#A855F7] to-[#00F2FE] bg-clip-text text-transparent">
-                  AIX ROUNDTABLE
-                </span>
-                <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-normal mt-2">
-                  {edition.city}, {edition.country}
-                </span>
-              </h1>
+          {/* Ambient Radial Color Glows */}
+          <div className="absolute top-1/4 left-1/3 h-[500px] w-[700px] rounded-full bg-brand-neonFuchsia/15 blur-[140px]" />
+          <div className="absolute top-1/2 right-1/4 h-[450px] w-[550px] rounded-full bg-brand-brightAqua/12 blur-[150px]" />
 
-              {/* Subtitle / Description */}
-              <p className="max-w-2xl text-base sm:text-lg text-text-secondary leading-relaxed">
-                {edition.description}
-              </p>
+          {/* Gradient overlays to keep left-aligned typography crisp and readable */}
+          <div className="absolute inset-0 bg-gradient-to-r from-bg-base via-bg-base/85 to-transparent w-full md:w-3/4" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-transparent to-transparent h-full" />
+        </div>
 
-              {/* Action Buttons (Left-Aligned) */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
-                <Button
-                  href="/partners/become-a-partner"
-                  variant="secondary"
-                  size="lg"
-                  className="rounded-full border-2 border-brand-primary text-text-primary hover:bg-brand-primary/10 hover:border-brand-secondary transition-all shadow-glow text-sm font-bold px-6 py-3"
-                >
-                  Become a Sponsor
-                </Button>
-                <Button
-                  href="#notify-form"
-                  variant="primary"
-                  size="lg"
-                  className="rounded-full bg-gradient-to-r from-brand-primary to-brand-purple text-text-primary shadow-glow text-sm font-bold px-6 py-3"
-                >
-                  Register Interest
-                </Button>
-              </div>
-
-              {/* Status Note */}
-              <div className="pt-4 flex items-center gap-2 text-xs text-text-muted">
-                <Radio className="h-4 w-4 text-brand-secondary animate-pulse" />
-                <span>{edition.venueStatus}</span>
-              </div>
+        {/* Hero Content — Strictly Left-Aligned, Homogeneous with Qatar Page */}
+        <Container size="default" className="relative z-20 text-left w-full">
+          <div className="max-w-3xl space-y-6">
+            {/* Eyebrow */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-950/40 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-purple-300">
+              <Sparkles className="h-3.5 w-3.5 text-brand-secondary" />
+              <span>STAY TUNED FOR THE NEXT EDITION!</span>
             </div>
 
-            {/* Right Graphic: City Skyline Vector */}
-            <div className="lg:col-span-5 relative flex items-center justify-center">
-              <div className="relative w-full max-w-[520px] flex items-center justify-center">
-                {/* Glowing Aura Ring */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand-primary/30 via-purple-600/20 to-brand-secondary/25 blur-3xl animate-pulse" />
+            {/* Huge Display Heading */}
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
+              JOIN THE ULTIMATE{' '}
+              <span className="block bg-gradient-to-r from-[#FF007A] via-[#A855F7] to-[#00F2FE] bg-clip-text text-transparent">
+                AIX ROUNDTABLE
+              </span>
+              <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-normal mt-2">
+                {edition.city}, {edition.country}
+              </span>
+            </h1>
 
-                {/* Country Skyline Silhouette Vector */}
-                <div className="relative z-10 w-full p-2 flex items-center justify-center">
-                  <Image
-                    src={edition.skyline}
-                    alt={`${edition.city}, ${edition.country} Skyline Vector`}
-                    width={1024}
-                    height={640}
-                    className="w-full h-auto object-contain filter drop-shadow-[0_0_35px_rgba(168,85,247,0.45)] transform hover:scale-105 transition-transform duration-500"
-                    priority
-                  />
-                </div>
+            {/* Subtitle / Description */}
+            <p className="max-w-2xl text-base sm:text-lg lg:text-xl text-text-secondary leading-relaxed">
+              {edition.description}
+            </p>
 
-                {/* Floating Highlights Card */}
-                <div className="absolute -bottom-4 -left-2 z-20 rounded-lg border border-border-subtle bg-bg-raised/90 p-4 shadow-card backdrop-blur-md max-w-[240px]">
-                  <div className="flex items-center gap-2 text-xs font-bold text-brand-secondary">
-                    <CheckCircle2 className="h-4 w-4" />
-                    <span>Chatham House Format</span>
-                  </div>
-                  <p className="mt-1 text-[11px] text-text-secondary leading-snug">
-                    Strictly 15 peer executives per table with working AI technology showcases.
-                  </p>
-                </div>
-              </div>
+            {/* Action Buttons (Left-Aligned) */}
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <Button
+                href="#notify-form"
+                variant="primary"
+                size="lg"
+                className="rounded-full bg-gradient-to-r from-brand-primary to-brand-purple text-text-primary shadow-glow text-sm font-bold px-7 py-3.5 hover:opacity-95 transition-all"
+              >
+                Register Interest
+              </Button>
+              <Button
+                href="/partners/become-a-partner"
+                variant="secondary"
+                size="lg"
+                className="rounded-full border-2 border-brand-primary text-text-primary hover:bg-brand-primary/10 hover:border-brand-secondary transition-all shadow-glow text-sm font-bold px-7 py-3.5"
+              >
+                Become a Sponsor
+              </Button>
+            </div>
+
+            {/* Status & Format Note */}
+            <div className="pt-4 flex flex-wrap items-center gap-4 text-xs font-medium tracking-wide text-text-muted">
+              <span className="flex items-center gap-1.5 text-brand-secondary">
+                <Radio className="h-3.5 w-3.5 animate-pulse" />
+                <span>{edition.venueStatus}</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 text-purple-300">
+                <CheckCircle2 className="h-3.5 w-3.5 text-brand-secondary" />
+                <span>Chatham House Format · Strictly 15 Leaders per Table</span>
+              </span>
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
       {/* -------------------- NOTIFY / REGISTER INTEREST SECTION -------------------- */}
       <Section id="notify-form" variant="surface" className="relative z-10 py-16 border-t border-border-subtle">

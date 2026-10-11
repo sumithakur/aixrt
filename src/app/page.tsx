@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
 import { HomeHero } from '@/components/home/HomeHero';
-import { HomeParallaxBackground } from '@/components/home/HomeParallaxBackground';
 import { getSiteConfig, getRoundtables, getAudienceData, getHomeContent } from '@/lib/content';
 import {
   ArrowRight,
@@ -67,14 +66,9 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-bg-base/80 text-text-primary selection:bg-brand-secondary/30">
-      {/* Persistent smooth parallax background continuing throughout the entire homepage */}
-      <HomeParallaxBackground />
-
-      {/* S1: Hero Section — Left Aligned, Homogeneous with Edition Pages */}
-      <div className="relative z-10">
-        <HomeHero config={config} homeData={homeData} />
-      </div>
+    <div className="min-h-screen bg-bg-base text-text-primary selection:bg-brand-secondary/30">
+      {/* S1: Hero Section — Left Aligned with smooth Parallax Skyline contained strictly to Hero */}
+      <HomeHero config={config} homeData={homeData} />
 
       {/* S2: The Proposition */}
       <Section variant="surface">
@@ -96,8 +90,11 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {homeData.positioning.blocks.map((block: any, idx: number) => (
-              <div key={idx} className="bg-bg-raised p-6 rounded-lg border border-border-subtle shadow-card">
-                <h3 className="font-display font-bold text-brand-secondary mb-3">{block.title}</h3>
+              <div
+                key={idx}
+                className="bg-bg-raised p-6 rounded-lg border border-border-subtle shadow-card hover:border-brand-primary/40 transition-all"
+              >
+                <h3 className="font-display font-bold text-white text-base mb-3">{block.title}</h3>
                 <p className="text-sm text-text-secondary leading-relaxed">{block.desc}</p>
               </div>
             ))}

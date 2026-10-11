@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
-import { Calendar, ArrowRight, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
@@ -23,8 +24,62 @@ interface HomeHeroProps {
 }
 
 export function HomeHero({ config, homeData }: HomeHeroProps) {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Smooth zoom-in on scroll down, smooth zoom-out on scroll up
+  // Strictly confined to the hero section so it never obstructs or darkens subsequent content
+  const scale = 1 + Math.min(scrollY * 0.0006, 0.35);
+  const translateY = scrollY * 0.16;
+  const opacity = Math.max(1 - scrollY / 650, 0);
+
   return (
-    <section className="relative min-h-[88vh] flex items-center justify-center overflow-hidden bg-transparent pt-12 pb-20 sm:pt-16 sm:pb-28">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-bg-base pt-12 pb-24 sm:pt-16 sm:pb-32">
+      {/* Parallax Vector Skyline Background — Contained strictly to Hero */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden will-change-transform"
+        style={{
+          transform: `translate3d(0, ${translateY}px, 0) scale(${scale})`,
+          opacity,
+          transition: 'transform 0.06s ease-out, opacity 0.06s ease-out',
+        }}
+        aria-hidden="true"
+      >
+        <div className="absolute inset-0">
+          <Image
+            src="/brand/skyline-qatar.png"
+            alt="AIX Roundtable Doha Skyline Silhouette"
+            fill
+            priority
+            className="object-cover object-bottom sm:object-right-bottom opacity-85"
+          />
+        </div>
+
+        {/* Ambient Radial Color Glows */}
+        <div className="absolute top-1/4 left-1/3 h-[500px] w-[700px] rounded-full bg-brand-neonFuchsia/15 blur-[140px]" />
+        <div className="absolute top-1/2 right-1/4 h-[450px] w-[550px] rounded-full bg-brand-brightAqua/12 blur-[150px]" />
+
+        {/* Left Gradient Overlay to keep left-aligned typography razor sharp */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bg-base via-bg-base/85 to-transparent w-full md:w-3/4" />
+        {/* Bottom Fade smoothly into the next section */}
+        <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-transparent to-transparent h-full" />
+      </div>
+
       {/* Hero Content — Strictly Left-Aligned, Homogeneous with Edition Pages */}
       <Container size="default" className="relative z-20 text-left w-full">
         <div className="max-w-3xl space-y-6">

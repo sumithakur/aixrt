@@ -12,6 +12,7 @@ interface EditionConfig {
   name: string;
   country: string;
   city: string;
+  skyline: string;
   tagline: string;
   description: string;
   venueStatus: string;
@@ -22,27 +23,30 @@ const EDITION_MAP: Record<string, EditionConfig> = {
     name: 'Oman',
     country: 'Sultanate of Oman',
     city: 'Muscat',
+    skyline: '/brand/skyline-oman.png',
     tagline: 'Strategic AI for National Transformation & Enterprise Capability',
     description:
-      'AIX Summit is expanding to Muscat. Convening government transformation ministers, sovereign investment leaders, and enterprise buyers for closed-door, Chatham House discussions and working software demonstrations.',
+      'AIX Roundtable is expanding to Muscat. Convening government transformation ministers, sovereign investment leaders, and enterprise buyers for closed-door, Chatham House discussions and working software demonstrations.',
     venueStatus: 'Muscat · Venue & dates to be announced',
   },
   ksa: {
     name: 'KSA',
     country: 'Kingdom of Saudi Arabia',
     city: 'Riyadh',
+    skyline: '/brand/skyline-ksa.png',
     tagline: 'Sovereign Compute, Industrial Scale & Enterprise AI Deployment',
     description:
-      'AIX Summit is bringing its high-density, Chatham House roundtable format to Riyadh. Designed specifically for Giga-project leadership, Saudi enterprise executives, and global AI infrastructure leaders.',
+      'AIX Roundtable is bringing its high-density, Chatham House roundtable format to Riyadh. Designed specifically for Giga-project leadership, Saudi enterprise executives, and global AI infrastructure leaders.',
     venueStatus: 'Riyadh · Venue & dates to be announced',
   },
   uae: {
     name: 'UAE',
     country: 'United Arab Emirates',
     city: 'Dubai / Abu Dhabi',
+    skyline: '/brand/skyline-uae.png',
     tagline: 'Global Capital, Frontier AI Models & Regional Scaling',
     description:
-      'AIX Summit lands in the UAE to convene GCC sovereign wealth allocators, frontier enterprise AI startups, and regional conglomerate leadership.',
+      'AIX Roundtable lands in the UAE to convene GCC sovereign wealth allocators, frontier enterprise AI startups, and regional conglomerate leadership.',
     venueStatus: 'Dubai / Abu Dhabi · Venue & dates to be announced',
   },
 };
@@ -54,11 +58,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { country } = await params;
   const edition = EDITION_MAP[country.toLowerCase()];
-  if (!edition) return { title: 'Edition Not Found | AIX Summit' };
+  if (!edition) return { title: 'Edition Not Found | AIX Roundtable' };
 
   return {
-    title: `AIX Summit ${edition.name} · Stay Tuned for the Next Edition`,
-    description: `Stay tuned for the next edition of AIX Summit | AIXHACK in ${edition.country}. Closed-door executive roundtables and working AI showcase.`,
+    title: `AIX Roundtable ${edition.name} · Stay Tuned for the Next Edition`,
+    description: `Stay tuned for the next edition of AIX Roundtable in ${edition.country}. Closed-door executive roundtables and working AI showcase.`,
   };
 }
 
@@ -117,7 +121,7 @@ export default async function EditionPage({
               <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
                 JOIN THE ULTIMATE{' '}
                 <span className="block bg-gradient-to-r from-[#FF007A] via-[#A855F7] to-[#00F2FE] bg-clip-text text-transparent">
-                  AIXSUMMIT | AIXHACK
+                  AIX ROUNDTABLE
                 </span>
                 <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-normal mt-2">
                   {edition.city}, {edition.country}
@@ -156,26 +160,26 @@ export default async function EditionPage({
               </div>
             </div>
 
-            {/* Right Graphic: Globe & Network Graphic */}
+            {/* Right Graphic: City Skyline Vector */}
             <div className="lg:col-span-5 relative flex items-center justify-center">
-              <div className="relative w-full max-w-[460px] aspect-square flex items-center justify-center">
+              <div className="relative w-full max-w-[520px] flex items-center justify-center">
                 {/* Glowing Aura Ring */}
-                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-brand-primary/30 to-brand-secondary/20 blur-3xl animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand-primary/30 via-purple-600/20 to-brand-secondary/25 blur-3xl animate-pulse" />
 
-                {/* Network Globe Graphic */}
-                <div className="relative z-10 w-full h-full p-4 flex items-center justify-center">
+                {/* Country Skyline Silhouette Vector */}
+                <div className="relative z-10 w-full p-2 flex items-center justify-center">
                   <Image
-                    src="/brand/globe.svg"
-                    alt={`${edition.name} Network Globe`}
-                    width={480}
-                    height={480}
-                    className="w-full h-full object-contain filter drop-shadow-[0_0_35px_rgba(168,85,247,0.45)]"
+                    src={edition.skyline}
+                    alt={`${edition.city}, ${edition.country} Skyline Vector`}
+                    width={1024}
+                    height={640}
+                    className="w-full h-auto object-contain filter drop-shadow-[0_0_35px_rgba(168,85,247,0.45)] transform hover:scale-105 transition-transform duration-500"
                     priority
                   />
                 </div>
 
                 {/* Floating Highlights Card */}
-                <div className="absolute -bottom-4 -left-4 z-20 rounded-lg border border-border-subtle bg-bg-raised/90 p-4 shadow-card backdrop-blur-md max-w-[240px]">
+                <div className="absolute -bottom-4 -left-2 z-20 rounded-lg border border-border-subtle bg-bg-raised/90 p-4 shadow-card backdrop-blur-md max-w-[240px]">
                   <div className="flex items-center gap-2 text-xs font-bold text-brand-secondary">
                     <CheckCircle2 className="h-4 w-4" />
                     <span>Chatham House Format</span>
@@ -195,7 +199,7 @@ export default async function EditionPage({
         <Container size="narrow">
           <div className="text-center space-y-4 mb-10">
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-              Be the First to Know About AIX Summit {edition.name}
+              Be the First to Know About AIX Roundtable {edition.name}
             </h2>
             <p className="text-sm text-text-secondary max-w-xl mx-auto">
               Seats and roundtable chair sponsorships for {edition.country} are invitation-led and strictly limited. Register your interest below to receive early briefing documents and invitations.

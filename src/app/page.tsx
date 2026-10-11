@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
 import { HomeHero } from '@/components/home/HomeHero';
+import { HomeParallaxBackground } from '@/components/home/HomeParallaxBackground';
 import { getSiteConfig, getRoundtables, getAudienceData, getHomeContent } from '@/lib/content';
 import {
   ArrowRight,
@@ -66,9 +67,14 @@ export default function HomePage() {
   ];
 
   return (
-    <>
-      {/* S1: Hero Section — Left Aligned with Parallax Skyline & Interactive Twinkling Stars */}
-      <HomeHero config={config} homeData={homeData} />
+    <div className="relative min-h-screen bg-bg-base/80 text-text-primary selection:bg-brand-secondary/30">
+      {/* Persistent smooth parallax background continuing throughout the entire homepage */}
+      <HomeParallaxBackground />
+
+      {/* S1: Hero Section — Left Aligned, Homogeneous with Edition Pages */}
+      <div className="relative z-10">
+        <HomeHero config={config} homeData={homeData} />
+      </div>
 
       {/* S2: The Proposition */}
       <Section variant="surface">
@@ -393,6 +399,6 @@ export default function HomePage() {
 
       {/* S10: Closing Universal CTA */}
       <CTABand />
-    </>
+    </div>
   );
 }

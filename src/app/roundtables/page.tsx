@@ -7,7 +7,7 @@ import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
-import { getRoundtables } from '@/lib/content';
+import { getRoundtablesAsync } from '@/lib/content';
 import { Shield, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     'Six parallel 75-minute curated discussions of 15 senior leaders each, conducted under Chatham House principles across distinct strategic lanes.',
 };
 
-export default function RoundtablesHubPage() {
-  const roundtables = getRoundtables();
+export default async function RoundtablesHubPage() {
+  const roundtables = await getRoundtablesAsync();
 
   const runOfShowSteps = [
     {

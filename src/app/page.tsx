@@ -10,7 +10,12 @@ import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
 import { HomeHero } from '@/components/home/HomeHero';
-import { getSiteConfig, getRoundtables, getAudienceData, getHomeContent } from '@/lib/content';
+import {
+  getSiteConfigAsync,
+  getRoundtablesAsync,
+  getAudienceDataAsync,
+  getHomeContentAsync,
+} from '@/lib/content';
 import {
   ArrowRight,
   Shield,
@@ -53,11 +58,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
-  const config = getSiteConfig();
-  const roundtables = getRoundtables();
-  const audience = getAudienceData();
-  const homeData = getHomeContent();
+export default async function HomePage() {
+  const config = await getSiteConfigAsync();
+  const roundtables = await getRoundtablesAsync();
+  const audience = await getAudienceDataAsync();
+  const homeData = await getHomeContentAsync();
 
   const condensedProgramme = [
     {

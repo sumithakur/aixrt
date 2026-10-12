@@ -6,7 +6,12 @@ import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { ProgrammeRow } from '@/components/content/ProgrammeRow';
 import { CTABand } from '@/components/content/CTABand';
-import { getProgramme, getSiteConfig, getRoundtables, getProgrammeDataRaw } from '@/lib/content';
+import {
+  getProgrammeAsync,
+  getSiteConfigAsync,
+  getRoundtablesAsync,
+  getProgrammeDataRaw,
+} from '@/lib/content';
 import { Calendar, Clock, Download, Layers, ShieldCheck, Sparkles, Users } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -18,10 +23,10 @@ export const metadata: Metadata = {
     'Full programme for AIX Summit 2026. Monday 14 December 2026, 14:00–18:00, followed by reception to 18:00. Featuring six parallel executive roundtables and live AI demonstrations.',
 };
 
-export default function ProgrammePage() {
-  const programme = getProgramme();
-  const config = getSiteConfig();
-  const roundtables = getRoundtables();
+export default async function ProgrammePage() {
+  const programme = await getProgrammeAsync();
+  const config = await getSiteConfigAsync();
+  const roundtables = await getRoundtablesAsync();
   const rawData = getProgrammeDataRaw();
   const architecturalReasoning = rawData.architecturalReasoning;
 

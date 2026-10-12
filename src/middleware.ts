@@ -8,10 +8,11 @@ export async function middleware(req: NextRequest) {
 
   const isLoginPage = req.nextUrl.pathname === '/admin/login';
   const isLoginApi = req.nextUrl.pathname === '/api/admin/login';
+  const isLogoutApi = req.nextUrl.pathname === '/api/admin/logout';
   const isApiRoute = req.nextUrl.pathname.startsWith('/api/admin');
 
   // If trying to access admin routes without auth
-  if (!isAuthenticated && !isLoginPage && !isLoginApi) {
+  if (!isAuthenticated && !isLoginPage && !isLoginApi && !isLogoutApi) {
     if (isApiRoute) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

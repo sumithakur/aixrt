@@ -16,8 +16,12 @@ async function fetchFromFirestore<T = any>(filename: string): Promise<T | null> 
     const db = getFirestoreDb();
     if (!db) return null;
     const docId = filename.replace('.json', '');
-    const doc = await db.collection('content').doc(docId).get();
-    if (doc.exists) {
+    const docPromise = db.collection('content').doc(docId).get();
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Firestore timeout')), 2000)
+    );
+    const doc = await Promise.race([docPromise, timeoutPromise]) as any;
+    if (doc && doc.exists) {
       const data = doc.data();
       if (data && data.payload) {
         if (typeof globalThis !== 'undefined') {
@@ -28,7 +32,7 @@ async function fetchFromFirestore<T = any>(filename: string): Promise<T | null> 
       }
     }
   } catch (err) {
-    // ignore
+    // fallback cleanly
   }
   return null;
 }

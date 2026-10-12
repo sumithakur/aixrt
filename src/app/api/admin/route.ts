@@ -36,13 +36,17 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Invalid or disallowed file' }, { status: 400 });
   }
 
+  // 1. Try reading live from Firestore first with 2.5s timeout
   try {
-    // 1. Try reading live from Firestore first
     const db = getFirestoreDb();
     if (db) {
       const docId = file.replace('.json', '');
-      const doc = await db.collection('content').doc(docId).get();
-      if (doc.exists) {
+      const docPromise = db.collection('content').doc(docId).get();
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Firestore timeout')), 2500)
+      );
+      const doc = await Promise.race([docPromise, timeoutPromise]) as any;
+      if (doc && doc.exists) {
         const data = doc.data();
         if (data && data.payload) {
           // Update in-memory cache as well
@@ -54,8 +58,12 @@ export async function GET(request: Request) {
         }
       }
     }
+  } catch (e: any) {
+    console.warn(`Firestore read bypass for ${file}:`, e?.message);
+  }
 
-    // 2. Fall back to local file / memory cache
+  // 2. Guaranteed fall back to local file / memory cache
+  try {
     const content = loadContentFile(file);
     return NextResponse.json({ content, source: 'fallback' });
   } catch (e: any) {

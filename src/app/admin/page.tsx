@@ -1,18 +1,29 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import defaultSite from '@/content/site.json';
+import defaultHome from '@/content/home.json';
+import defaultAbout from '@/content/about.json';
+import defaultProgramme from '@/content/programme.json';
+import defaultRoundtables from '@/content/roundtables.json';
+import defaultPartners from '@/content/partners.json';
+import defaultShowcase from '@/content/showcase.json';
+import defaultVenue from '@/content/venue.json';
+import defaultSignals from '@/content/signals.json';
+import defaultContact from '@/content/contact.json';
+import defaultFaq from '@/content/faq.json';
 
 export default function AdminPage() {
-  const [siteData, setSiteData] = useState<any>(null);
-  const [homeData, setHomeData] = useState<any>(null);
-  const [aboutData, setAboutData] = useState<any>(null);
-  const [programmeData, setProgrammeData] = useState<any>(null);
-  const [roundtablesData, setRoundtablesData] = useState<any>(null);
-  const [partnersData, setPartnersData] = useState<any>(null);
-  const [showcaseData, setShowcaseData] = useState<any>(null);
-  const [venueData, setVenueData] = useState<any>(null);
-  const [signalsData, setSignalsData] = useState<any>(null);
-  const [contactData, setContactData] = useState<any>(null);
-  const [faqData, setFaqData] = useState<any>(null);
+  const [siteData, setSiteData] = useState<any>(defaultSite);
+  const [homeData, setHomeData] = useState<any>(defaultHome);
+  const [aboutData, setAboutData] = useState<any>(defaultAbout);
+  const [programmeData, setProgrammeData] = useState<any>(defaultProgramme);
+  const [roundtablesData, setRoundtablesData] = useState<any>(defaultRoundtables);
+  const [partnersData, setPartnersData] = useState<any>(defaultPartners);
+  const [showcaseData, setShowcaseData] = useState<any>(defaultShowcase);
+  const [venueData, setVenueData] = useState<any>(defaultVenue);
+  const [signalsData, setSignalsData] = useState<any>(defaultSignals);
+  const [contactData, setContactData] = useState<any>(defaultContact);
+  const [faqData, setFaqData] = useState<any>(defaultFaq);
 
   const [status, setStatus] = useState('');
   const [activeTab, setActiveTab] = useState('site');
@@ -23,10 +34,13 @@ export default function AdminPage() {
       fetch(`/api/admin?file=${file}`)
         .then(r => r.ok ? r.json() : null)
         .then(d => {
-          if (d && d.content) setter(d.content);
-          else setter({});
+          if (d && d.content && typeof d.content === 'object' && Object.keys(d.content).length > 0) {
+            setter(d.content);
+          }
         })
-        .catch(() => setter({}));
+        .catch(err => {
+          console.warn(`Could not refresh ${file} from server:`, err);
+        });
     };
 
     fetchSafe('site.json', setSiteData);
@@ -115,13 +129,15 @@ export default function AdminPage() {
     }
   };
 
-  const [timedOut, setTimedOut] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setTimedOut(true), 2500);
-    return () => clearTimeout(t);
-  }, []);
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } finally {
+      window.location.href = '/admin/login';
+    }
+  };
 
-  const isReady = timedOut || (siteData && homeData && aboutData && programmeData && roundtablesData && partnersData && showcaseData && venueData && signalsData && contactData && faqData);
+  const isReady = !!(siteData && homeData && aboutData && programmeData && roundtablesData && partnersData && showcaseData && venueData && signalsData && contactData && faqData);
 
   if (!isReady) {
     return (
@@ -150,6 +166,12 @@ export default function AdminPage() {
             >
               <span>View Live Website ↗</span>
             </a>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-xs font-semibold rounded-md border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+            >
+              Log Out
+            </button>
             {status && <span className="text-brand-secondary font-medium bg-brand-secondary/10 px-4 py-2 rounded text-sm">{status}</span>}
           </div>
         </div>

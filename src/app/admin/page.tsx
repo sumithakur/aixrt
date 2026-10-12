@@ -66,14 +66,20 @@ export default function AdminPage() {
       });
       const data = await res.json();
       if (res.ok) {
-        setStatus(`Saved & live! (${file})`);
+        if (data.firestoreSaved) {
+          setStatus(`Saved & synced live to Firestore! (${file})`);
+        } else if (data.firestoreError) {
+          setStatus(`⚠️ ${data.firestoreError}`);
+        } else {
+          setStatus(`Saved! (${file})`);
+        }
       } else {
         setStatus(`Error saving: ${data.error || 'Server error'}`);
       }
     } catch (e: any) {
       setStatus(`Network error saving ${file}`);
     }
-    setTimeout(() => setStatus(''), 4000);
+    setTimeout(() => setStatus(''), 7000);
   };
 
   const downloadJson = (fileName: string, data: any) => {

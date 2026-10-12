@@ -87,6 +87,7 @@ export async function POST(request: Request) {
 
     // 2. Save directly to Firebase Firestore (persists globally across all Vercel instances & visitors)
     let firestoreSaved = false;
+    let firestoreError: string | null = null;
     try {
       const db = getFirestoreDb();
       if (db) {
@@ -97,9 +98,16 @@ export async function POST(request: Request) {
           file,
         });
         firestoreSaved = true;
+      } else {
+        firestoreError = 'Firebase credentials missing or incomplete';
       }
-    } catch (fsDbErr) {
+    } catch (fsDbErr: any) {
       console.warn('Could not save to Firestore:', fsDbErr);
+      if (fsDbErr?.code === 5 || fsDbErr?.message?.includes('NOT_FOUND')) {
+        firestoreError = 'Firestore database has not been created yet in Firebase Console. Please click Firestore -> Create database in Firebase.';
+      } else {
+        firestoreError = fsDbErr?.message || 'Firestore write error';
+      }
     }
 
     // 3. Try writing to /tmp/content
@@ -137,6 +145,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       firestoreSaved,
+      firestoreError,
     });
   } catch (e: any) {
     return NextResponse.json({ error: e?.message || 'Could not save file' }, { status: 500 });

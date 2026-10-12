@@ -35,14 +35,34 @@ export default function AdminPage() {
 
   const saveFile = async (file: string, content: any) => {
     setStatus(`Saving ${file}...`);
-    const res = await fetch('/api/admin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ file, content }),
-    });
-    if (res.ok) setStatus(`Saved successfully!`);
-    else setStatus(`Error saving`);
-    setTimeout(() => setStatus(''), 3000);
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file, content }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStatus(`Saved & live! (${file})`);
+      } else {
+        setStatus(`Error saving: ${data.error || 'Server error'}`);
+      }
+    } catch (e: any) {
+      setStatus(`Network error saving ${file}`);
+    }
+    setTimeout(() => setStatus(''), 4000);
+  };
+
+  const downloadJson = (fileName: string, data: any) => {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   
@@ -91,12 +111,22 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-bg-base pt-16 pb-20 text-text-primary">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="flex items-center justify-between mb-8 border-b border-border-subtle pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 border-b border-border-subtle pb-6">
           <div>
             <h1 className="text-3xl font-display font-bold text-brand-primary">AIX Content Manager</h1>
-            <p className="mt-2 text-text-secondary">Edit everything: Logos, Homepage, and About text.</p>
+            <p className="mt-2 text-text-secondary">Changes save and revalidate live pages immediately.</p>
           </div>
-          {status && <span className="text-brand-secondary font-medium bg-brand-secondary/10 px-4 py-2 rounded">{status}</span>}
+          <div className="flex items-center gap-3">
+            <a
+              href="/"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 text-xs font-semibold rounded-md border border-border-subtle bg-bg-surface hover:bg-bg-raised text-text-primary transition-colors inline-flex items-center gap-1.5"
+            >
+              <span>View Live Website ↗</span>
+            </a>
+            {status && <span className="text-brand-secondary font-medium bg-brand-secondary/10 px-4 py-2 rounded text-sm">{status}</span>}
+          </div>
         </div>
 
         <div className="flex gap-4 mb-8 border-b border-border-subtle pb-4 overflow-x-auto">
@@ -138,17 +168,60 @@ export default function AdminPage() {
                 <div>
                   <h3 className="font-semibold text-brand-secondary mb-3 border-b border-border-subtle pb-2">Hero Section</h3>
                   <div className="space-y-3">
-                    <label className="block text-xs font-semibold text-text-muted">Eyebrow</label>
-                    <input type="text" value={homeData.hero.eyebrow} onChange={e => setHomeData({...homeData, hero: {...homeData.hero, eyebrow: e.target.value}})} className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary" />
-                    
-                    <label className="block text-xs font-semibold text-text-muted">Title</label>
-                    <input type="text" value={homeData.hero.title} onChange={e => setHomeData({...homeData, hero: {...homeData.hero, title: e.target.value}})} className="w-full p-2 bg-bg-surface border border-border-subtle rounded font-bold text-lg text-text-primary" />
-                    
-                    <label className="block text-xs font-semibold text-text-muted">Description</label>
-                    <textarea value={homeData.hero.description} onChange={e => setHomeData({...homeData, hero: {...homeData.hero, description: e.target.value}})} className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary h-24" />
-                    
-                    <label className="block text-xs font-semibold text-text-muted">Quote block</label>
-                    <textarea value={homeData.hero.quote} onChange={e => setHomeData({...homeData, hero: {...homeData.hero, quote: e.target.value}})} className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary h-24" />
+                    <label className="block text-xs font-semibold text-text-muted">Eyebrow Badge</label>
+                    <input
+                      type="text"
+                      value={homeData.hero?.eyebrow || ''}
+                      onChange={(e) => setHomeData({ ...homeData, hero: { ...homeData.hero, eyebrow: e.target.value } })}
+                      className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary"
+                      placeholder="e.g. ACTIVE EDITION · 14 DECEMBER 2026"
+                    />
+
+                    <label className="block text-xs font-semibold text-text-muted">Title / Main Heading</label>
+                    <input
+                      type="text"
+                      value={homeData.hero?.title || homeData.hero?.headline || ''}
+                      onChange={(e) => setHomeData({ ...homeData, hero: { ...homeData.hero, title: e.target.value, headline: e.target.value } })}
+                      className="w-full p-2 bg-bg-surface border border-border-subtle rounded font-bold text-lg text-text-primary"
+                      placeholder="e.g. JOIN THE ULTIMATE AIX ROUNDTABLE"
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-text-muted">Location</label>
+                        <input
+                          type="text"
+                          value={homeData.hero?.location || ''}
+                          onChange={(e) => setHomeData({ ...homeData, hero: { ...homeData.hero, location: e.target.value } })}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary"
+                          placeholder="e.g. Doha, Qatar"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-text-muted">Date</label>
+                        <input
+                          type="text"
+                          value={homeData.hero?.date || ''}
+                          onChange={(e) => setHomeData({ ...homeData, hero: { ...homeData.hero, date: e.target.value } })}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary"
+                          placeholder="e.g. 14 December 2026"
+                        />
+                      </div>
+                    </div>
+
+                    <label className="block text-xs font-semibold text-text-muted">Description / Standfirst</label>
+                    <textarea
+                      value={homeData.hero?.description || ''}
+                      onChange={(e) => setHomeData({ ...homeData, hero: { ...homeData.hero, description: e.target.value } })}
+                      className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary h-24"
+                    />
+
+                    <label className="block text-xs font-semibold text-text-muted">Quote Block</label>
+                    <textarea
+                      value={homeData.hero?.quote || ''}
+                      onChange={(e) => setHomeData({ ...homeData, hero: { ...homeData.hero, quote: e.target.value } })}
+                      className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-text-primary h-24"
+                    />
                   </div>
                 </div>
 

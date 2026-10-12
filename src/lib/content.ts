@@ -1,11 +1,21 @@
-import siteData from '@/content/site.json';
-import roundtablesData from '@/content/roundtables.json';
-import programmeData from '@/content/programme.json';
-import partnersData from '@/content/partners.json';
-import showcaseData from '@/content/showcase.json';
-import speakersData from '@/content/speakers.json';
-import audienceData from '@/content/audience.json';
-import faqData from '@/content/faq.json';
+import fs from 'fs';
+import path from 'path';
+
+// Fallback static JSON imports
+import siteFallback from '@/content/site.json';
+import roundtablesFallback from '@/content/roundtables.json';
+import programmeFallback from '@/content/programme.json';
+import partnersFallback from '@/content/partners.json';
+import showcaseFallback from '@/content/showcase.json';
+import speakersFallback from '@/content/speakers.json';
+import audienceFallback from '@/content/audience.json';
+import faqFallback from '@/content/faq.json';
+import homeFallback from '@/content/home.json';
+import aboutFallback from '@/content/about.json';
+import venueFallback from '@/content/venue.json';
+import signalsFallback from '@/content/signals.json';
+import contactFallback from '@/content/contact.json';
+
 import type {
   SiteConfig,
   Roundtable,
@@ -17,12 +27,66 @@ import type {
   FAQCategory,
 } from '@/types/content';
 
+const FALLBACK_MAP: Record<string, any> = {
+  'site.json': siteFallback,
+  'roundtables.json': roundtablesFallback,
+  'programme.json': programmeFallback,
+  'partners.json': partnersFallback,
+  'showcase.json': showcaseFallback,
+  'speakers.json': speakersFallback,
+  'audience.json': audienceFallback,
+  'faq.json': faqFallback,
+  'home.json': homeFallback,
+  'about.json': aboutFallback,
+  'venue.json': venueFallback,
+  'signals.json': signalsFallback,
+  'contact.json': contactFallback,
+};
+
+// Global in-memory cache shared across serverless function invocations
+declare global {
+  var __CMS_CACHE__: Record<string, any> | undefined;
+}
+
+export function loadContentFile<T = any>(filename: string): T {
+  const fallback = FALLBACK_MAP[filename] as T;
+
+  // 1. Check in-memory global cache first
+  if (typeof globalThis !== 'undefined' && globalThis.__CMS_CACHE__ && globalThis.__CMS_CACHE__[filename]) {
+    return globalThis.__CMS_CACHE__[filename] as T;
+  }
+
+  // 2. Check /tmp/content (writable on Vercel and serverless containers)
+  try {
+    const tmpPath = path.join('/tmp', 'content', filename);
+    if (fs.existsSync(tmpPath)) {
+      const parsed = JSON.parse(fs.readFileSync(tmpPath, 'utf8'));
+      if (parsed) return parsed as T;
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  // 3. Check local content directory on disk
+  try {
+    const localPath = path.join(process.cwd(), 'content', filename);
+    if (fs.existsSync(localPath)) {
+      const parsed = JSON.parse(fs.readFileSync(localPath, 'utf8'));
+      if (parsed) return parsed as T;
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  return fallback;
+}
+
 /**
  * Enforce the confirmation gate at the data layer.
  * Any unconfirmed entity has its identifying names censored.
  */
 export function getSiteConfig(): SiteConfig {
-  const config = siteData as SiteConfig;
+  const config = loadContentFile<SiteConfig>('site.json');
   if (config.venue.status !== 'confirmed') {
     return {
       ...config,
@@ -38,7 +102,9 @@ export function getSiteConfig(): SiteConfig {
 }
 
 export function getRoundtables(): Roundtable[] {
-  return ((roundtablesData as any).items as Roundtable[]).map((rt) => {
+  const data = loadContentFile<{ items: Roundtable[] }>('roundtables.json');
+  const items = (data?.items || []) as Roundtable[];
+  return items.map((rt) => {
     if (rt.chair && rt.chair.status !== 'confirmed') {
       return {
         ...rt,
@@ -62,54 +128,73 @@ export function getRoundtableBySlug(slug: string): Roundtable | undefined {
 
 export function getProgramme(): ProgrammeItem[] {
   const config = getSiteConfig();
-  const items = (programmeData as any).items as ProgrammeItem[];
-  // If recognition feature flag is off, hide conditional recognition slot
-  if (!config.features.showRecognition) {
+  const data = loadContentFile<{ items: ProgrammeItem[] }>('programme.json');
+  const items = (data?.items || []) as ProgrammeItem[];
+  if (!config.features?.showRecognition) {
     return items.filter((item) => item.conditional !== 'recognition');
   }
   return items;
 }
 
 export function getPartners(): Partner[] {
-  return ((partnersData as any).items as Partner[]).filter((p) => p.status === 'confirmed');
+  const data = loadContentFile<{ items: Partner[] }>('partners.json');
+  const items = (data?.items || []) as Partner[];
+  return items.filter((p) => p.status === 'confirmed');
 }
 
 export function getShowcaseCompanies(): ShowcaseCompany[] {
-  return ((showcaseData as any).items as ShowcaseCompany[]).filter((c) => c.status === 'confirmed');
+  const data = loadContentFile<{ items: ShowcaseCompany[] }>('showcase.json');
+  const items = (data?.items || []) as ShowcaseCompany[];
+  return items.filter((c) => c.status === 'confirmed');
 }
 
 export function getSpeakers(): Speaker[] {
-  return ((speakersData as any).items as Speaker[]).filter((s) => s.status === 'confirmed');
+  const data = loadContentFile<{ items: Speaker[] }>('speakers.json');
+  const items = (data?.items || []) as Speaker[];
+  return items.filter((s) => s.status === 'confirmed');
 }
 
 export function getAudienceData(): AudienceData {
-  return audienceData as AudienceData;
+  return loadContentFile<AudienceData>('audience.json');
 }
 
 export function getFAQs(): FAQCategory[] {
-  return (faqData as any).items as FAQCategory[];
+  const data = loadContentFile<{ items: FAQCategory[] }>('faq.json');
+  return (data?.items || []) as FAQCategory[];
 }
 
-import homeData from '@/content/home.json';
-import aboutData from '@/content/about.json';
-
 export function getHomeContent() {
-  return homeData;
+  return loadContentFile('home.json');
 }
 
 export function getAboutContent() {
-  return aboutData;
+  return loadContentFile('about.json');
 }
 
-export function getProgrammeDataRaw() { return programmeData as any; }
-export function getRoundtablesDataRaw() { return roundtablesData as any; }
-export function getPartnersDataRaw() { return partnersData as any; }
+export function getProgrammeDataRaw() {
+  return loadContentFile('programme.json');
+}
 
-import venueData from '@/content/venue.json';
-import signalsData from '@/content/signals.json';
-import contactData from '@/content/contact.json';
+export function getRoundtablesDataRaw() {
+  return loadContentFile('roundtables.json');
+}
 
-export function getShowcaseData() { return showcaseData; }
-export function getVenueData() { return venueData; }
-export function getSignalsData() { return signalsData; }
-export function getContactData() { return contactData; }
+export function getPartnersDataRaw() {
+  return loadContentFile('partners.json');
+}
+
+export function getShowcaseData() {
+  return loadContentFile('showcase.json');
+}
+
+export function getVenueData() {
+  return loadContentFile('venue.json');
+}
+
+export function getSignalsData() {
+  return loadContentFile('signals.json');
+}
+
+export function getContactData() {
+  return loadContentFile('contact.json');
+}

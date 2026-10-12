@@ -10,6 +10,9 @@ import { CTABand } from '@/components/content/CTABand';
 import { getRoundtables } from '@/lib/content';
 import { Shield, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: 'Six Executive Roundtables',
   description:

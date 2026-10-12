@@ -9,6 +9,9 @@ import { CTABand } from '@/components/content/CTABand';
 import { getProgramme, getSiteConfig, getRoundtables, getProgrammeDataRaw } from '@/lib/content';
 import { Calendar, Clock, Download, Layers, ShieldCheck, Sparkles, Users } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: 'The Programme | One-Day Executive Schedule',
   description:

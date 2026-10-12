@@ -22,6 +22,9 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: 'AIX Roundtables 2026 | Executive AI Summit, Doha, 14 December 2026',
   description:

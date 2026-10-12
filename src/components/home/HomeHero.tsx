@@ -87,19 +87,25 @@ export function HomeHero({ config, homeData }: HomeHeroProps) {
           <FadeIn delay={100}>
             <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-950/40 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-purple-300">
               <Sparkles className="h-3.5 w-3.5 text-brand-secondary" />
-              <span>ACTIVE EDITION · {config.event.date}</span>
+              <span>{homeData.hero?.eyebrow || `ACTIVE EDITION · ${homeData.hero?.date || config.event.date}`}</span>
             </div>
           </FadeIn>
 
-          {/* Huge Display Heading — Homogeneous Typography */}
+          {/* Huge Display Heading — Homogeneous Typography & CMS Responsive */}
           <FadeIn delay={250}>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-              JOIN THE ULTIMATE{' '}
-              <span className="block bg-gradient-to-r from-[#FF007A] via-[#A855F7] to-[#00F2FE] bg-clip-text text-transparent">
-                AIX ROUNDTABLE
-              </span>
+              {homeData.hero?.title ? (
+                homeData.hero.title
+              ) : (
+                <>
+                  JOIN THE ULTIMATE{' '}
+                  <span className="block bg-gradient-to-r from-[#FF007A] via-[#A855F7] to-[#00F2FE] bg-clip-text text-transparent">
+                    AIX ROUNDTABLE
+                  </span>
+                </>
+              )}
               <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-normal mt-2">
-                {config.event.locationPublic}
+                {homeData.hero?.location || config.event.locationPublic}
               </span>
             </h1>
           </FadeIn>
@@ -107,7 +113,7 @@ export function HomeHero({ config, homeData }: HomeHeroProps) {
           {/* Standfirst / Description */}
           <FadeIn delay={400}>
             <p className="max-w-2xl text-base sm:text-lg lg:text-xl leading-relaxed text-text-secondary">
-              {homeData.hero.description ||
+              {homeData.hero?.description ||
                 'Where AI moves from ambition to action. 110 leaders, 6 closed-door Chatham House roundtables, and live working AI software demonstrations.'}
             </p>
           </FadeIn>

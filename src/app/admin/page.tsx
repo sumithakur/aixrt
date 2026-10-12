@@ -19,18 +19,27 @@ export default function AdminPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fetch('/api/admin?file=site.json').then(r => r.json()).then(d => setSiteData(d.content));
-    fetch('/api/admin?file=home.json').then(r => r.json()).then(d => setHomeData(d.content));
-    fetch('/api/admin?file=about.json').then(r => r.json()).then(d => setAboutData(d.content));
-    fetch('/api/admin?file=programme.json').then(r => r.json()).then(d => setProgrammeData(d.content));
-    fetch('/api/admin?file=roundtables.json').then(r => r.json()).then(d => setRoundtablesData(d.content));
-    fetch('/api/admin?file=partners.json').then(r => r.json()).then(d => setPartnersData(d.content));
-    fetch('/api/admin?file=showcase.json').then(r => r.json()).then(d => setShowcaseData(d.content));
-    fetch('/api/admin?file=venue.json').then(r => r.json()).then(d => setVenueData(d.content));
-    fetch('/api/admin?file=signals.json').then(r => r.json()).then(d => setSignalsData(d.content));
-    fetch('/api/admin?file=contact.json').then(r => r.json()).then(d => setContactData(d.content));
-    fetch('/api/admin?file=faq.json').then(r => r.json()).then(d => setFaqData(d.content));
+    const fetchSafe = (file: string, setter: (d: any) => void) => {
+      fetch(`/api/admin?file=${file}`)
+        .then(r => r.ok ? r.json() : null)
+        .then(d => {
+          if (d && d.content) setter(d.content);
+          else setter({});
+        })
+        .catch(() => setter({}));
+    };
 
+    fetchSafe('site.json', setSiteData);
+    fetchSafe('home.json', setHomeData);
+    fetchSafe('about.json', setAboutData);
+    fetchSafe('programme.json', setProgrammeData);
+    fetchSafe('roundtables.json', setRoundtablesData);
+    fetchSafe('partners.json', setPartnersData);
+    fetchSafe('showcase.json', setShowcaseData);
+    fetchSafe('venue.json', setVenueData);
+    fetchSafe('signals.json', setSignalsData);
+    fetchSafe('contact.json', setContactData);
+    fetchSafe('faq.json', setFaqData);
   }, []);
 
   const saveFile = async (file: string, content: any) => {
@@ -106,7 +115,23 @@ export default function AdminPage() {
     }
   };
 
-  if (!siteData || !homeData || !aboutData || !programmeData || !roundtablesData || !partnersData || !showcaseData || !venueData || !signalsData || !contactData || !faqData) return <div className="p-20 text-center text-text-primary">Loading Content Manager...</div>;
+  const [timedOut, setTimedOut] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setTimedOut(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
+
+  const isReady = timedOut || (siteData && homeData && aboutData && programmeData && roundtablesData && partnersData && showcaseData && venueData && signalsData && contactData && faqData);
+
+  if (!isReady) {
+    return (
+      <div className="min-h-screen bg-bg-base flex flex-col items-center justify-center p-20 text-center text-text-primary">
+        <div className="h-8 w-8 rounded-full border-2 border-brand-primary border-t-transparent animate-spin mb-4" />
+        <p className="font-semibold text-lg text-text-primary">Loading Content Manager...</p>
+        <p className="text-xs text-text-secondary mt-1">Connecting to live content store...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-bg-base pt-16 pb-20 text-text-primary">

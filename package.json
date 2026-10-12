@@ -8,8 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "validate:content": "node scripts/validate-content.js",
-    "check:hex": "node scripts/check-hex.js"
+    "validate:content": "node scripts/validate-content.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",

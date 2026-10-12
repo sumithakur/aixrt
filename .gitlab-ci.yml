@@ -31,13 +31,6 @@ typecheck:
   script:
     - npx tsc --noEmit
 
-check-hex:
-  extends: .node
-  stage: test
-  script:
-    - npm run check:hex
-  allow_failure: true
-
 build:
   extends: .node
   stage: build

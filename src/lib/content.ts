@@ -91,58 +91,9 @@ export function loadContentFile<T = any>(filename: string): T {
 }
 
 /**
- * Async content loader that queries Firestore on the server with fallback to synchronous loadContentFile
- */
-export async function fetchContentFileAsync<T = any>(filename: string): Promise<T> {
-  // If running in browser, use memory or fallback
-  if (typeof window !== 'undefined') {
-    return loadContentFile<T>(filename);
-  }
-
-  try {
-    const { getFirestoreDb } = await import('@/lib/firebase-admin');
-    const db = getFirestoreDb();
-    if (db) {
-      const docId = filename.replace('.json', '');
-      const doc = await db.collection('content').doc(docId).get();
-      if (doc.exists) {
-        const data = doc.data();
-        if (data && data.payload) {
-          if (typeof globalThis !== 'undefined') {
-            globalThis.__CMS_CACHE__ = globalThis.__CMS_CACHE__ || {};
-            globalThis.__CMS_CACHE__[filename] = data.payload;
-          }
-          return data.payload as T;
-        }
-      }
-    }
-  } catch (e) {
-    // Fallback if Firestore query fails or offline
-  }
-
-  return loadContentFile<T>(filename);
-}
-
-/**
  * Enforce the confirmation gate at the data layer.
  * Any unconfirmed entity has its identifying names censored.
  */
-export async function getSiteConfigAsync(): Promise<SiteConfig> {
-  const config = await fetchContentFileAsync<SiteConfig>('site.json');
-  if (config.venue.status !== 'confirmed') {
-    return {
-      ...config,
-      venue: {
-        ...config.venue,
-        name: 'Doha, Qatar',
-        address: '',
-        mapUrl: '',
-      },
-    };
-  }
-  return config;
-}
-
 export function getSiteConfig(): SiteConfig {
   const config = loadContentFile<SiteConfig>('site.json');
   if (config.venue.status !== 'confirmed') {
@@ -157,26 +108,6 @@ export function getSiteConfig(): SiteConfig {
     };
   }
   return config;
-}
-
-export async function getRoundtablesAsync(): Promise<Roundtable[]> {
-  const data = await fetchContentFileAsync<{ items: Roundtable[] }>('roundtables.json');
-  const items = (data?.items || []) as Roundtable[];
-  return items.map((rt) => {
-    if (rt.chair && rt.chair.status !== 'confirmed') {
-      return {
-        ...rt,
-        chair: {
-          status: rt.chair.status,
-          organisation: undefined,
-          personName: undefined,
-          personRole: undefined,
-          logo: undefined,
-        },
-      };
-    }
-    return rt;
-  });
 }
 
 export function getRoundtables(): Roundtable[] {
@@ -199,24 +130,9 @@ export function getRoundtables(): Roundtable[] {
   });
 }
 
-export async function getRoundtableBySlugAsync(slug: string): Promise<Roundtable | undefined> {
-  const all = await getRoundtablesAsync();
-  return all.find((rt) => rt.slug === slug);
-}
-
 export function getRoundtableBySlug(slug: string): Roundtable | undefined {
   const all = getRoundtables();
   return all.find((rt) => rt.slug === slug);
-}
-
-export async function getProgrammeAsync(): Promise<ProgrammeItem[]> {
-  const config = await getSiteConfigAsync();
-  const data = await fetchContentFileAsync<{ items: ProgrammeItem[] }>('programme.json');
-  const items = (data?.items || []) as ProgrammeItem[];
-  if (!config.features?.showRecognition) {
-    return items.filter((item) => item.conditional !== 'recognition');
-  }
-  return items;
 }
 
 export function getProgramme(): ProgrammeItem[] {
@@ -229,30 +145,10 @@ export function getProgramme(): ProgrammeItem[] {
   return items;
 }
 
-export async function getHomeContentAsync() {
-  return await fetchContentFileAsync('home.json');
-}
-
-export function getHomeContent() {
-  return loadContentFile('home.json');
-}
-
-export async function getPartnersAsync(): Promise<Partner[]> {
-  const data = await fetchContentFileAsync<{ items: Partner[] }>('partners.json');
-  const items = (data?.items || []) as Partner[];
-  return items.filter((p) => p.status === 'confirmed');
-}
-
 export function getPartners(): Partner[] {
   const data = loadContentFile<{ items: Partner[] }>('partners.json');
   const items = (data?.items || []) as Partner[];
   return items.filter((p) => p.status === 'confirmed');
-}
-
-export async function getShowcaseCompaniesAsync(): Promise<ShowcaseCompany[]> {
-  const data = await fetchContentFileAsync<{ items: ShowcaseCompany[] }>('showcase.json');
-  const items = (data?.items || []) as ShowcaseCompany[];
-  return items.filter((c) => c.status === 'confirmed');
 }
 
 export function getShowcaseCompanies(): ShowcaseCompany[] {
@@ -261,29 +157,14 @@ export function getShowcaseCompanies(): ShowcaseCompany[] {
   return items.filter((c) => c.status === 'confirmed');
 }
 
-export async function getSpeakersAsync(): Promise<Speaker[]> {
-  const data = await fetchContentFileAsync<{ items: Speaker[] }>('speakers.json');
-  const items = (data?.items || []) as Speaker[];
-  return items.filter((s) => s.status === 'confirmed');
-}
-
 export function getSpeakers(): Speaker[] {
   const data = loadContentFile<{ items: Speaker[] }>('speakers.json');
   const items = (data?.items || []) as Speaker[];
   return items.filter((s) => s.status === 'confirmed');
 }
 
-export async function getAudienceDataAsync(): Promise<AudienceData> {
-  return await fetchContentFileAsync<AudienceData>('audience.json');
-}
-
 export function getAudienceData(): AudienceData {
   return loadContentFile<AudienceData>('audience.json');
-}
-
-export async function getFAQsAsync(): Promise<FAQCategory[]> {
-  const data = await fetchContentFileAsync<{ items: FAQCategory[] }>('faq.json');
-  return (data?.items || []) as FAQCategory[];
 }
 
 export function getFAQs(): FAQCategory[] {
@@ -291,8 +172,8 @@ export function getFAQs(): FAQCategory[] {
   return (data?.items || []) as FAQCategory[];
 }
 
-export async function getAboutContentAsync() {
-  return await fetchContentFileAsync('about.json');
+export function getHomeContent() {
+  return loadContentFile('home.json');
 }
 
 export function getAboutContent() {

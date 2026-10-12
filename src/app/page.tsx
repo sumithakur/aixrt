@@ -11,11 +11,11 @@ import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
 import { HomeHero } from '@/components/home/HomeHero';
 import {
-  getSiteConfigAsync,
-  getRoundtablesAsync,
-  getAudienceDataAsync,
-  getHomeContentAsync,
-} from '@/lib/content';
+  getLiveSiteConfig,
+  getLiveRoundtables,
+  getLiveAudienceData,
+  getLiveHomeContent,
+} from '@/lib/server-content';
 import {
   ArrowRight,
   Shield,
@@ -59,10 +59,10 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const config = await getSiteConfigAsync();
-  const roundtables = await getRoundtablesAsync();
-  const audience = await getAudienceDataAsync();
-  const homeData = await getHomeContentAsync();
+  const config = await getLiveSiteConfig();
+  const roundtables = await getLiveRoundtables();
+  const audience = await getLiveAudienceData();
+  const homeData = await getLiveHomeContent();
 
   const condensedProgramme = [
     {

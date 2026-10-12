@@ -7,7 +7,7 @@ import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
-import { getRoundtablesAsync } from '@/lib/content';
+import { getLiveRoundtables } from '@/lib/server-content';
 import { Shield, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RoundtablesHubPage() {
-  const roundtables = await getRoundtablesAsync();
+  const roundtables = await getLiveRoundtables();
 
   const runOfShowSteps = [
     {

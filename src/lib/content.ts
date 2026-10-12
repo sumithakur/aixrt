@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
 // Fallback static JSON imports
 import siteFallback from '@/content/site.json';
 import roundtablesFallback from '@/content/roundtables.json';
@@ -48,6 +45,36 @@ declare global {
   var __CMS_CACHE__: Record<string, any> | undefined;
 }
 
+function readServerFile(filename: string): any {
+  // Never attempt to load Node fs/path in the browser client
+  if (typeof window !== 'undefined') return null;
+
+  try {
+    // Dynamically require so client bundler does not bundle fs/path
+    const fs = typeof require !== 'undefined' ? require('fs') : null;
+    const path = typeof require !== 'undefined' ? require('path') : null;
+    if (!fs || !path) return null;
+
+    // 1. Check /tmp/content (writable on Vercel and serverless containers)
+    const tmpPath = path.join('/tmp', 'content', filename);
+    if (fs.existsSync(tmpPath)) {
+      const parsed = JSON.parse(fs.readFileSync(tmpPath, 'utf8'));
+      if (parsed) return parsed;
+    }
+
+    // 2. Check local content directory on disk
+    const localPath = path.join(process.cwd(), 'content', filename);
+    if (fs.existsSync(localPath)) {
+      const parsed = JSON.parse(fs.readFileSync(localPath, 'utf8'));
+      if (parsed) return parsed;
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  return null;
+}
+
 export function loadContentFile<T = any>(filename: string): T {
   const fallback = FALLBACK_MAP[filename] as T;
 
@@ -56,26 +83,10 @@ export function loadContentFile<T = any>(filename: string): T {
     return globalThis.__CMS_CACHE__[filename] as T;
   }
 
-  // 2. Check /tmp/content (writable on Vercel and serverless containers)
-  try {
-    const tmpPath = path.join('/tmp', 'content', filename);
-    if (fs.existsSync(tmpPath)) {
-      const parsed = JSON.parse(fs.readFileSync(tmpPath, 'utf8'));
-      if (parsed) return parsed as T;
-    }
-  } catch (e) {
-    // ignore
-  }
-
-  // 3. Check local content directory on disk
-  try {
-    const localPath = path.join(process.cwd(), 'content', filename);
-    if (fs.existsSync(localPath)) {
-      const parsed = JSON.parse(fs.readFileSync(localPath, 'utf8'));
-      if (parsed) return parsed as T;
-    }
-  } catch (e) {
-    // ignore
+  // 2. Check server-side filesystem (/tmp or content/)
+  const serverData = readServerFile(filename);
+  if (serverData) {
+    return serverData as T;
   }
 
   return fallback;

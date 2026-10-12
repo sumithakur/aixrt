@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+build
+coverage
+.git
+.gitignore
+.gitlab-ci.yml
+Dockerfile
+.dockerignore
+.env*
+*.log
+.dev_log
+.vscode
+.claude
+scripts/archive

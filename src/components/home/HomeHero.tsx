@@ -145,7 +145,8 @@ export function HomeHero({ config, homeData }: HomeHeroProps) {
           <FadeIn delay={550}>
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <Button
-                href="/request-an-invitation"
+                // href="/request-an-invitation"
+                href="https://arisio.io/"
                 variant="primary"
                 size="lg"
                 className="rounded-full bg-gradient-to-r from-brand-primary to-brand-purple text-text-primary shadow-glow text-sm font-bold px-7 py-3.5 hover:opacity-95 transition-all"

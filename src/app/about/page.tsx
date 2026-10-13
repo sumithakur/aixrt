@@ -244,7 +244,7 @@ export default function AboutPage() {
                 </ul>
 
                 <div className="pt-4 border-t border-border-subtle">
-                  <Button href="/request-an-invitation" variant="primary" size="md" className="w-full">
+                  <Button /* href="/request-an-invitation" */ href="https://arisio.io/" variant="primary" size="md" className="w-full">
                     Register
                   </Button>
                 </div>

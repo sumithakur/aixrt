@@ -27,7 +27,7 @@ export function CTABand({
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-          <Button href="/request-an-invitation" variant="gradient" size="lg">
+          <Button /* href="/request-an-invitation" */ href="https://arisio.io/" variant="gradient" size="lg">
             Register
           </Button>
           <Button href="/partners/become-a-partner" variant="secondary" size="lg">

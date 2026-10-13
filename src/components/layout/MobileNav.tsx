@@ -53,7 +53,8 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       <div className="flex-1 overflow-y-auto px-6 py-8">
         <div className="mb-6">
           <Button
-            href="/request-an-invitation"
+            // href="/request-an-invitation"
+            href="https://arisio.io/"
             variant="primary"
             size="lg"
             className="w-full"

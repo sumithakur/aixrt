@@ -189,7 +189,8 @@ export function SiteHeader() {
               Become a Sponsor
             </Button>
             <Button
-              href="/request-an-invitation"
+              // href="/request-an-invitation"
+              href="https://arisio.io/"
               variant="primary"
               size="sm"
               className="text-xs font-semibold sm:text-sm shadow-glow"

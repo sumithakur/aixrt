@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -8,22 +8,54 @@ import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { getSiteConfig, getContactData } from '@/lib/content';
 import { Mail, CheckCircle2, MessageSquare, Briefcase, Sparkles, Newspaper } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { createInstitutionalMessage, fetchContactDepartmentOptions } from '@/store/contact/contactActions';
+import { resetInstitutionalMessage } from '@/store/contact/contactSlice';
 
 export default function ContactPage() {
   const config = getSiteConfig();
   const contactData = getContactData();
-  const [submitted, setSubmitted] = useState(false);
+  const dispatch = useAppDispatch();
+  const { departmentOptions, institutionalMessage } = useAppSelector((state) => state.contact);
+  const submitted = institutionalMessage.status === 'succeeded';
   const [form, setForm] = useState({
     name: '',
     email: '',
     organisation: '',
-    department: 'general',
+    departmentId: '',
     message: '',
   });
 
+  // Load dropdown options
+  useEffect(() => {
+    if (departmentOptions.status === 'idle') dispatch(fetchContactDepartmentOptions());
+  }, [dispatch, departmentOptions.status]);
+
+  // Default the department to the first option once loaded
+  useEffect(() => {
+    if (!form.departmentId && departmentOptions.data.length > 0) {
+      setForm((prev) => ({ ...prev, departmentId: String(departmentOptions.data[0].id) }));
+    }
+  }, [departmentOptions.data, form.departmentId]);
+
+  // clear submission state when leaving the page
+  useEffect(() => {
+    return () => {
+      dispatch(resetInstitutionalMessage());
+    };
+  }, [dispatch]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    dispatch(
+      createInstitutionalMessage({
+        full_name: form.name,
+        work_email: form.email,
+        organisation: form.organisation,
+        department_option_id: Number(form.departmentId),
+        message: form.message,
+      })
+    );
   };
 
   const contactRoutes = [
@@ -158,15 +190,26 @@ export default function ContactPage() {
                   <label htmlFor="contact-department" className="block text-xs font-semibold text-text-primary">Department / Enquiry Type *</label>
                   <select
                     id="contact-department"
-                    value={form.department}
-                    onChange={(e) => setForm({ ...form, department: e.target.value })}
+                    required
+                    value={form.departmentId}
+                    onChange={(e) => setForm({ ...form, departmentId: e.target.value })}
+                    disabled={departmentOptions.status === 'loading'}
                     className="mt-1 w-full rounded-sm border border-border-subtle bg-bg-base px-3 py-2 text-sm text-text-primary focus:border-brand-primary focus:outline-none"
                   >
-                    <option value="general">General Summit Information</option>
-                    <option value="partnerships">Partnership & Roundtable Chair</option>
-                    <option value="showcase">AI Showcase Application</option>
-                    <option value="media">Press Accreditation & Interviews</option>
+                    {departmentOptions.data.length === 0 && (
+                      <option value="">
+                        {departmentOptions.status === 'loading' ? 'Loading…' : 'No options available'}
+                      </option>
+                    )}
+                    {departmentOptions.data.map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.name}
+                      </option>
+                    ))}
                   </select>
+                  {departmentOptions.error && (
+                    <p className="mt-1 text-xs text-brand-rose">{departmentOptions.error}</p>
+                  )}
                 </div>
               </div>
 
@@ -182,8 +225,18 @@ export default function ContactPage() {
                 />
               </div>
 
+              {institutionalMessage.error && (
+                <p className="text-xs text-brand-rose">{institutionalMessage.error}</p>
+              )}
+
               <div className="pt-2">
-                <Button type="submit" variant="primary" size="md" className="w-full">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="md"
+                  className="w-full"
+                  isLoading={institutionalMessage.status === 'loading'}
+                >
                   Transmit Message
                 </Button>
               </div>

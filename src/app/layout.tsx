@@ -4,6 +4,7 @@ import './globals.css';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { getSiteConfig } from '@/lib/content';
+import { StoreProvider } from '@/store/StoreProvider';
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -94,17 +95,26 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ubuntu.variable} ${roboto.variable}`}>
       <head>
+        {/* Browser form-fill extensions (e.g. Edge autofill) inject `fdprocessedid` into inputs/buttons
+            before React hydrates, causing hydration mismatch warnings. Strip it as soon as it appears. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var a='fdprocessedid';function s(n){n.removeAttribute&&n.hasAttribute&&n.hasAttribute(a)&&n.removeAttribute(a)}new MutationObserver(function(m){for(var i=0;i<m.length;i++){var r=m[i];if(r.type==='attributes'){s(r.target)}else{for(var j=0;j<r.addedNodes.length;j++){var n=r.addedNodes[j];if(n.nodeType===1){s(n);n.querySelectorAll&&n.querySelectorAll('['+a+']').forEach(s)}}}}}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:[a]})})();`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
         />
       </head>
       <body className="flex min-h-screen flex-col bg-bg-base text-text-primary antialiased overflow-x-hidden">
-        <SiteHeader />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
+        <StoreProvider>
+          <SiteHeader />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <SiteFooter />
+        </StoreProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -25,6 +25,19 @@ import {
   SPONSORSHIP_TIERS,
   type SponsorshipTier,
 } from '@/components/sponsors/SponsorshipTiersModal';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import {
+  createDirectInquiry,
+  createProspectusDownload,
+  fetchPartnershipInterests,
+  fetchRoundtableLanes,
+} from '@/store/partnership/partnershipActions';
+import { resetDirectInquiry, resetProspectusDownload } from '@/store/partnership/partnershipSlice';
+import { downloadFile } from '@/lib/download';
+
+const PROSPECTUS_FILE_NAME = 'AIX-Summit-2026-Partnership-Prospectus.pdf';
+// Served from public/pdf/AIX Brochure CXO 2.pdf
+const PROSPECTUS_FILE_URL = '/pdf/AIX%20Brochure%20CXO%202.pdf';
 
 export default function BecomeAPartnerPage() {
   const roundtables = getRoundtables();
@@ -33,41 +46,95 @@ export default function BecomeAPartnerPage() {
   // Tier modal state
   const [selectedTier, setSelectedTier] = useState<SponsorshipTier | null>(null);
 
+  const dispatch = useAppDispatch();
+  const { interests, roundtableLanes, prospectusDownload, directInquiry } = useAppSelector(
+    (state) => state.partnership
+  );
+
   // Prospectus form state
-  const [prospectusSubmitted, setProspectusSubmitted] = useState(false);
   const [prospectusForm, setProspectusForm] = useState({
     name: '',
     workEmail: '',
     organisation: '',
     role: '',
   });
+  const prospectusSubmitted = prospectusDownload.status === 'succeeded';
 
-  // Enquiry form state
-  const [enquirySubmitted, setEnquirySubmitted] = useState(false);
+  // Enquiry form state (interestId / roundtableId hold option ids from the API)
   const [enquiryForm, setEnquiryForm] = useState({
     name: '',
     email: '',
     organisation: '',
     role: '',
-    interest: 'Roundtable Chair',
-    roundtable: '',
+    interestId: '',
+    roundtableId: '',
     message: '',
   });
+  const enquirySubmitted = directInquiry.status === 'succeeded';
 
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-  const handleProspectusSubmit = (e: React.FormEvent) => {
+  // Load dropdown options
+  useEffect(() => {
+    if (interests.status === 'idle') dispatch(fetchPartnershipInterests());
+    if (roundtableLanes.status === 'idle') dispatch(fetchRoundtableLanes());
+  }, [dispatch, interests.status, roundtableLanes.status]);
+
+  // Default the interest to the first option once loaded
+  useEffect(() => {
+    if (!enquiryForm.interestId && interests.data.length > 0) {
+      setEnquiryForm((prev) => ({ ...prev, interestId: String(interests.data[0].id) }));
+    }
+  }, [interests.data, enquiryForm.interestId]);
+
+  // Reset submission state when leaving the page
+  useEffect(() => {
+    return () => {
+      dispatch(resetProspectusDownload());
+      dispatch(resetDirectInquiry());
+    };
+  }, [dispatch]);
+
+  const selectRoundtableBySlug = (slug: string) => {
+    const lane = roundtableLanes.data.find((l) => l.value === slug);
+    if (lane) setEnquiryForm((prev) => ({ ...prev, roundtableId: String(lane.id) }));
+  };
+
+  const selectInterestByTier = (tierName: string) => {
+    const interest = interests.data.find(
+      (i) => tierName.startsWith(i.name.split(' (')[0]) || i.name.startsWith(tierName)
+    );
+    if (interest) setEnquiryForm((prev) => ({ ...prev, interestId: String(interest.id) }));
+  };
+
+  const handleProspectusSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (prospectusForm.name && prospectusForm.workEmail) {
-      setProspectusSubmitted(true);
+    const result = await dispatch(
+      createProspectusDownload({
+        full_name: prospectusForm.name,
+        work_email: prospectusForm.workEmail,
+        organisation: prospectusForm.organisation,
+        role_title: prospectusForm.role,
+      })
+    );
+    if (createProspectusDownload.fulfilled.match(result)) {
+      downloadFile(PROSPECTUS_FILE_URL, PROSPECTUS_FILE_NAME);
     }
   };
 
   const handleEnquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (enquiryForm.name && enquiryForm.email) {
-      setEnquirySubmitted(true);
-    }
+    dispatch(
+      createDirectInquiry({
+        full_name: enquiryForm.name,
+        work_email: enquiryForm.email,
+        organisation: enquiryForm.organisation,
+        job_title: enquiryForm.role,
+        partnership_interest_id: Number(enquiryForm.interestId),
+        preferred_roundtable_lane_id: enquiryForm.roundtableId ? Number(enquiryForm.roundtableId) : null,
+        strategic_focus_objectives: enquiryForm.message,
+      })
+    );
   };
 
   const chairBenefits = [
@@ -283,7 +350,7 @@ export default function BecomeAPartnerPage() {
                   </Link>
                   <Button
                     onClick={() => {
-                      setEnquiryForm((prev) => ({ ...prev, roundtable: rt.slug }));
+                      selectRoundtableBySlug(rt.slug);
                       document.getElementById('enquiry')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     variant="ghost"
@@ -430,10 +497,18 @@ export default function BecomeAPartnerPage() {
               <div className="mt-8 rounded-md bg-status-confirmed/10 p-6 border border-status-confirmed/30 text-center">
                 <CheckCircle2 className="mx-auto h-8 w-8 text-status-confirmed mb-2" />
                 <p className="text-sm font-semibold text-text-primary">
-                  Prospectus download link sent!
+                  Your prospectus download has started.
                 </p>
                 <p className="text-xs text-text-secondary mt-1">
-                  We have forwarded the document to {prospectusForm.workEmail}.
+                  Download didn&apos;t start?{' '}
+                  <a
+                    href={PROSPECTUS_FILE_URL}
+                    download={PROSPECTUS_FILE_NAME}
+                    className="font-semibold text-brand-secondary hover:underline"
+                  >
+                    Click here to download
+                  </a>
+                  .
                 </p>
               </div>
             ) : (
@@ -485,8 +560,20 @@ export default function BecomeAPartnerPage() {
                   </div>
                 </div>
 
+                {prospectusDownload.error && (
+                  <p role="alert" className="rounded border border-brand-rose/40 bg-brand-rose/10 p-3 text-xs text-brand-rose">
+                    {prospectusDownload.error}
+                  </p>
+                )}
+
                 <div className="pt-2">
-                  <Button type="submit" variant="primary" size="md" className="w-full">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="md"
+                    className="w-full"
+                    isLoading={prospectusDownload.status === 'loading'}
+                  >
                     <span>Request Prospectus (PDF)</span>
                     <Download className="h-4 w-4" />
                   </Button>
@@ -575,35 +662,49 @@ export default function BecomeAPartnerPage() {
                     <label htmlFor="partner-interest" className="block text-xs font-semibold text-text-primary">Partnership Interest *</label>
                     <select
                       id="partner-interest"
-                      value={enquiryForm.interest}
-                      onChange={(e) => setEnquiryForm({ ...enquiryForm, interest: e.target.value })}
+                      required
+                      value={enquiryForm.interestId}
+                      onChange={(e) => setEnquiryForm({ ...enquiryForm, interestId: e.target.value })}
+                      disabled={interests.status === 'loading'}
                       className="mt-1 w-full rounded-sm border border-border-subtle bg-bg-base px-3 py-2 text-sm text-text-primary focus:border-brand-primary focus:outline-none"
                     >
-                      <option value="Roundtable Chair">Roundtable Chair (Flagship)</option>
-                      <option value="Strategic Partner">Strategic Partner</option>
-                      <option value="Knowledge Partner">Knowledge Partner</option>
-                      <option value="AI Showcase Partner">AI Showcase Partner</option>
-                      <option value="Networking Partner">Networking Partner</option>
-                      <option value="Technology Partner">Technology Partner</option>
-                      <option value="Not sure">Not sure / General Enquiry</option>
+                      {interests.data.length === 0 && (
+                        <option value="">
+                          {interests.status === 'loading' ? 'Loading…' : 'No options available'}
+                        </option>
+                      )}
+                      {interests.data.map((interest) => (
+                        <option key={interest.id} value={interest.id}>
+                          {interest.name}
+                        </option>
+                      ))}
                     </select>
+                    {interests.error && (
+                      <p className="mt-1 text-xs text-brand-rose">{interests.error}</p>
+                    )}
                   </div>
 
                   <div>
                     <label htmlFor="partner-roundtable-lane" className="block text-xs font-semibold text-text-primary">Preferred Roundtable Lane</label>
                     <select
                       id="partner-roundtable-lane"
-                      value={enquiryForm.roundtable}
-                      onChange={(e) => setEnquiryForm({ ...enquiryForm, roundtable: e.target.value })}
+                      value={enquiryForm.roundtableId}
+                      onChange={(e) => setEnquiryForm({ ...enquiryForm, roundtableId: e.target.value })}
+                      disabled={roundtableLanes.status === 'loading'}
                       className="mt-1 w-full rounded-sm border border-border-subtle bg-bg-base px-3 py-2 text-sm text-text-primary focus:border-brand-primary focus:outline-none"
                     >
-                      <option value="">Select a roundtable lane</option>
-                      {roundtables.map((rt) => (
-                        <option key={rt.slug} value={rt.slug}>
-                          Table {rt.order}: {rt.shortTitle}
+                      <option value="">
+                        {roundtableLanes.status === 'loading' ? 'Loading…' : 'Select a roundtable lane'}
+                      </option>
+                      {roundtableLanes.data.map((lane) => (
+                        <option key={lane.id} value={lane.id}>
+                          {lane.name}
                         </option>
                       ))}
                     </select>
+                    {roundtableLanes.error && (
+                      <p className="mt-1 text-xs text-brand-rose">{roundtableLanes.error}</p>
+                    )}
                   </div>
                 </div>
 
@@ -618,8 +719,21 @@ export default function BecomeAPartnerPage() {
                   />
                 </div>
 
+                {directInquiry.error && (
+                  <p role="alert" className="rounded border border-brand-rose/40 bg-brand-rose/10 p-3 text-xs text-brand-rose">
+                    {directInquiry.error}
+                  </p>
+                )}
+
                 <div className="pt-2">
-                  <Button type="submit" variant="primary" size="md" className="w-full">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="md"
+                    className="w-full"
+                    isLoading={directInquiry.status === 'loading'}
+                    disabled={!enquiryForm.interestId}
+                  >
                     Submit Partnership Enquiry
                   </Button>
                 </div>
@@ -679,7 +793,7 @@ export default function BecomeAPartnerPage() {
         onClose={() => setSelectedTier(null)}
         onContactClick={(tier) => {
           setSelectedTier(null);
-          setEnquiryForm((prev) => ({ ...prev, interest: tier.tier }));
+          selectInterestByTier(tier.tier);
           document.getElementById('enquiry')?.scrollIntoView({ behavior: 'smooth' });
         }}
       />

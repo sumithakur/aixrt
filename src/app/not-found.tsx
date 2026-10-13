@@ -29,7 +29,7 @@ export default function NotFound() {
           <Button href="/programme" variant="secondary" size="md">
             Programme
           </Button>
-          <Button href="/request-an-invitation" variant="secondary" size="md">
+          <Button /* href="/request-an-invitation" */ href="https://arisio.io/" variant="secondary" size="md">
             Register
           </Button>
         </div>

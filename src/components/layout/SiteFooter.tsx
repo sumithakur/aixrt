@@ -6,11 +6,15 @@ import { Logo } from '@/components/brand/Logo';
 import { Button } from '@/components/ui/Button';
 import { getSiteConfig } from '@/lib/content';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { createAnnouncementSubscriber } from '@/store/contact/contactActions';
 
 export function SiteFooter() {
   const config = getSiteConfig();
+  const dispatch = useAppDispatch();
+  const announcementSubscriber = useAppSelector((state) => state.contact.announcementSubscriber);
+  const subscribed = announcementSubscriber.status === 'succeeded';
   const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -20,7 +24,7 @@ export function SiteFooter() {
       return;
     }
     setError('');
-    setSubscribed(true);
+    dispatch(createAnnouncementSubscriber({ email: email.trim() }));
   };
 
   return (
@@ -43,7 +47,11 @@ export function SiteFooter() {
               {subscribed ? (
                 <div className="flex items-center gap-2 rounded-sm bg-status-confirmed/10 p-3 text-sm text-status-confirmed border border-status-confirmed/30">
                   <CheckCircle2 className="h-5 w-5 shrink-0" />
-                  <span>Thank you. You will receive confirmed announcements directly.</span>
+                  <span>
+                    {announcementSubscriber.data?.already_subscribed
+                      ? 'You are already subscribed. You will receive confirmed announcements directly.'
+                      : 'Thank you. You will receive confirmed announcements directly.'}
+                  </span>
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="space-y-2">
@@ -56,12 +64,20 @@ export function SiteFooter() {
                       required
                       className="w-full rounded-sm border border-border-subtle bg-bg-base px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:border-brand-primary focus:outline-none"
                     />
-                    <Button type="submit" variant="primary" size="md" className="shrink-0">
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="md"
+                      className="shrink-0"
+                      isLoading={announcementSubscriber.status === 'loading'}
+                    >
                       <span>Get updates</span>
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </div>
-                  {error && <p className="text-xs text-brand-rose">{error}</p>}
+                  {(error || announcementSubscriber.error) && (
+                    <p className="text-xs text-brand-rose">{error || announcementSubscriber.error}</p>
+                  )}
                 </form>
               )}
             </div>
@@ -133,7 +149,8 @@ export function SiteFooter() {
             <ul className="space-y-2 text-xs">
               <li>
                 <Link
-                  href="/request-an-invitation"
+                  // href="/request-an-invitation"
+                  href="https://arisio.io/"
                   className="font-medium text-brand-secondary hover:underline"
                 >
                   Register

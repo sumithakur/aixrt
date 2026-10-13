@@ -41,7 +41,7 @@ build:
       - .next/
     expire_in: 1 day
 
-docker-build-develop:
+docker-build:
   image: docker:latest
   stage: docker
   services:
@@ -50,9 +50,10 @@ docker-build-develop:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - echo "Building Docker image..."
-    # Image is named after the branch, version goes up on every commit: develop:1.0, develop:1.1, ...
-    - export VERSION="1.$((CI_PIPELINE_IID - 1))"
-    - export CI_REGISTRY_IMAGE_WITH_TAG="$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$VERSION"
+    # Tag is <branch>-1.<pipeline number, 2 digits>, e.g. develop-1.05, staging-1.06
+    - export ROUNDED_PIPELINE_IID=$(printf "%02d" $((CI_PIPELINE_IID % 100)))
+    - export TAG_NAME="$CI_COMMIT_REF_SLUG-1.$ROUNDED_PIPELINE_IID"
+    - export CI_REGISTRY_IMAGE_WITH_TAG="$CI_REGISTRY_IMAGE:$TAG_NAME"
     - docker build --pull -t "$CI_REGISTRY_IMAGE_WITH_TAG" .
     - echo "Pushing Docker image to registry..."
     - docker push "$CI_REGISTRY_IMAGE_WITH_TAG"

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Calendar, MapPin } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { FadeIn } from '@/components/ui/FadeIn';
@@ -48,6 +48,9 @@ export function HomeHero({ config, homeData }: HomeHeroProps) {
   const translateY = scrollY * 0.16;
   const opacity = Math.max(1 - scrollY / 650, 0);
 
+  const eventDate = homeData.hero?.date || config.event.date;
+  const eventLocation = homeData.hero?.location || config.event.locationPublic;
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-bg-base pt-12 pb-24 sm:pt-16 sm:pb-32">
       {/* Parallax Vector Skyline Background — Contained strictly to Hero */}
@@ -85,29 +88,49 @@ export function HomeHero({ config, homeData }: HomeHeroProps) {
         <div className="max-w-3xl space-y-6">
           {/* Eyebrow: Active Edition Pill */}
           <FadeIn delay={100}>
-            <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-950/40 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-purple-300">
-              <Sparkles className="h-3.5 w-3.5 text-brand-secondary" />
-              <span>{homeData.hero?.eyebrow || `ACTIVE EDITION · ${homeData.hero?.date || config.event.date}`}</span>
+            <div className="inline-flex items-center gap-2.5 rounded-full border border-brand-secondary/40 bg-brand-secondary/10 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-text-primary shadow-[0_0_20px_rgba(61,216,216,0.15)] backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-secondary opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-secondary" />
+              </span>
+              <span className="text-brand-secondary font-extrabold tracking-wider">ACTIVE EDITION</span>
+              <span className="text-white/30">•</span>
+              <span className="text-white font-bold tracking-wider">{eventDate}</span>
             </div>
           </FadeIn>
 
           {/* Huge Display Heading — Homogeneous Typography & CMS Responsive */}
           <FadeIn delay={250}>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-              {homeData.hero?.title ? (
-                homeData.hero.title
-              ) : (
-                <>
-                  JOIN THE ULTIMATE{' '}
-                  <span className="block bg-gradient-to-r from-[#FF007A] via-[#A855F7] to-[#00F2FE] bg-clip-text text-transparent">
-                    AIX ROUNDTABLE
+            <div className="space-y-4">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
+                {homeData.hero?.title ? (
+                  homeData.hero.title
+                ) : (
+                  <>
+                    JOIN THE ULTIMATE{' '}
+                    <span className="block bg-gradient-to-r from-[#FF007A] via-[#A855F7] to-[#00F2FE] bg-clip-text text-transparent">
+                      AIX ROUNDTABLE
+                    </span>
+                  </>
+                )}
+              </h1>
+
+              {/* Prominent Date & Location Highlight Strip */}
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1">
+                <div className="inline-flex items-center gap-2.5 rounded-xl border border-brand-primary/60 bg-gradient-to-r from-brand-primary/25 via-brand-amethystPurple/20 to-transparent px-4 py-2.5 text-white shadow-[0_0_30px_rgba(247,70,169,0.3)] backdrop-blur-md">
+                  <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-brand-primary shrink-0" />
+                  <span className="font-display text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white">
+                    {eventDate}
                   </span>
-                </>
-              )}
-              <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-secondary font-normal mt-2">
-                {homeData.hero?.location || config.event.locationPublic}
-              </span>
-            </h1>
+                </div>
+                <div className="inline-flex items-center gap-2 rounded-xl border border-border-prominent bg-bg-surface/90 px-4 py-2.5 text-text-secondary backdrop-blur-md shadow-card">
+                  <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-brand-secondary shrink-0" />
+                  <span className="font-display text-lg sm:text-xl lg:text-2xl font-semibold text-text-primary">
+                    {eventLocation}
+                  </span>
+                </div>
+              </div>
+            </div>
           </FadeIn>
 
           {/* Standfirst / Description */}

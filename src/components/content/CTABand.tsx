@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/Button';
+import { REGISTER_URL } from '@/lib/links';
 import { Container } from '@/components/ui/Container';
 
 interface CTABandProps {
@@ -27,7 +28,7 @@ export function CTABand({
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-          <Button /* href="/request-an-invitation" */ href="https://arisio.io/" variant="gradient" size="lg">
+          <Button /* href="/request-an-invitation" */ href={REGISTER_URL} variant="gradient" size="lg">
             Register
           </Button>
           <Button href="/partners/become-a-partner" variant="secondary" size="lg">

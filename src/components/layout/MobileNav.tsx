@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { X, ChevronRight } from 'lucide-react';
 import { getRoundtables } from '@/lib/content';
 import { Button } from '@/components/ui/Button';
+import { REGISTER_URL } from '@/lib/links';
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -54,7 +55,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         <div className="mb-6">
           <Button
             // href="/request-an-invitation"
-            href="https://arisio.io/"
+            href={REGISTER_URL}
             variant="primary"
             size="lg"
             className="w-full"

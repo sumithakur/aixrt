@@ -4,6 +4,7 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
+import { REGISTER_URL } from '@/lib/links';
 
 export default function NotFound() {
   return (
@@ -29,7 +30,7 @@ export default function NotFound() {
           <Button href="/programme" variant="secondary" size="md">
             Programme
           </Button>
-          <Button /* href="/request-an-invitation" */ href="https://arisio.io/" variant="secondary" size="md">
+          <Button /* href="/request-an-invitation" */ href={REGISTER_URL} variant="secondary" size="md">
             Register
           </Button>
         </div>

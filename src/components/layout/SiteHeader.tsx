@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { ChevronDown, Menu } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 import { Button } from '@/components/ui/Button';
+import { REGISTER_URL } from '@/lib/links';
 import { MegaMenu } from '@/components/layout/MegaMenu';
 import { MobileNav } from '@/components/layout/MobileNav';
 import { EditionTopBar } from '@/components/layout/EditionTopBar';
@@ -190,7 +191,7 @@ export function SiteHeader() {
             </Button>
             <Button
               // href="/request-an-invitation"
-              href="https://arisio.io/"
+              href={REGISTER_URL}
               variant="primary"
               size="sm"
               className="text-xs font-semibold sm:text-sm shadow-glow"

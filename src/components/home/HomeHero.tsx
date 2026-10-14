@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ArrowRight, Sparkles, Calendar, MapPin } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { REGISTER_URL } from '@/lib/links';
 import { FadeIn } from '@/components/ui/FadeIn';
 import type { SiteConfig } from '@/types/content';
 
@@ -146,7 +147,7 @@ export function HomeHero({ config, homeData }: HomeHeroProps) {
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <Button
                 // href="/request-an-invitation"
-                href="https://arisio.io/"
+                href={REGISTER_URL}
                 variant="primary"
                 size="lg"
                 className="rounded-full bg-gradient-to-r from-brand-primary to-brand-purple text-text-primary shadow-glow text-sm font-bold px-7 py-3.5 hover:opacity-95 transition-all"

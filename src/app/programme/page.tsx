@@ -4,6 +4,7 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
+import { REGISTER_URL } from '@/lib/links';
 import { ProgrammeRow } from '@/components/content/ProgrammeRow';
 import { CTABand } from '@/components/content/CTABand';
 import {
@@ -126,7 +127,7 @@ export default async function ProgrammePage() {
                 </ul>
 
                 <div className="pt-4 border-t border-border-subtle">
-                  <Button /* href="/request-an-invitation" */ href="https://arisio.io/" variant="primary" size="md" className="w-full">
+                  <Button /* href="/request-an-invitation" */ href={REGISTER_URL} variant="primary" size="md" className="w-full">
                     Register
                   </Button>
                 </div>

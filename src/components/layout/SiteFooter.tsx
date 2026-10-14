@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/brand/Logo';
 import { Button } from '@/components/ui/Button';
+import { REGISTER_URL } from '@/lib/links';
 import { getSiteConfig } from '@/lib/content';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -150,7 +151,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   // href="/request-an-invitation"
-                  href="https://arisio.io/"
+                  href={REGISTER_URL}
                   className="font-medium text-brand-secondary hover:underline"
                 >
                   Register

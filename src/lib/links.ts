@@ -3,4 +3,4 @@
  */
 
 /** Where every "Register" button sends visitors. Override with NEXT_PUBLIC_REGISTER_URL. */
-export const REGISTER_URL = process.env.NEXT_PUBLIC_REGISTER_URL || 'https://dic.hyperthink.io/DetailEventsPage/aix-roundtables-2026-doha-qatar-monday-14-december-2026-556';
+export const REGISTER_URL = process.env.NEXT_PUBLIC_REGISTER_URL || 'https://arisio.io/DetailEventsPage/aix-roundtables-2026-doha-qatar-monday-14-december-2026-by';

@@ -59,4 +59,4 @@ docker-build:
     - docker push "$CI_REGISTRY_IMAGE_WITH_TAG"
     - echo "Docker image pushed successfully - $CI_REGISTRY_IMAGE_WITH_TAG"
   only:
-    - develop
+    - production

@@ -2,7 +2,7 @@
  * Thin client for the AIXRT backend (aixrt_backend).
  * Every endpoint responds with { success, data } or { success: false, error: { code, msg } }.
  */
-export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || 'https://aixrt.be.hyperthings.in/api').replace(/\/+$/, '');
+export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || 'https://aixrt.be.aixroundtables.com/api').replace(/\/+$/, '');
 
 interface ApiEnvelope<T> {
   success: boolean;

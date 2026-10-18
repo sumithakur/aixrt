@@ -1,15 +1,36 @@
 {
   "hero": {
-    "title": "Enterprise AI Showcase",
-    "description": "Twelve heavily-vetted Series A+ enterprise AI startups present live, working software directly to the roundtable executives."
+    "eyebrow": "Live Stage Demonstrations · 11:30 – 12:15",
+    "title": "Working AI, demonstrated to the people who buy it.",
+    "description": "Four to six selected enterprise AI companies demonstrate working products to a room of senior buyers. Not a pitch competition — working software, verified outcomes, and pre-booked introductions.",
+    "primaryButtonText": "Apply to Demonstrate",
+    "primaryButtonUrl": "/showcase/apply",
+    "secondaryButtonText": "Enterprise Connections Details",
+    "secondaryButtonUrl": "#connections"
   },
-  "opportunity": {
-    "title": "Six Minutes to Prove It Works",
-    "paragraphs": [
-      "The Showcase is strictly for enterprise-grade AI applications with verified deployments. Foundational models are table stakes; we are interested in applied layers, orchestration, security, and measurable ROI.",
-      "Startups are integrated directly into the roundtable sessions. Each table (15 executives) will receive two 6-minute live demonstrations relevant to their specific lane.",
-      "Showcase stations are active in the central summit foyer during arrival (14:00–14:30) and the networking break (16:00–16:30). Delegates can interact directly with the software and interrogate technical principals."
+  "format": {
+    "eyebrow": "The Format",
+    "title": "A 45-Minute Dedicated Stage Slot",
+    "description": "Each Showcase demonstration follows a rigorous three-part structure:",
+    "steps": [
+      {
+        "title": "1. The Enterprise Problem (2 Mins)",
+        "desc": "The specific friction point, risk constraint, or operational bottleneck in the enterprise."
+      },
+      {
+        "title": "2. Live Product Demonstration (5 Mins)",
+        "desc": "Working software performing live execution in the production environment."
+      },
+      {
+        "title": "3. Measurable Outcome & ROI (2 Mins)",
+        "desc": "Audited results: cycle time compression, cost reduction, or risk mitigation evidence."
+      }
     ]
+  },
+  "connections": {
+    "eyebrow": "Curated Introductions",
+    "title": "1-on-1 Enterprise Connections",
+    "description": "Beyond the stage demonstrations, AIX facilitates pre-scheduled 15-minute briefings during the afternoon break, connecting showcase founders directly with enterprise buyers who requested further interrogation."
   },
   "criteria": [
     {

@@ -172,6 +172,10 @@ export function getFAQs(): FAQCategory[] {
   return (data?.items || []) as FAQCategory[];
 }
 
+export function getFAQDataRaw() {
+  return loadContentFile('faq.json');
+}
+
 export function getHomeContent() {
   return loadContentFile('home.json');
 }

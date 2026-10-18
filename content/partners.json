@@ -1,13 +1,28 @@
 {
+  "hero": {
+    "eyebrow": "Strategic Collaboration",
+    "title": "Sponsors & Roundtable Chairs",
+    "description": "Sponsorship at AIX Roundtable means substantive access to a curated executive room, not exposure to a crowd. Our sponsors lead the strategic agenda across sovereign AI deployment, critical infrastructure, and capital investment."
+  },
+  "flagship": {
+    "badge": "2026 Sponsorship Opportunities",
+    "title": "Six Roundtable Chair Sponsorships are Open for 2026",
+    "description": "Confirmed chairs and roundtable sponsors are announced in sequence as agreements are finalized. Each partner owns a strategic conversation, leads 15 curated peer executives, and co-authors the published AIX Roundtable Signals research report.",
+    "buttonText": "Explore Roundtable Chair Specifications",
+    "buttonUrl": "/partners/become-a-partner"
+  },
+  "statusSection": {
+    "title": "Roundtable Chair Status Across the Six Lanes"
+  },
+  "previousPartners": {
+    "title": "Previous Partners",
+    "description": "Organisations that have supported the AIX executive mandate."
+  },
   "items": [
     {
       "name": "Hyperthink Technologies",
       "logo": "/brand/WhiteLogo.png",
       "status": "confirmed"
     }
-  ],
-  "hero": {
-    "title": "Partners & Roundtable Chairs",
-    "description": "Partnership at AIX Summit means substantive access to a curated executive room, not exposure to a crowd. Our partners lead the strategic agenda across sovereign AI deployment, critical infrastructure, and capital investment."
-  }
+  ]
 }

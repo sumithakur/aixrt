@@ -291,13 +291,11 @@ export default async function HomePage() {
                 Practical Innovation
               </Eyebrow>
               <Heading level={2} size="xl">
-                Working AI, demonstrated to the people who buy it.
+                {homeData.showcaseIntro?.title || 'Working AI, demonstrated to the people who buy it.'}
               </Heading>
               <p className="text-sm sm:text-base leading-relaxed text-text-secondary">
-                Four to six enterprise AI companies demonstrate working products to a room of buyers. Not a pitch competition — working software, real outcomes, and pre-booked introductions to the executives who want to see more.
-              </p>
-              <p className="text-sm leading-relaxed text-text-secondary">
-                During lunch, delegates select which companies they wish to interrogate further. AIX coordinates 15-minute 1-on-1 Enterprise Connections during the afternoon break, with follow-on briefings scheduled post-event.
+                {homeData.showcaseIntro?.description ||
+                  'Four to six enterprise AI companies demonstrate working products to a room of buyers. Not a pitch competition — working software, real outcomes, and pre-booked introductions to the executives who want to see more.'}
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row pt-4">

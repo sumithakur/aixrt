@@ -6,8 +6,13 @@ import {
   getHomeContent,
   getAboutContent,
   getPartners,
+  getPartnersDataRaw,
   getAudienceData,
   getFAQs,
+  getVenueData,
+  getShowcaseData,
+  getSignalsData,
+  getContactData,
 } from '@/lib/content';
 import type { SiteConfig, Roundtable, ProgrammeItem, Partner, AudienceData, FAQCategory } from '@/types/content';
 
@@ -111,6 +116,36 @@ export async function getLivePartners(): Promise<Partner[]> {
     return items.filter((p) => p.status === 'confirmed');
   }
   return getPartners();
+}
+
+export async function getLivePartnersDataRaw(): Promise<any> {
+  const firestoreData = await fetchFromFirestore('partners.json');
+  if (firestoreData) return firestoreData;
+  return getPartnersDataRaw();
+}
+
+export async function getLiveVenueData(): Promise<any> {
+  const firestoreData = await fetchFromFirestore('venue.json');
+  if (firestoreData) return firestoreData;
+  return getVenueData();
+}
+
+export async function getLiveShowcaseData(): Promise<any> {
+  const firestoreData = await fetchFromFirestore('showcase.json');
+  if (firestoreData) return firestoreData;
+  return getShowcaseData();
+}
+
+export async function getLiveSignalsData(): Promise<any> {
+  const firestoreData = await fetchFromFirestore('signals.json');
+  if (firestoreData) return firestoreData;
+  return getSignalsData();
+}
+
+export async function getLiveContactData(): Promise<any> {
+  const firestoreData = await fetchFromFirestore('contact.json');
+  if (firestoreData) return firestoreData;
+  return getContactData();
 }
 
 export async function getLiveAudienceData(): Promise<AudienceData> {

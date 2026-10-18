@@ -7,7 +7,7 @@ import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { REGISTER_URL } from '@/lib/links';
 import { CTABand } from '@/components/content/CTABand';
-import { getSiteConfig, getAudienceData, getAboutContent } from '@/lib/content';
+import { getLiveSiteConfig, getLiveAboutContent } from '@/lib/server-content';
 import {
   ShieldCheck,
   CheckCircle2,
@@ -19,39 +19,86 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: 'About AIX Summit 2026',
   description:
     'About AIX Summit 2026: A one-day executive summit in Doha built for enterprise leaders responsible for deploying, governing, funding and scaling AI.',
 };
 
-export default function AboutPage() {
-  const config = getSiteConfig();
-  const aboutData = getAboutContent();
-  const audience = getAudienceData();
+export default async function AboutPage() {
+  const config = await getLiveSiteConfig();
+  const aboutData = await getLiveAboutContent();
 
-  const positioningPrinciples = [
-    {
-      title: 'Curated rather than mass-market',
-      desc: 'An invited room of around 110 participants. Curation ensures peer-level credibility, where every participant is actively grappling with live deployment challenges.',
-    },
-    {
-      title: 'Executive conversation rather than session volume',
-      desc: 'Six focused 75-minute roundtables replace dozens of superficial panel sessions. Depth, candour, and substantive exchange take priority over speaking slots.',
-    },
-    {
-      title: 'Enterprise-first, with real deployments and ROI at the centre',
-      desc: 'Focused on enterprise production, infrastructure investment, security posture, and verifiable business value rather than theoretical hype.',
-    },
-    {
-      title: 'Qatar and GCC relevance with selected international voices',
-      desc: 'Grounded in the regional economic landscape, regulatory reality, and sovereign AI priorities of Qatar and the wider Gulf region.',
-    },
-    {
-      title: 'Practical innovation through demonstrations rather than startup pitching',
-      desc: 'Live working enterprise software solving genuine operational bottlenecks, coupled with pre-scheduled 1-on-1 executive buyer briefings.',
-    },
-  ];
+  const hero = aboutData.hero || {
+    eyebrow: 'Institutional Context & Purpose',
+    title: 'About AIX Summit 2026',
+    description:
+      'Where AI moves from ambition to action. A one-day invitation-led summit in Doha for the leaders shaping enterprise adoption, regulation, risk, and capital allocation.',
+  };
+
+  const premise = aboutData.premise || {
+    eyebrow: 'The Premise',
+    title: 'Moving from Experimentation to Institutional Action',
+    paragraphs: [
+      'AI has moved decisively beyond laboratory experimentation and isolated proofs-of-concept. Over the past twenty-four months, enterprise organisations across Qatar and the GCC have piloted large language models, automated repetitive tasks, and established initial AI working groups.',
+      'The harder questions now concern execution: where to deploy autonomous agents, how to redesign core workflows, how to secure critical infrastructure against adversarial prompt injection, how to govern models across sovereign regulatory boundaries, and how to convert capital investment into audited, repeatable business value.',
+      'AIX Summit 2026 convenes the leaders carrying those responsibilities. Rather than staging a mass-audience conference, AIX brings around sixty senior decision-makers together in six focused roundtables, designed for strategic problem-solving.',
+    ],
+  };
+
+  const philosophy = aboutData.philosophy || {
+    eyebrow: 'Our Operating Philosophy',
+    title: 'Six Distinctive Principles',
+    principles: [
+      {
+        title: 'Curated rather than mass-market',
+        desc: 'An invited room of around 110 participants. Curation ensures peer-level credibility, where every participant is actively grappling with live deployment challenges.',
+      },
+      {
+        title: 'Executive conversation rather than session volume',
+        desc: 'Six focused 75-minute roundtables replace dozens of superficial panel sessions. Depth, candour, and substantive exchange take priority over speaking slots.',
+      },
+      {
+        title: 'Enterprise-first, with real deployments and ROI at the centre',
+        desc: 'Focused on enterprise production, infrastructure investment, security posture, and verifiable business value rather than theoretical hype.',
+      },
+      {
+        title: 'Qatar and GCC relevance with selected international voices',
+        desc: 'Grounded in the regional economic landscape, regulatory reality, and sovereign AI priorities of Qatar and the wider Gulf region.',
+      },
+      {
+        title: 'Practical innovation through demonstrations rather than startup pitching',
+        desc: 'Live working enterprise software solving genuine operational bottlenecks, coupled with pre-scheduled 1-on-1 executive buyer briefings.',
+      },
+    ],
+  };
+
+  const rationale = aboutData.rationale || {
+    eyebrow: 'The Structure',
+    title: 'Why One Day, Six Roundtables, and a Curated Room',
+    paragraphs: [
+      'Senior executives do not have time for multi-day passive listening. A single, focused day concentrates attention. 75 minutes is precisely calibrated: long enough to move past superficial generalities and interrogate live bottlenecks, yet short enough to maintain high engagement.',
+      'Rather than superficial stage read-outs, discussions flow directly into the published Chatham House AIX Roundtable Signals research, followed by an evening reception so executive relationships established at the tables can deepen in an informal environment.',
+    ],
+  };
+
+  const confidentiality = aboutData.confidentiality || {
+    title: 'Chatham House Rule & Absolute Confidentiality',
+    description:
+      'All executive roundtables operate strictly under the Chatham House Rule. Participants are free to use the insights gained, but neither the identity nor the affiliation of any speaker or participant may be disclosed. This governance guarantees honest institutional sharing.',
+    linkText: 'Read Chatham House principles',
+    linkUrl: '/legal/confidentiality',
+  };
+
+  const organiser = aboutData.organiser || {
+    name: 'Risin Ventures',
+    url: 'https://www.risin.ventures',
+    description:
+      'AIX Summit is designed, curated, and produced by Risin Ventures, an innovation and enterprise venture studio active across the GCC ecosystem. Risin Ventures convenes senior institutional leadership to turn technological ambition into operational enterprise capability.',
+  };
 
   return (
     <>
@@ -59,13 +106,13 @@ export default function AboutPage() {
         <Container size="default">
           <div className="max-w-3xl">
             <Eyebrow accent="secondary" className="mb-3">
-              Institutional Context & Purpose
+              {hero.eyebrow}
             </Eyebrow>
             <Heading level={1} size="xl" className="mb-4">
-              About AIX Summit 2026
+              {hero.title}
             </Heading>
             <Standfirst>
-              Where AI moves from ambition to action. A one-day invitation-led summit in Doha for the leaders shaping enterprise adoption, regulation, risk, and capital allocation.
+              {hero.description}
             </Standfirst>
           </div>
         </Container>
@@ -78,33 +125,27 @@ export default function AboutPage() {
             <div className="space-y-12 lg:col-span-8">
               {/* The Premise */}
               <div className="space-y-4">
-                <Eyebrow accent="secondary">The Premise</Eyebrow>
+                <Eyebrow accent="secondary">{premise.eyebrow}</Eyebrow>
                 <h2 className="font-display text-2xl font-bold text-text-primary">
-                  Moving from Experimentation to Institutional Action
+                  {premise.title}
                 </h2>
                 <div className="space-y-4 text-sm leading-relaxed text-text-secondary sm:text-base">
-                  <p>
-                    AI has moved decisively beyond laboratory experimentation and isolated proofs-of-concept. Over the past twenty-four months, enterprise organisations across Qatar and the GCC have piloted large language models, automated repetitive tasks, and established initial AI working groups.
-                  </p>
-                  <p>
-                    The harder questions now concern execution: where to deploy autonomous agents, how to redesign core workflows, how to secure critical infrastructure against adversarial prompt injection, how to govern models across sovereign regulatory boundaries, and how to convert capital investment into audited, repeatable business value.
-                  </p>
-                  <p>
-                    AIX Summit 2026 convenes the leaders carrying those responsibilities. Rather than staging a mass-audience conference, AIX brings around sixty senior decision-makers together in six focused roundtables, designed for strategic problem-solving.
-                  </p>
+                  {(premise.paragraphs || []).map((p: string, i: number) => (
+                    <p key={i}>{p}</p>
+                  ))}
                 </div>
               </div>
 
-              {/* Six Positioning Principles */}
+              {/* Operating Philosophy Principles */}
               <div className="space-y-6">
-                <Eyebrow accent="secondary">Our Operating Philosophy</Eyebrow>
+                <Eyebrow accent="secondary">{philosophy.eyebrow}</Eyebrow>
                 <h2 className="font-display text-2xl font-bold text-text-primary">
-                  Six Distinctive Principles
+                  {philosophy.title}
                 </h2>
                 <div className="space-y-4">
-                  {positioningPrinciples.map((item, index) => (
+                  {(philosophy.principles || []).map((item: any, index: number) => (
                     <div
-                      key={item.title}
+                      key={item.title || index}
                       className="rounded-md border border-border-subtle bg-bg-surface/60 p-6 transition-colors hover:border-border-prominent"
                     >
                       <div className="flex items-center gap-2 text-xs font-bold text-brand-secondary">
@@ -123,17 +164,14 @@ export default function AboutPage() {
 
               {/* Why the Format Works */}
               <div className="space-y-4">
-                <Eyebrow accent="secondary">The Structure</Eyebrow>
+                <Eyebrow accent="secondary">{rationale.eyebrow || 'The Structure'}</Eyebrow>
                 <h2 className="font-display text-2xl font-bold text-text-primary">
-                  {aboutData.rationale?.title || ''}
+                  {rationale.title}
                 </h2>
                 <div className="space-y-4 text-sm leading-relaxed text-text-secondary sm:text-base">
-                  <p>
-                    {aboutData.rationale.paragraphs[0]}
-                  </p>
-                  <p>
-                    Rather than superficial stage read-outs, discussions flow directly into the published Chatham House <em>AIX Roundtable Signals</em> research, followed by an evening reception so executive relationships established at the tables can deepen in an informal environment.
-                  </p>
+                  {(rationale.paragraphs || []).map((p: string, i: number) => (
+                    <p key={i}>{p}</p>
+                  ))}
                 </div>
               </div>
 
@@ -143,17 +181,17 @@ export default function AboutPage() {
                   <ShieldCheck className="h-6 w-6 text-brand-secondary shrink-0 mt-1" />
                   <div className="space-y-2">
                     <h3 className="font-display text-base font-bold text-text-primary">
-                      Chatham House Rule & Absolute Confidentiality
+                      {confidentiality.title}
                     </h3>
                     <p className="text-xs leading-relaxed text-text-secondary sm:text-sm">
-                      All executive roundtables operate strictly under the Chatham House Rule. Participants are free to use the insights gained, but neither the identity nor the affiliation of any speaker or participant may be disclosed. This governance guarantees honest institutional sharing.
+                      {confidentiality.description}
                     </p>
                     <div className="pt-2">
                       <Link
-                        href="/legal/confidentiality"
+                        href={confidentiality.linkUrl || '/legal/confidentiality'}
                         className="inline-flex items-center gap-1 text-xs font-semibold text-brand-secondary hover:underline"
                       >
-                        <span>Read Chatham House principles</span>
+                        <span>{confidentiality.linkText || 'Read Chatham House principles'}</span>
                         <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
@@ -166,25 +204,16 @@ export default function AboutPage() {
                 <Eyebrow accent="primary">The Organiser</Eyebrow>
                 <h3 className="font-display text-lg font-bold text-text-primary">
                   <a
-                    href="https://www.risin.ventures"
+                    href={organiser.url || 'https://www.risin.ventures'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-brand-secondary transition-colors underline decoration-brand-secondary/40 underline-offset-4"
                   >
-                    Risin Ventures
+                    {organiser.name}
                   </a>
                 </h3>
                 <p className="text-xs sm:text-sm leading-relaxed text-text-secondary">
-                  AIX Summit is designed, curated, and produced by{' '}
-                  <a
-                    href="https://www.risin.ventures"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-text-primary underline hover:text-brand-secondary transition-colors"
-                  >
-                    Risin Ventures
-                  </a>
-                  , an innovation and enterprise venture studio active across the GCC ecosystem. Risin Ventures convenes senior institutional leadership to turn technological ambition into operational enterprise capability.
+                  {organiser.description}
                 </p>
               </div>
             </div>
@@ -245,7 +274,7 @@ export default function AboutPage() {
                 </ul>
 
                 <div className="pt-4 border-t border-border-subtle">
-                  <Button /* href="/request-an-invitation" */ href={REGISTER_URL} variant="primary" size="md" className="w-full">
+                  <Button href={REGISTER_URL} variant="primary" size="md" className="w-full">
                     Register
                   </Button>
                 </div>

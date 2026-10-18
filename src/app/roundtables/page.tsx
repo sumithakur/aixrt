@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABand } from '@/components/content/CTABand';
 import { getLiveRoundtables } from '@/lib/server-content';
+import { getRoundtablesDataRaw } from '@/lib/content';
 import { Shield, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -21,6 +22,13 @@ export const metadata: Metadata = {
 
 export default async function RoundtablesHubPage() {
   const roundtables = await getLiveRoundtables();
+  const rawData = getRoundtablesDataRaw() || {};
+  const hero = rawData.hero || {
+    eyebrow: 'The Summit Core · Two Sessions · 14:30 – 18:00',
+    title: 'Six Executive Roundtables',
+    description:
+      'Two parallel sessions of three roundtables each, 75 minutes of discussion, fifteen seats per table. Each table owns a distinct strategic lane, ensuring focused depth without convergence into generic debate.',
+  };
 
   const runOfShowSteps = [
     {
@@ -68,13 +76,13 @@ export default async function RoundtablesHubPage() {
         <Container size="default">
           <div className="max-w-3xl">
             <Eyebrow accent="secondary" className="mb-3">
-              The Summit Core · Two Sessions · 14:30 – 18:00
+              {hero.eyebrow}
             </Eyebrow>
             <Heading level={1} size="xl" className="mb-4">
-              Six Executive Roundtables
+              {hero.title}
             </Heading>
             <Standfirst>
-              Two parallel sessions of three roundtables each, 75 minutes of discussion, fifteen seats per table. Each table owns a distinct strategic lane, ensuring focused depth without convergence into generic debate.
+              {hero.description}
             </Standfirst>
           </div>
 

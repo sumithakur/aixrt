@@ -1,15 +1,61 @@
 {
   "hero": {
-    "eyebrow": "A Different Kind of Summit",
-    "title": "Built for Executive Candour",
-    "description": "Mass conferences produce fleeting soundbites. AIX Summit is structured to produce durable intellectual output by putting the right people in a closed room and focusing on the friction of actual deployment."
+    "eyebrow": "Institutional Context & Purpose",
+    "title": "About AIX Summit 2026",
+    "description": "Where AI moves from ambition to action. A one-day invitation-led summit in Doha for the leaders shaping enterprise adoption, regulation, risk, and capital allocation."
+  },
+  "premise": {
+    "eyebrow": "The Premise",
+    "title": "Moving from Experimentation to Institutional Action",
+    "paragraphs": [
+      "AI has moved decisively beyond laboratory experimentation and isolated proofs-of-concept. Over the past twenty-four months, enterprise organisations across Qatar and the GCC have piloted large language models, automated repetitive tasks, and established initial AI working groups.",
+      "The harder questions now concern execution: where to deploy autonomous agents, how to redesign core workflows, how to secure critical infrastructure against adversarial prompt injection, how to govern models across sovereign regulatory boundaries, and how to convert capital investment into audited, repeatable business value.",
+      "AIX Summit 2026 convenes the leaders carrying those responsibilities. Rather than staging a mass-audience conference, AIX brings around sixty senior decision-makers together in six focused roundtables, designed for strategic problem-solving."
+    ]
+  },
+  "philosophy": {
+    "eyebrow": "Our Operating Philosophy",
+    "title": "Six Distinctive Principles",
+    "principles": [
+      {
+        "title": "Curated rather than mass-market",
+        "desc": "An invited room of around 110 participants. Curation ensures peer-level credibility, where every participant is actively grappling with live deployment challenges."
+      },
+      {
+        "title": "Executive conversation rather than session volume",
+        "desc": "Six focused 75-minute roundtables replace dozens of superficial panel sessions. Depth, candour, and substantive exchange take priority over speaking slots."
+      },
+      {
+        "title": "Enterprise-first, with real deployments and ROI at the centre",
+        "desc": "Focused on enterprise production, infrastructure investment, security posture, and verifiable business value rather than theoretical hype."
+      },
+      {
+        "title": "Qatar and GCC relevance with selected international voices",
+        "desc": "Grounded in the regional economic landscape, regulatory reality, and sovereign AI priorities of Qatar and the wider Gulf region."
+      },
+      {
+        "title": "Practical innovation through demonstrations rather than startup pitching",
+        "desc": "Live working enterprise software solving genuine operational bottlenecks, coupled with pre-scheduled 1-on-1 executive buyer briefings."
+      }
+    ]
   },
   "rationale": {
+    "eyebrow": "The Structure",
     "title": "Why One Day, Six Roundtables, and a Curated Room",
     "paragraphs": [
       "Senior executives do not have time for multi-day passive listening. A single, focused day concentrates attention. 75 minutes is precisely calibrated: long enough to move past superficial generalities and interrogate live bottlenecks, yet short enough to maintain high engagement.",
-      "The value of any summit is defined by who is not in the room. By capping attendance at ~110 and enforcing strict seniority thresholds, AIX ensures peer-level dialogue.",
-      "Generic tech events focus on what AI might do in the future. AIX is strictly concerned with what AI is doing right now in secure, scaled, enterprise environments."
+      "Rather than superficial stage read-outs, discussions flow directly into the published Chatham House AIX Roundtable Signals research, followed by an evening reception so executive relationships established at the tables can deepen in an informal environment."
     ]
+  },
+  "confidentiality": {
+    "title": "Chatham House Rule & Absolute Confidentiality",
+    "description": "All executive roundtables operate strictly under the Chatham House Rule. Participants are free to use the insights gained, but neither the identity nor the affiliation of any speaker or participant may be disclosed. This governance guarantees honest institutional sharing.",
+    "linkText": "Read Chatham House principles",
+    "linkUrl": "/legal/confidentiality"
+  },
+  "organiser": {
+    "name": "Risin Ventures",
+    "url": "https://www.risin.ventures",
+    "description": "AIX Summit is designed, curated, and produced by Risin Ventures, an innovation and enterprise venture studio active across the GCC ecosystem. Risin Ventures convenes senior institutional leadership to turn technological ambition into operational enterprise capability."
   }
 }

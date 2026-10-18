@@ -1,4 +1,9 @@
 {
+  "hero": {
+    "eyebrow": "Knowledge Base & Guidance",
+    "title": "Frequently Asked Questions",
+    "description": "Comprehensive guidance on delegate invitations, Chatham House Rule protocols, roundtable participation, and summit attendance logistics."
+  },
   "items": [
     {
       "category": "Attending & Invitations",

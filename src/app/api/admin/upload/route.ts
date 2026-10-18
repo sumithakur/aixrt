@@ -35,9 +35,13 @@ export async function POST(request: Request) {
     }
 
     // Save to public/brand directory with safe name
+    const uploadDir = path.join(process.cwd(), 'public', 'brand');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
     const baseName = path.basename(file.name, ext).replace(/[^a-zA-Z0-9_-]/g, '');
     const safeFileName = `${baseName || 'logo'}-${Date.now()}${ext}`;
-    const savePath = path.join(process.cwd(), 'public', 'brand', safeFileName);
+    const savePath = path.join(uploadDir, safeFileName);
     
     fs.writeFileSync(savePath, buffer);
     

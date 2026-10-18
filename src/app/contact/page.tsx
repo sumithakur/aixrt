@@ -90,13 +90,13 @@ export default function ContactPage() {
       <Container size="default">
         <div className="mb-16 text-center max-w-2xl mx-auto">
           <Eyebrow accent="secondary" className="mb-2">
-            Connect with the Summit Team
+            {contactData.hero?.eyebrow || 'Connect with the Summit Team'}
           </Eyebrow>
           <Heading level={1} size="xl" className="mb-4">
-            Contact Organising Team
+            {contactData.hero?.title || 'Contact Organising Team'}
           </Heading>
           <Standfirst>
-            Direct contact routes for delegates, prospective roundtable chairs, demonstration applicants, and media.
+            {contactData.hero?.description || 'Direct contact routes for delegates, prospective roundtable chairs, demonstration applicants, and media.'}
           </Standfirst>
         </div>
 

@@ -6,11 +6,18 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { CTABand } from '@/components/content/CTABand';
-import { getFAQs } from '@/lib/content';
+import { getFAQs, getFAQDataRaw } from '@/lib/content';
 import { ChevronDown, HelpCircle, Link as LinkIcon } from 'lucide-react';
 
 export default function FAQPage() {
   const faqCategories = getFAQs();
+  const rawFaq = getFAQDataRaw() || {};
+  const hero = rawFaq.hero || {
+    eyebrow: 'Knowledge Base & Guidance',
+    title: 'Frequently Asked Questions',
+    description:
+      'Clear answers regarding attendance eligibility, invitation allocations, roundtable governance, Chatham House principles, and partnership models.',
+  };
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   // Auto-expand based on hash in URL
@@ -57,13 +64,13 @@ export default function FAQPage() {
         <Container size="default">
           <div className="max-w-3xl">
             <Eyebrow accent="secondary" className="mb-3">
-              Knowledge Base & Guidance
+              {hero.eyebrow}
             </Eyebrow>
             <Heading level={1} size="xl" className="mb-4">
-              Frequently Asked Questions
+              {hero.title}
             </Heading>
             <Standfirst>
-              Clear answers regarding attendance eligibility, invitation allocations, roundtable governance, Chatham House principles, and partnership models.
+              {hero.description}
             </Standfirst>
           </div>
         </Container>

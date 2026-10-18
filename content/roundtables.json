@@ -1,4 +1,9 @@
 {
+  "hero": {
+    "eyebrow": "The Summit Core · Two Sessions · 14:30 – 18:00",
+    "title": "Six Executive Roundtables",
+    "description": "Two parallel sessions of three roundtables each, 75 minutes of discussion, fifteen seats per table. Each table owns a distinct strategic lane, ensuring focused depth without convergence into generic debate."
+  },
   "items": [
     {
       "slug": "ai-in-bfsi",

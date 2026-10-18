@@ -1,12 +1,41 @@
 {
   "hero": {
-    "title": "Venue & Logistics",
-    "description": "AIX Summit 2026 takes place in Doha, Qatar. Due to the Chatham House Rule and the seniority of the room, the specific venue is strictly embargoed until delegate confirmation."
+    "eyebrow": "Destination & Logistics",
+    "title": "Venue & Doha Delegate Guide",
+    "description": "Essential travel logistics, international arrival coordinates, and hospitality guidance for executives attending AIX Summit 2026."
   },
-  "details": {
-    "title": "Logistics",
-    "date": "Monday 14 December 2026",
-    "time": "14:00 – 18:30 (Reception to 18:30)",
-    "location": "Doha, Qatar (Embargoed)"
-  }
+  "statusCard": {
+    "title": "Summit Location",
+    "embargoTitle": "Embargoed Prior to Delegate Confirmation",
+    "embargoDesc": "Due to the Chatham House Rule and the seniority of confirmed participants, the exact summit coordinates and venue hotel in Doha are shared strictly with confirmed delegates, chairs, and accredited partners.",
+    "accessInfo": "All delegates will receive secure calendar invitations and access credentials 14 days prior to the summit date."
+  },
+  "travelCards": [
+    {
+      "title": "Arrival via Hamad International Airport (DOH)",
+      "desc": "Consistently ranked among the world’s leading airports. Direct flights connect Doha to over 170 international destinations via Qatar Airways and global carriers. The city centre is approximately 20 minutes by taxi or metro."
+    },
+    {
+      "title": "Entry Visas & Hayya Portal",
+      "desc": "Citizens of over 95 countries are eligible for visa-free entry or visa-on-arrival in Qatar. All delegates should verify current entry requirements on the official Hayya or Ministry of Interior portals prior to travel.",
+      "linkText": "Visit Official Qatar Visas Portal",
+      "linkUrl": "https://visitqatar.com/intl-en/practical-info/visas"
+    },
+    {
+      "title": "December Weather",
+      "desc": "December represents the premier winter season in Doha, with pleasant daytime temperatures averaging 20°C to 25°C (68°F–77°F) and cool evenings. Peak travel season: early flight and hotel reservations are recommended."
+    },
+    {
+      "title": "Timezone & Connectivity",
+      "desc": "Arabia Standard Time (AST), UTC+3, with no daylight saving shifts. High-speed 5G connectivity is ubiquitously available across central Doha through local networks (Ooredoo and Vodafone)."
+    },
+    {
+      "title": "Currency & Payments",
+      "desc": "Qatari Riyal (QAR), pegged to the US Dollar at approximately 1 USD = 3.64 QAR. Contactless digital payments and international credit cards are universally accepted across hotels, transit, and dining."
+    },
+    {
+      "title": "Executive Dress Code",
+      "desc": "Business formal or traditional national dress (thobe / abaya) for all summit sessions, roundtables, and the evening reception."
+    }
+  ]
 }

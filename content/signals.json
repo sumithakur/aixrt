@@ -1,14 +1,42 @@
 {
   "hero": {
+    "eyebrow": "Research & Executive Intelligence",
     "title": "AIX Roundtable Signals",
-    "description": "The official intelligence report from the AIX Summit."
+    "description": "The conversations don't end at 16:30. Each roundtable produces a concise, anonymised strategic synthesis published in mid-January 2027 as an institutional reference document."
   },
-  "content": {
-    "title": "The Output",
+  "publicationMandate": {
+    "eyebrow": "The Publication Mandate",
+    "title": "Synthesising Closed-Door Executive Consensus",
     "paragraphs": [
-      "Mass conferences produce soundbites. AIX Summit produces the Roundtable Signals report.",
-      "Under the Chatham House Rule, participants can share the information received, but neither the identity nor the affiliation of the speaker(s). This allows us to publish the most critical insights, bottlenecks, and strategies discussed across the six lanes.",
-      "The report is circulated to all attendees and chairs post-summit."
+      "Mass conferences produce fleeting soundbites. AIX Summit is structured to produce durable intellectual output. Throughout the six closed-door 75-minute roundtables, dedicated rapporteurs capture the debate across six core analytical dimensions.",
+      "Crucially, points are recorded strictly without personal or institutional attribution under the Chatham House Rule. This methodological independence guarantees that the report reflects raw operational reality rather than polished public relations."
     ]
+  },
+  "dimensionsTitle": "What Each Table Section Contains",
+  "dimensions": [
+    {
+      "title": "Current Production Reality",
+      "desc": "Where enterprise AI is actively generating measurable business ROI today, versus experimental pilot claims."
+    },
+    {
+      "title": "Capital & Infrastructure Allocation",
+      "desc": "Where sovereign funds, banks, and enterprises are directing hardware, cloud compute, and talent capital."
+    },
+    {
+      "title": "Structural Hurdles & Risk Debt",
+      "desc": "Governance, agent identity, prompt injection vulnerabilities, and regulatory friction blocking autonomous scale."
+    },
+    {
+      "title": "12–24 Month Strategic Outlook",
+      "desc": "The architectural, operational, and organizational redesign required as copilots transition into autonomous agents."
+    },
+    {
+      "title": "Three Practical Executive Actions",
+      "desc": "Concrete, immediate implementation priorities agreed upon across each table’s senior leadership cohort."
+    }
+  ],
+  "report": {
+    "title": "AIX Roundtable Signals 2026 Executive Report",
+    "description": "Distributed to all attendees, partners, and accredited institutional delegates following editorial synthesis."
   }
 }

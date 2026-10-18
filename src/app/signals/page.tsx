@@ -7,7 +7,7 @@ import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { CTABand } from '@/components/content/CTABand';
-import { getRoundtables } from '@/lib/content';
+import { getRoundtables, getSignalsData } from '@/lib/content';
 import { FileText, CheckCircle2, ShieldCheck, ArrowRight, BookOpen, Clock } from 'lucide-react';
 
 export default function SignalsPage() {
@@ -43,20 +43,39 @@ export default function SignalsPage() {
     },
   ];
 
+  const signalsData = getSignalsData();
+  const hero = signalsData.hero || {
+    eyebrow: 'Research & Executive Intelligence',
+    title: 'AIX Roundtable Signals',
+    description: "The conversations don't end at 16:30. Each roundtable produces a concise, anonymised strategic synthesis published in mid-January 2027 as an institutional reference document.",
+  };
+
+  const mandate = signalsData.publicationMandate || {
+    eyebrow: 'The Publication Mandate',
+    title: 'Synthesising Closed-Door Executive Consensus',
+    paragraphs: [
+      'Mass conferences produce fleeting soundbites. AIX Summit is structured to produce durable intellectual output. Throughout the six closed-door 75-minute roundtables, dedicated rapporteurs capture the debate across six core analytical dimensions.',
+      'Crucially, points are recorded strictly without personal or institutional attribution under the Chatham House Rule. This methodological independence guarantees that the report reflects raw operational reality rather than polished public relations.',
+    ],
+  };
+
+  const dimensions = signalsData.dimensions || signalsDimensions;
+
   return (
     <>
       <Section variant="hero" className="pt-16 pb-16">
         <Container size="default">
           <div className="max-w-3xl">
             <Eyebrow accent="secondary" className="mb-3">
-              Research & Executive Intelligence
+              {hero.eyebrow || 'Research & Executive Intelligence'}
             </Eyebrow>
-            {(() => { const signalsData = require('@/lib/content').getSignalsData(); return (
-    <>
-      <Heading level={1} size="xl" className="mb-4">{signalsData.hero?.title || 'AIX Roundtable Signals'}</Heading>
-      <Standfirst>{signalsData.hero?.description || 'The conversations don\'t end at 16:30. Each roundtable produces a concise, anonymised strategic synthesis published in mid-January 2027 as an institutional reference document.'}</Standfirst>
-    </>
-  ) })()}
+            <Heading level={1} size="xl" className="mb-4">
+              {hero.title || 'AIX Roundtable Signals'}
+            </Heading>
+            <Standfirst>
+              {hero.description ||
+                "The conversations don't end at 16:30. Each roundtable produces a concise, anonymised strategic synthesis published in mid-January 2027 as an institutional reference document."}
+            </Standfirst>
           </div>
         </Container>
       </Section>
@@ -67,30 +86,27 @@ export default function SignalsPage() {
             {/* Main Explainer Column */}
             <div className="space-y-10 lg:col-span-8">
               <div className="space-y-4">
-                <Eyebrow accent="secondary">The Publication Mandate</Eyebrow>
+                <Eyebrow accent="secondary">{mandate.eyebrow}</Eyebrow>
                 <h2 className="font-display text-2xl font-bold text-text-primary">
-                  Synthesising Closed-Door Executive Consensus
+                  {mandate.title}
                 </h2>
                 <div className="space-y-4 text-sm leading-relaxed text-text-secondary sm:text-base">
-                  <p>
-                    Mass conferences produce fleeting soundbites. AIX Summit is structured to produce durable intellectual output. Throughout the six closed-door 75-minute roundtables, dedicated rapporteurs capture the debate across six core analytical dimensions.
-                  </p>
-                  <p>
-                    Crucially, <strong>points are recorded strictly without personal or institutional attribution</strong> under the Chatham House Rule. This methodological independence guarantees that the report reflects raw operational reality rather than polished public relations.
-                  </p>
+                  {(mandate.paragraphs || []).map((p: string, i: number) => (
+                    <p key={i}>{p}</p>
+                  ))}
                 </div>
               </div>
 
               {/* The 5 Report Sections */}
               <div className="space-y-4">
                 <h3 className="font-display text-lg font-bold text-text-primary">
-                  What Each Table Section Contains
+                  {signalsData.dimensionsTitle || 'What Each Table Section Contains'}
                 </h3>
 
                 <div className="space-y-3">
-                  {signalsDimensions.map((dim, idx) => (
+                  {dimensions.map((dim: any, idx: number) => (
                     <div
-                      key={dim.title}
+                      key={dim.title || idx}
                       className="rounded-md border border-border-subtle bg-bg-surface/50 p-4"
                     >
                       <div className="flex items-center gap-2 text-xs font-bold text-brand-secondary">

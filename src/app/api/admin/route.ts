@@ -4,24 +4,11 @@ import path from 'path';
 import { revalidatePath } from 'next/cache';
 import { loadContentFile } from '@/lib/content';
 import { getFirestoreDb } from '@/lib/firebase-admin';
+import { CONTENT_FILE_SET } from '@/lib/content-files';
 
 const contentDir = path.join(process.cwd(), 'content');
 
-const ALLOWED_FILES = new Set([
-  'site.json',
-  'home.json',
-  'about.json',
-  'programme.json',
-  'roundtables.json',
-  'partners.json',
-  'showcase.json',
-  'venue.json',
-  'signals.json',
-  'contact.json',
-  'faq.json',
-  'navigation.json',
-  'globals.json',
-]);
+const ALLOWED_FILES = CONTENT_FILE_SET;
 
 function isSafeFilePath(fileName: string | null): string | null {
   if (!fileName || !ALLOWED_FILES.has(fileName)) return null;

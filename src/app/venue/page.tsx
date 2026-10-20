@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -24,11 +25,9 @@ import {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'Venue, Travel & Doha Delegate Guide',
-  description:
-    'Venue coordinates, travel planning, visa requirements, and executive delegate guidance for AIX Summit 2026 in Doha, Qatar.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/venue');
+}
 
 export default async function VenuePage() {
   const config = await getLiveSiteConfig();

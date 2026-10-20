@@ -77,38 +77,7 @@
     "title": "The Day at a Glance",
     "linkLabel": "Full timeline",
     "linkHref": "/programme",
-    "items": [
-      {
-        "time": "14:00 – 14:30",
-        "title": "Arrival",
-        "desc": "Registration, networking coffee; startup booths open; host welcome.",
-        "highlight": false
-      },
-      {
-        "time": "14:30 – 16:00",
-        "title": "Roundtable Session 1",
-        "desc": "Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase.",
-        "highlight": true
-      },
-      {
-        "time": "16:00 – 16:30",
-        "title": "Networking Break",
-        "desc": "Attendees of both sessions network with each other and meet the startups at their booths.",
-        "highlight": false
-      },
-      {
-        "time": "16:30 – 18:00",
-        "title": "Roundtable Session 2",
-        "desc": "Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase.",
-        "highlight": true
-      },
-      {
-        "time": "18:00 – 18:30",
-        "title": "Networking & Booths",
-        "desc": "Optional close: booth visits and informal networking.",
-        "highlight": false
-      }
-    ]
+    "sourceNote": "Rows come from the Programme tab. Edit times and titles there; this section only controls the headings."
   },
   "showcaseSection": {
     "eyebrow": "Practical Innovation",

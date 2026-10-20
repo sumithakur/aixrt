@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -12,11 +13,9 @@ import { ShieldCheck, ArrowRight, CheckCircle2, Award } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'Our Sponsors & Roundtable Chairs',
-  description:
-    'Institutional and strategic sponsors powering AIX Summit 2026. Executive leadership across six dedicated roundtable discussion lanes in Doha, Qatar.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/partners');
+}
 
 export default async function PartnersPage() {
   const roundtables = await getLiveRoundtables();

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
@@ -10,12 +11,7 @@ import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABandLive } from '@/components/content/CTABandLive';
 import { HomeHero } from '@/components/home/HomeHero';
-import {
-  getLiveSiteConfig,
-  getLiveRoundtables,
-  getLiveAudienceData,
-  getLiveHomeContent,
-} from '@/lib/server-content';
+import { getLiveSiteConfig, getLiveRoundtables, getLiveAudienceData, getLiveHomeContent, getLiveProgramme } from '@/lib/server-content';
 import {
   ArrowRight,
   Shield,
@@ -30,33 +26,9 @@ import {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'AIX Roundtables 2026 | Executive AI Summit, Doha, 14 December 2026',
-  description:
-    'Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.',
-  openGraph: {
-    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
-    description:
-      'Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.',
-    url: 'https://aixrt-sigma.vercel.app',
-    siteName: 'AIX Roundtables 2026',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1024,
-        height: 537,
-        alt: 'AIX Roundtables Doha 2026 - Where AI moves from ambition to action',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
-    description:
-      'Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.',
-    images: ['/og-image.png'],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/');
+}
 
 export default async function HomePage() {
   const config = await getLiveSiteConfig();
@@ -64,8 +36,16 @@ export default async function HomePage() {
   const audience = await getLiveAudienceData();
   const homeData = await getLiveHomeContent();
 
-  const condensedProgramme =
-    homeData.programmeSection?.items ?? [];
+  // Single source of truth: the Programme tab. No second copy to keep in sync.
+  const programmeItems = await getLiveProgramme();
+  const condensedProgramme = (programmeItems as any[])
+    .filter((item) => item.showOnHome !== false)
+    .map((item) => ({
+      time: `${item.start} – ${item.end}`,
+      title: item.title,
+      desc: item.description,
+      highlight: item.emphasis === true,
+    }));
 
   return (
     <div className="min-h-screen bg-bg-base text-text-primary selection:bg-brand-secondary/30">

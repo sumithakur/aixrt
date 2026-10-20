@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, Menu } from 'lucide-react';
@@ -47,6 +47,26 @@ export function SiteHeader({ navigation, registerUrl }: SiteHeaderProps) {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const pathname = usePathname();
 
+  // Hover menus sit below a small gap. Closing instantly on mouseleave makes the
+  // panel unreachable, so closing is deferred and cancelled if the pointer arrives.
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const openMega = () => { cancelClose(); setOpenDropdown(null); setIsMegaMenuOpen(true); };
+  const openMenu = (href: string) => { cancelClose(); setIsMegaMenuOpen(false); setOpenDropdown(href); };
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => {
+      setIsMegaMenuOpen(false);
+      setOpenDropdown(null);
+    }, 220);
+  };
+  useEffect(() => cancelClose, []);
+
   const config = getSiteConfig();
   const nav = navigation ?? (getNavigation() as any);
   const header: HeaderContent = nav?.header ?? {};
@@ -59,6 +79,15 @@ export function SiteHeader({ navigation, registerUrl }: SiteHeaderProps) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Escape closes any open menu
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { cancelClose(); setIsMegaMenuOpen(false); setOpenDropdown(null); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, []);
 
   // Close menus on route change
@@ -122,8 +151,9 @@ export function SiteHeader({ navigation, registerUrl }: SiteHeaderProps) {
                     <div
                       key={item.href}
                       className="relative"
-                      onMouseEnter={() => setIsMegaMenuOpen(true)}
-                      onMouseLeave={() => setIsMegaMenuOpen(false)}
+                      onMouseEnter={openMega}
+                      onMouseLeave={scheduleClose}
+                      onFocus={openMega}
                     >
                       <Link
                         href={item.href}
@@ -148,8 +178,9 @@ export function SiteHeader({ navigation, registerUrl }: SiteHeaderProps) {
                     <div
                       key={item.href}
                       className="relative"
-                      onMouseEnter={() => setOpenDropdown(item.href)}
-                      onMouseLeave={() => setOpenDropdown(null)}
+                      onMouseEnter={() => openMenu(item.href)}
+                      onMouseLeave={scheduleClose}
+                      onFocus={() => openMenu(item.href)}
                     >
                       <Link
                         href={item.href}
@@ -229,11 +260,8 @@ export function SiteHeader({ navigation, registerUrl }: SiteHeaderProps) {
         </div>
 
         {/* Desktop MegaMenu portal */}
-        <div
-          onMouseEnter={() => setIsMegaMenuOpen(true)}
-          onMouseLeave={() => setIsMegaMenuOpen(false)}
-        >
-          <MegaMenu isOpen={isMegaMenuOpen} onClose={() => setIsMegaMenuOpen(false)} />
+        <div onMouseEnter={cancelClose} onMouseLeave={scheduleClose}>
+          <MegaMenu isOpen={isMegaMenuOpen} onClose={() => { cancelClose(); setIsMegaMenuOpen(false); }} />
         </div>
       </header>
 

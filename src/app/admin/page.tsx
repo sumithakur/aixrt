@@ -14,10 +14,23 @@ import defaultContact from '@/content/contact.json';
 import defaultFaq from '@/content/faq.json';
 import defaultNavigation from '@/content/navigation.json';
 import defaultGlobals from '@/content/globals.json';
+import defaultMetadata from '@/content/metadata.json';
 import { NavigationEditor } from '@/components/admin/NavigationEditor';
 import { GlobalsEditor } from '@/components/admin/GlobalsEditor';
+import { MetadataEditor } from '@/components/admin/MetadataEditor';
+import { FirebaseStatus } from '@/components/admin/FirebaseStatus';
+import { RoundtableDefaultsEditor, StringListEditor } from '@/components/admin/RoundtableDefaultsEditor';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { LogOut, Save, Download, RefreshCw, Plus, Trash2, ArrowUpRight } from 'lucide-react';
+
+/** Turns a roundtable's short title into the URL slug used for its page address. */
+function slugify(value: string) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
 export default function AdminPage() {
   const [siteData, setSiteData] = useState<any>(defaultSite);
@@ -33,9 +46,23 @@ export default function AdminPage() {
   const [faqData, setFaqData] = useState<any>(defaultFaq);
   const [navigationData, setNavigationData] = useState<any>(defaultNavigation);
   const [globalsData, setGlobalsData] = useState<any>(defaultGlobals);
+  const [metadataData, setMetadataData] = useState<any>(defaultMetadata);
 
   const [status, setStatus] = useState('');
   const [activeTab, setActiveTab] = useState('partners');
+
+  // Kept current on every render so the Ctrl/Cmd+S handler always saves the open tab.
+  const saveCurrentRef = useRef<() => void>(() => {});
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        saveCurrentRef.current();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   useEffect(() => {
     const fetchSafe = (file: string, setter: (d: any) => void) => {
@@ -64,6 +91,7 @@ export default function AdminPage() {
     fetchSafe('faq.json', setFaqData);
     fetchSafe('navigation.json', setNavigationData);
     fetchSafe('globals.json', setGlobalsData);
+    fetchSafe('metadata.json', setMetadataData);
   }, []);
 
   const saveFile = async (file: string, content: any) => {
@@ -77,11 +105,15 @@ export default function AdminPage() {
       const data = await res.json();
       if (res.ok) {
         if (data.firestoreSaved) {
-          setStatus(`Saved & synced live to Firestore! (${file})`);
-        } else if (data.firestoreError) {
-          setStatus(`⚠️ Saved locally, Firestore note: ${data.firestoreError}`);
+          setStatus(`Saved to Firebase — ${file} is live on the site.`);
         } else {
-          setStatus(`Saved successfully! (${file})`);
+          // A save that never reached Firebase only exists on this server and is
+          // discarded on the next deployment, so it is reported as a failure.
+          setStatus(
+            `NOT SAVED TO FIREBASE — ${file} was written to this server only and will be lost on the next deployment. ${
+              data.firestoreError || ''
+            }`
+          );
         }
       } else {
         setStatus(`Error saving: ${data.error || 'Server error'}`);
@@ -135,21 +167,26 @@ export default function AdminPage() {
     );
   }
 
+  // Each tab knows the file it writes to, so one Save button serves all of them.
   const TABS = [
-    { id: 'partners', label: 'Sponsors & Partners' },
-    { id: 'home', label: 'Home Page' },
-    { id: 'about', label: 'About Page' },
-    { id: 'programme', label: 'Programme' },
-    { id: 'roundtables', label: 'Roundtables' },
-    { id: 'showcase', label: 'AI Showcase' },
-    { id: 'venue', label: 'Venue & Travel' },
-    { id: 'signals', label: 'Signals Report' },
-    { id: 'contact', label: 'Contact' },
-    { id: 'faq', label: 'FAQ' },
-    { id: 'navigation', label: 'Navigation & Footer' },
-    { id: 'globals', label: 'Global CTAs' },
-    { id: 'site', label: 'Global / Header' },
+    { id: 'partners', label: 'Sponsors & Partners', file: 'partners.json', data: partnersData },
+    { id: 'home', label: 'Home Page', file: 'home.json', data: homeData },
+    { id: 'about', label: 'About Page', file: 'about.json', data: aboutData },
+    { id: 'programme', label: 'Programme', file: 'programme.json', data: programmeData },
+    { id: 'roundtables', label: 'Roundtables', file: 'roundtables.json', data: roundtablesData },
+    { id: 'showcase', label: 'AI Showcase', file: 'showcase.json', data: showcaseData },
+    { id: 'venue', label: 'Venue & Travel', file: 'venue.json', data: venueData },
+    { id: 'signals', label: 'Signals Report', file: 'signals.json', data: signalsData },
+    { id: 'contact', label: 'Contact', file: 'contact.json', data: contactData },
+    { id: 'faq', label: 'FAQ', file: 'faq.json', data: faqData },
+    { id: 'navigation', label: 'Navigation & Footer', file: 'navigation.json', data: navigationData },
+    { id: 'globals', label: 'Global CTAs', file: 'globals.json', data: globalsData },
+    { id: 'metadata', label: 'SEO & Metadata', file: 'metadata.json', data: metadataData },
+    { id: 'site', label: 'Global / Header', file: 'site.json', data: siteData },
   ];
+
+  const currentTab = TABS.find((t) => t.id === activeTab) || TABS[0];
+  saveCurrentRef.current = () => saveFile(currentTab.file, currentTab.data);
 
   return (
     <div className="min-h-screen bg-bg-base text-text-primary p-6 md:p-10 max-w-7xl mx-auto">
@@ -174,29 +211,62 @@ export default function AdminPage() {
             <LogOut className="h-4 w-4" />
             <span>Logout</span>
           </button>
-          {status && (
-            <span className="text-brand-secondary font-medium bg-brand-secondary/10 border border-brand-secondary/30 px-3 py-1.5 rounded-lg text-xs animate-pulse">
-              {status}
-            </span>
-          )}
         </div>
       </div>
 
-      {/* Tabs Bar */}
-      <div className="flex gap-2 mb-8 border-b border-border-subtle pb-4 overflow-x-auto scrollbar-thin">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`whitespace-nowrap px-5 py-2.5 rounded-lg font-semibold text-xs md:text-sm transition-all border ${
-              activeTab === tab.id
-                ? 'bg-brand-primary text-white border-brand-primary shadow-glow'
-                : 'bg-bg-raised hover:bg-bg-surface border-border-subtle text-text-secondary hover:text-text-primary'
+      <FirebaseStatus onStatus={setStatus} />
+
+      {/* Tabs + Save — stays on screen while editing, so Save is always one click away */}
+      <div className="sticky top-0 z-50 -mx-6 md:-mx-10 mb-8 border-b border-border-subtle bg-bg-base/95 px-6 md:px-10 py-3 backdrop-blur-md">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-1 gap-2 overflow-x-auto scrollbar-thin py-0.5">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`whitespace-nowrap px-5 py-2.5 rounded-lg font-semibold text-xs md:text-sm transition-all border ${
+                  activeTab === tab.id
+                    ? 'bg-brand-primary text-white border-brand-primary shadow-glow'
+                    : 'bg-bg-raised hover:bg-bg-surface border-border-subtle text-text-secondary hover:text-text-primary'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex shrink-0 items-center gap-2 border-l border-border-subtle pl-3">
+            <button
+              onClick={() => saveFile(currentTab.file, currentTab.data)}
+              title={`Save ${currentTab.label} (${currentTab.file}) — Ctrl/Cmd + S`}
+              className="flex items-center gap-2 px-4 md:px-5 py-2.5 bg-brand-primary text-white rounded-lg font-bold text-xs md:text-sm shadow-glow hover:opacity-95 transition-all"
+            >
+              <Save className="h-4 w-4" />
+              <span className="hidden sm:inline">Save</span>
+            </button>
+            <button
+              onClick={() => downloadJson(currentTab.file, currentTab.data)}
+              title={`Download a backup of ${currentTab.file}`}
+              aria-label={`Download a backup of ${currentTab.file}`}
+              className="flex items-center justify-center h-[42px] w-[42px] bg-bg-surface border border-border-subtle text-text-secondary hover:text-text-primary rounded-lg"
+            >
+              <Download className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        {status && (
+          <p
+            className={`mt-2 text-xs font-medium ${
+              /NOT SAVED|Error|error|Could not|Failed|failed/.test(status)
+                ? 'text-brand-primary'
+                : 'text-brand-secondary'
             }`}
+            role="status"
           >
-            {tab.label}
-          </button>
-        ))}
+            {status}
+          </p>
+        )}
       </div>
 
       <div className="bg-bg-raised border border-border-subtle p-6 md:p-8 rounded-2xl shadow-card">
@@ -971,7 +1041,15 @@ export default function AdminPage() {
             </div>
 
             <div className="space-y-4">
-              <h3 className="font-semibold text-brand-secondary">Track Cards ({roundtablesData.items?.length || 0})</h3>
+              <RoundtableDefaultsEditor data={roundtablesData} setData={setRoundtablesData} />
+
+              <h3 className="font-semibold text-brand-secondary">
+                Per-table content ({roundtablesData.items?.length || 0})
+              </h3>
+              <p className="text-xs text-text-secondary -mt-2">
+                Only what differs between tables. Timings, seat counts, the specifications panel and
+                button labels live in the shared settings above.
+              </p>
               <div className="space-y-6">
                 {(roundtablesData.items || []).map((rt: any, i: number) => (
                   <div key={rt.slug || i} className="p-6 bg-bg-base border border-border-subtle rounded-xl space-y-4">
@@ -989,8 +1067,15 @@ export default function AdminPage() {
                           type="text"
                           value={rt.shortTitle}
                           onChange={(e) => {
+                            const nextTitle = e.target.value;
+                            // The slug follows the title unless it has been edited by hand.
+                            const slugWasAuto = !rt.slug || rt.slug === slugify(rt.shortTitle);
                             const newItems = [...roundtablesData.items];
-                            newItems[i].shortTitle = e.target.value;
+                            newItems[i] = {
+                              ...rt,
+                              shortTitle: nextTitle,
+                              slug: slugWasAuto ? slugify(nextTitle) : rt.slug,
+                            };
                             setRoundtablesData({ ...roundtablesData, items: newItems });
                           }}
                           className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm font-semibold text-text-primary"
@@ -1036,6 +1121,82 @@ export default function AdminPage() {
                         className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-xs text-text-primary h-16"
                       />
                     </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">Session</label>
+                        <select
+                          value={rt.session || 1}
+                          onChange={(e) => {
+                            const newItems = [...roundtablesData.items];
+                            newItems[i] = { ...rt, session: Number(e.target.value) };
+                            setRoundtablesData({ ...roundtablesData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                        >
+                          <option value={1}>Session 1</option>
+                          <option value={2}>Session 2</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">
+                          Page address (follows the short title)
+                        </label>
+                        <div className="flex items-center gap-1 rounded border border-border-subtle bg-bg-surface px-2">
+                          <span className="text-xs text-text-muted font-mono shrink-0">/roundtables/</span>
+                          <input
+                            type="text"
+                            value={rt.slug || ''}
+                            onChange={(e) => {
+                              const newItems = [...roundtablesData.items];
+                              newItems[i] = { ...rt, slug: slugify(e.target.value) };
+                              setRoundtablesData({ ...roundtablesData, items: newItems });
+                            }}
+                            className="w-full bg-transparent py-2 text-sm font-mono text-text-primary outline-none"
+                          />
+                        </div>
+                        {rt.slug !== slugify(rt.shortTitle) ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newItems = [...roundtablesData.items];
+                              newItems[i] = { ...rt, slug: slugify(rt.shortTitle) };
+                              setRoundtablesData({ ...roundtablesData, items: newItems });
+                            }}
+                            className="text-[10px] text-brand-secondary hover:underline mt-1"
+                          >
+                            Edited by hand — click to match the short title again
+                          </button>
+                        ) : (
+                          <p className="text-[10px] text-text-secondary mt-1">
+                            Editing this changes the page address and breaks existing links to it.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <StringListEditor
+                      title="Discussion Themes"
+                      items={rt.themes || []}
+                      placeholder="e.g. Fraud and financial crime"
+                      onChange={(next) => {
+                        const newItems = [...roundtablesData.items];
+                        newItems[i] = { ...rt, themes: next };
+                        setRoundtablesData({ ...roundtablesData, items: newItems });
+                      }}
+                    />
+
+                    <StringListEditor
+                      title="Who Will Be In The Room"
+                      hint="One seat per line, as shown on the roundtable page."
+                      items={rt.participantProfile || []}
+                      placeholder="e.g. Qatar Central Bank / regulatory voice"
+                      onChange={(next) => {
+                        const newItems = [...roundtablesData.items];
+                        newItems[i] = { ...rt, participantProfile: next };
+                        setRoundtablesData({ ...roundtablesData, items: newItems });
+                      }}
+                    />
                   </div>
                 ))}
               </div>
@@ -1558,6 +1719,36 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={() => downloadJson('globals.json', globalsData)}
+                className="px-5 py-3 border border-border-subtle rounded-lg text-sm flex items-center gap-2 hover:border-border-prominent"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download JSON</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ===================== TAB: SEO & METADATA ===================== */}
+        {activeTab === 'metadata' && (
+          <div className="space-y-8">
+            <div className="border-b border-border-subtle pb-4">
+              <h2 className="text-xl font-bold">SEO & Metadata</h2>
+              <p className="text-xs text-text-secondary mt-1">
+                The browser tab title, the description shown in search results, and the preview card
+                used when a page is shared on LinkedIn, WhatsApp or X.
+              </p>
+            </div>
+            <MetadataEditor data={metadataData} setData={setMetadataData} />
+            <div className="flex items-center gap-4 pt-4">
+              <button
+                onClick={() => saveFile('metadata.json', metadataData)}
+                className="px-8 py-3 bg-brand-primary text-text-primary rounded-lg font-bold shadow-glow hover:opacity-95 transition-all text-sm flex items-center gap-2"
+              >
+                <Save className="h-4 w-4" />
+                <span>Save SEO & Metadata</span>
+              </button>
+              <button
+                onClick={() => downloadJson('metadata.json', metadataData)}
                 className="px-5 py-3 border border-border-subtle rounded-lg text-sm flex items-center gap-2 hover:border-border-prominent"
               >
                 <Download className="h-4 w-4" />

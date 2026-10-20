@@ -33,7 +33,7 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
 
   return (
     <div
-      className="absolute left-0 right-0 top-full mt-2 w-full origin-top transform border-b border-border-subtle bg-bg-raised/95 p-6 shadow-card backdrop-blur-xl transition-all duration-base"
+      className="absolute left-0 right-0 top-full w-full origin-top border-t-8 border-transparent bg-clip-padding transform border-b border-border-subtle bg-bg-raised/95 p-6 shadow-card backdrop-blur-xl transition-all duration-base"
       role="region"
       aria-label="Executive Roundtables Navigation"
     >
@@ -49,7 +49,6 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
           </div>
           <Link
             href="/roundtables"
-            onClick={onClose}
             className="group flex items-center gap-1.5 text-xs font-medium text-brand-secondary hover:underline"
           >
             <span>View Roundtables Hub</span>
@@ -62,7 +61,6 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
             <Link
               key={rt.slug}
               href={`/roundtables/${rt.slug}`}
-              onClick={onClose}
               className={`group flex flex-col justify-between rounded-md border border-border-subtle bg-bg-surface/60 p-4 transition-all duration-base hover:-translate-y-1 hover:bg-bg-surface hover:shadow-card ${
                 accentBorderColors[rt.accent] || 'hover:border-brand-primary'
               }`}

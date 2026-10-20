@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
@@ -18,11 +19,9 @@ import { Calendar, Clock, Download, Layers, ShieldCheck, Sparkles, Users } from 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'The Programme | One-Day Executive Schedule',
-  description:
-    'Full programme for AIX Summit 2026. Monday 14 December 2026, 14:00–18:00, followed by reception to 18:00. Featuring six parallel executive roundtables and live AI demonstrations.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/programme');
+}
 
 export default async function ProgrammePage() {
   const programme = await getLiveProgramme();

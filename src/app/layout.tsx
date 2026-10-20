@@ -3,8 +3,10 @@ import { Ubuntu, Roboto } from 'next/font/google';
 import './globals.css';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
+import { PublicChrome } from '@/components/layout/PublicChrome';
+import { buildRobots } from '@/lib/page-metadata';
 import { getSiteConfig } from '@/lib/content';
-import { getLiveNavigation, getLiveGlobals } from '@/lib/server-content';
+import { getLiveNavigation, getLiveGlobals, getLiveMetadata } from '@/lib/server-content';
 import { StoreProvider } from '@/store/StoreProvider';
 
 const ubuntu = Ubuntu({
@@ -21,44 +23,62 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s | AIX Roundtables 2026',
-    default: 'AIX Roundtables 2026 | Executive AI Summit, Doha, 14 December 2026',
-  },
-  description:
-    'AIX Roundtables 2026 is an invitation-led executive summit in Doha, Qatar on Monday 14 December 2026. Convening 110 senior decision-makers across six sponsored roundtables to move AI from ambition to action.',
-  metadataBase: new URL('https://aixrt-sigma.vercel.app'),
-  icons: {
-    icon: '/brand/favicon.svg',
-    shortcut: '/brand/favicon.svg',
-    apple: '/brand/favicon.svg',
-  },
-  openGraph: {
-    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
-    description:
-      'A one-day executive summit in Doha. Six sponsored roundtables, working AI demonstrations, and Chatham House discussions for senior leaders.',
-    url: 'https://aixrt-sigma.vercel.app',
-    siteName: 'AIX Roundtables 2026',
-    locale: 'en_US',
-    type: 'website',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1024,
-        height: 537,
-        alt: 'AIX Roundtables Doha 2026 - Where AI moves from ambition to action',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
-    description:
-      'A one-day executive summit in Doha. Six sponsored roundtables, working AI demonstrations, and Chatham House discussions for senior leaders.',
-    images: ['/og-image.png'],
-  },
-};
+/**
+ * Site-wide defaults, edited in the CMS under the SEO tab. Individual pages
+ * override these through buildPageMetadata(); anything a page leaves blank
+ * falls back to what is set here.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const data: any = (await getLiveMetadata()) || {};
+  const site: any = data.site || {};
+  const baseUrl = String(site.baseUrl || 'https://aixrt-sigma.vercel.app').replace(/\/$/, '');
+
+  return {
+    title: {
+      template: site.titleTemplate || '%s | AIX Roundtables 2026',
+      default: site.defaultTitle || 'AIX Roundtables 2026',
+    },
+    description: site.defaultDescription,
+    metadataBase: new URL(baseUrl),
+    ...(site.keywords?.length ? { keywords: site.keywords } : {}),
+    ...buildRobots(site, {}),
+    ...(site.verification?.google || site.verification?.bing
+      ? {
+          verification: {
+            ...(site.verification.google ? { google: site.verification.google } : {}),
+            ...(site.verification.bing ? { other: { 'msvalidate.01': site.verification.bing } } : {}),
+          },
+        }
+      : {}),
+    icons: {
+      icon: '/brand/favicon.svg',
+      shortcut: '/brand/favicon.svg',
+      apple: '/brand/favicon.svg',
+    },
+    openGraph: {
+      title: site.ogTitle || site.defaultTitle,
+      description: site.ogDescription || site.defaultDescription,
+      url: baseUrl,
+      siteName: site.siteName,
+      locale: site.locale || 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: site.ogImage || '/og-image.png',
+          width: site.ogImageWidth || 1024,
+          height: site.ogImageHeight || 537,
+          alt: site.ogImageAlt || site.siteName,
+        },
+      ],
+    },
+    twitter: {
+      card: site.twitterCard || 'summary_large_image',
+      title: site.ogTitle || site.defaultTitle,
+      description: site.ogDescription || site.defaultDescription,
+      images: [site.ogImage || '/og-image.png'],
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -68,6 +88,13 @@ export default async function RootLayout({
   const config = getSiteConfig();
   const navigation = await getLiveNavigation();
   const globals = await getLiveGlobals();
+  const seo: any = (await getLiveMetadata()) || {};
+  const seoSite: any = seo.site || {};
+  const siteUrl = String(seoSite.baseUrl || 'https://aixrt-sigma.vercel.app').replace(/\/$/, '');
+  // Profiles the organisation controls, used by search engines and AI assistants
+  // to tie this site to a known entity. Taken from site.json so they are not
+  // maintained twice.
+  const sameAs = Object.values((config as any).socials || {}).filter(Boolean) as string[];
 
   // Structured Data Event JSON-LD
   const eventJsonLd = {
@@ -91,8 +118,40 @@ export default async function RootLayout({
     organizer: {
       '@type': 'Organization',
       name: config.event.organiser,
-      url: 'https://www.aixsummit.com',
+      url: config.event.organiserUrl || siteUrl,
     },
+    url: siteUrl,
+    image: `${siteUrl}${seoSite.ogImage || '/og-image.png'}`,
+  };
+
+  // Identifies the publisher as an entity in its own right. This is what lets a
+  // search engine or an AI assistant connect the summit to the organisation
+  // behind it, and to its verified profiles elsewhere.
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${siteUrl}/#organization`,
+    name: seoSite.siteName || 'AIX Roundtables',
+    url: siteUrl,
+    logo: `${siteUrl}${(config as any).brand?.logo || '/og-image.png'}`,
+    description: seoSite.defaultDescription,
+    ...(sameAs.length ? { sameAs } : {}),
+    parentOrganization: {
+      '@type': 'Organization',
+      name: config.event.organiser,
+      url: config.event.organiserUrl,
+    },
+  };
+
+  const webSiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: siteUrl,
+    name: seoSite.siteName,
+    description: seoSite.defaultDescription,
+    inLanguage: 'en',
+    publisher: { '@id': `${siteUrl}/#organization` },
   };
 
   return (
@@ -109,14 +168,26 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
+        />
       </head>
       <body className="flex min-h-screen flex-col bg-bg-base text-text-primary antialiased overflow-x-hidden">
         <StoreProvider>
-          <SiteHeader navigation={navigation} registerUrl={globals?.registerUrl} />
+          <PublicChrome>
+            <SiteHeader navigation={navigation} registerUrl={globals?.registerUrl} />
+          </PublicChrome>
           <main id="main-content" className="flex-1">
             {children}
           </main>
-          <SiteFooter navigation={navigation} registerUrl={globals?.registerUrl} />
+          <PublicChrome>
+            <SiteFooter navigation={navigation} registerUrl={globals?.registerUrl} />
+          </PublicChrome>
         </StoreProvider>
       </body>
     </html>

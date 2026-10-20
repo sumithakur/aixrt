@@ -5,7 +5,8 @@
       "end": "14:30",
       "format": "arrival",
       "title": "Arrival & Registration",
-      "description": "Registration, networking coffee; startup booths open; 3-minute host welcome at 14:25"
+      "description": "Registration, networking coffee; startup booths open; 3-minute host welcome at 14:25",
+      "showOnHome": true
     },
     {
       "start": "14:30",
@@ -14,14 +15,16 @@
       "title": "Roundtable Session 1",
       "description": "Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase",
       "emphasis": true,
-      "roundtableSessionId": 1
+      "roundtableSessionId": 1,
+      "showOnHome": true
     },
     {
       "start": "16:00",
       "end": "16:30",
       "format": "connections",
       "title": "Networking Break",
-      "description": "Attendees of both sessions network with each other and meet the startups at their booths; rooms reset for Session 2"
+      "description": "Attendees of both sessions network with each other and meet the startups at their booths; rooms reset for Session 2",
+      "showOnHome": true
     },
     {
       "start": "16:30",
@@ -30,14 +33,16 @@
       "title": "Roundtable Session 2",
       "description": "Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase",
       "emphasis": true,
-      "roundtableSessionId": 2
+      "roundtableSessionId": 2,
+      "showOnHome": true
     },
     {
       "start": "18:00",
       "end": "18:30",
       "format": "reception",
       "title": "Networking & Booths",
-      "description": "Optional close: booth visits and informal networking"
+      "description": "Optional close: booth visits and informal networking",
+      "showOnHome": true
     }
   ],
   "hero": {

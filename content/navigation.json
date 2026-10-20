@@ -64,17 +64,7 @@
       {
         "label": "Sponsors",
         "href": "/partners",
-        "type": "dropdown",
-        "children": [
-          {
-            "label": "Our Sponsors",
-            "href": "/partners"
-          },
-          {
-            "label": "Become a Sponsor (Chair a Table)",
-            "href": "/partners/become-a-partner"
-          }
-        ]
+        "type": "link"
       },
       {
         "label": "Signals",

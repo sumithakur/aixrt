@@ -7,6 +7,7 @@ import {
   getAboutContent,
   getPartners,
   getPartnersDataRaw,
+  getRoundtablesDataRaw,
   getAudienceData,
   getFAQs,
   getVenueData,
@@ -15,6 +16,7 @@ import {
   getContactData,
   getNavigation,
   getGlobals,
+  getMetadataContent,
 } from '@/lib/content';
 import type { SiteConfig, Roundtable, ProgrammeItem, Partner, AudienceData, FAQCategory } from '@/types/content';
 
@@ -171,4 +173,15 @@ export async function getLiveNavigation(): Promise<any> {
 export async function getLiveGlobals(): Promise<any> {
   const firestoreData = await fetchFromFirestore<any>('globals.json');
   return firestoreData || getGlobals();
+}
+
+export async function getLiveRoundtablesDataRaw(): Promise<any> {
+  const firestoreData = await fetchFromFirestore<any>('roundtables.json');
+  return firestoreData || getRoundtablesDataRaw();
+}
+
+export async function getLiveMetadata(): Promise<any> {
+  const firestoreData = await fetchFromFirestore<any>('metadata.json');
+  if (firestoreData) return firestoreData;
+  return getMetadataContent();
 }

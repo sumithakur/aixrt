@@ -1,15 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { CheckCircle2, ArrowRight, Calendar, Users, ShieldCheck } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Invitation Request Received',
-  description: 'Your invitation request for AIX Summit 2026 has been received for curatorial review.',
-};
+// Rendered per request so SEO edits in the CMS appear without a redeploy.
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/request-an-invitation/received');
+}
 
 export default function InvitationReceivedPage() {
   return (

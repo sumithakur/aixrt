@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -21,11 +22,9 @@ import {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'AI Showcase & Enterprise Connections',
-  description:
-    'Live working software demonstrated to senior enterprise buyers. 4–6 selected enterprise AI companies presenting production outcomes, not pitch decks.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/showcase');
+}
 
 export default async function ShowcasePage() {
   const companies = getShowcaseCompanies();

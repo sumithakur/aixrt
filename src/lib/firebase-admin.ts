@@ -22,6 +22,9 @@ export function getFirebaseAdmin() {
 
   try {
     return initializeApp({
+      // Also set at the top level: Firestore reads it from here, and without it
+      // a credential-only project id is not always picked up.
+      projectId,
       credential: cert({
         projectId,
         clientEmail,

@@ -4,6 +4,7 @@ import './globals.css';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { PublicChrome } from '@/components/layout/PublicChrome';
+import { buildRobots } from '@/lib/page-metadata';
 import { getSiteConfig } from '@/lib/content';
 import { getLiveNavigation, getLiveGlobals, getLiveMetadata } from '@/lib/server-content';
 import { StoreProvider } from '@/store/StoreProvider';
@@ -39,6 +40,16 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: site.defaultDescription,
     metadataBase: new URL(baseUrl),
+    ...(site.keywords?.length ? { keywords: site.keywords } : {}),
+    ...buildRobots(site, {}),
+    ...(site.verification?.google || site.verification?.bing
+      ? {
+          verification: {
+            ...(site.verification.google ? { google: site.verification.google } : {}),
+            ...(site.verification.bing ? { other: { 'msvalidate.01': site.verification.bing } } : {}),
+          },
+        }
+      : {}),
     icons: {
       icon: '/brand/favicon.svg',
       shortcut: '/brand/favicon.svg',
@@ -77,6 +88,13 @@ export default async function RootLayout({
   const config = getSiteConfig();
   const navigation = await getLiveNavigation();
   const globals = await getLiveGlobals();
+  const seo: any = (await getLiveMetadata()) || {};
+  const seoSite: any = seo.site || {};
+  const siteUrl = String(seoSite.baseUrl || 'https://aixrt-sigma.vercel.app').replace(/\/$/, '');
+  // Profiles the organisation controls, used by search engines and AI assistants
+  // to tie this site to a known entity. Taken from site.json so they are not
+  // maintained twice.
+  const sameAs = Object.values((config as any).socials || {}).filter(Boolean) as string[];
 
   // Structured Data Event JSON-LD
   const eventJsonLd = {
@@ -100,8 +118,40 @@ export default async function RootLayout({
     organizer: {
       '@type': 'Organization',
       name: config.event.organiser,
-      url: 'https://www.aixsummit.com',
+      url: config.event.organiserUrl || siteUrl,
     },
+    url: siteUrl,
+    image: `${siteUrl}${seoSite.ogImage || '/og-image.png'}`,
+  };
+
+  // Identifies the publisher as an entity in its own right. This is what lets a
+  // search engine or an AI assistant connect the summit to the organisation
+  // behind it, and to its verified profiles elsewhere.
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${siteUrl}/#organization`,
+    name: seoSite.siteName || 'AIX Roundtables',
+    url: siteUrl,
+    logo: `${siteUrl}${(config as any).brand?.logo || '/og-image.png'}`,
+    description: seoSite.defaultDescription,
+    ...(sameAs.length ? { sameAs } : {}),
+    parentOrganization: {
+      '@type': 'Organization',
+      name: config.event.organiser,
+      url: config.event.organiserUrl,
+    },
+  };
+
+  const webSiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: siteUrl,
+    name: seoSite.siteName,
+    description: seoSite.defaultDescription,
+    inLanguage: 'en',
+    publisher: { '@id': `${siteUrl}/#organization` },
   };
 
   return (
@@ -117,6 +167,14 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
       </head>
       <body className="flex min-h-screen flex-col bg-bg-base text-text-primary antialiased overflow-x-hidden">

@@ -56,9 +56,15 @@ export async function generateMetadata({ params }: RoundtablePageProps): Promise
     values
   );
 
+  const keywords = (tpl.keywordsTemplate || []).map((k: string) => fillTemplate(k, values)).filter(Boolean);
+
   return {
     title,
     description,
+    ...(keywords.length ? { keywords } : {}),
+    ...(site.baseUrl
+      ? { alternates: { canonical: `${String(site.baseUrl).replace(/\/$/, '')}/roundtables/${rt.slug}` } }
+      : {}),
     openGraph: {
       title: fillTemplate(tpl.ogTitleTemplate || '{shortTitle} — AIX Summit 2026 Roundtable', values),
       description: fillTemplate(tpl.ogDescriptionTemplate || '{coreQuestion}', values),

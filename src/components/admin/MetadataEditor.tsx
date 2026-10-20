@@ -23,9 +23,83 @@ function Counter({ value, limit }: { value: string; limit: number }) {
   );
 }
 
+/** Comma-separated in the box, an array in the file. */
+function KeywordsField({
+  value,
+  onChange,
+  hint,
+}: {
+  value: string[] | undefined;
+  onChange: (next: string[]) => void;
+  hint?: string;
+}) {
+  const list = value || [];
+  return (
+    <div>
+      <div className="flex items-baseline justify-between">
+        <label className={label}>Keywords ({list.length})</label>
+        <span className="text-[10px] font-mono text-text-muted">comma separated</span>
+      </div>
+      <textarea
+        className={`${input} h-16`}
+        value={list.join(', ')}
+        placeholder="AI summit Qatar, executive AI roundtable, enterprise AI Doha"
+        onChange={(e) =>
+          onChange(
+            e.target.value
+              .split(',')
+              .map((k) => k.trim())
+              .filter(Boolean)
+          )
+        }
+      />
+      {hint && <p className="text-[10px] text-text-secondary mt-1">{hint}</p>}
+    </div>
+  );
+}
+
 interface Props {
   data: any;
   setData: (d: any) => void;
+}
+
+/** A quick read on what still needs attention, rather than scrolling 17 cards to find it. */
+function SeoHealth({ data }: { data: any }) {
+  const site = data?.site || {};
+  const pages: any[] = data?.pages || [];
+  const indexed = pages.filter((p) => !p.noindex);
+
+  const checks = [
+    { label: 'Pages with a title', value: `${indexed.filter((p) => p.title).length}/${indexed.length}`, bad: indexed.some((p) => !p.title) },
+    { label: 'Pages with a description', value: `${indexed.filter((p) => p.description).length}/${indexed.length}`, bad: indexed.some((p) => !p.description) },
+    { label: 'Titles over 60 characters', value: String(indexed.filter((p) => (p.title || '').length > TITLE_LIMIT).length), bad: indexed.some((p) => (p.title || '').length > TITLE_LIMIT) },
+    { label: 'Descriptions over 160', value: String(indexed.filter((p) => (p.description || '').length > DESCRIPTION_LIMIT).length), bad: indexed.some((p) => (p.description || '').length > DESCRIPTION_LIMIT) },
+    { label: 'Hidden from search', value: String(pages.length - indexed.length), bad: false },
+    { label: 'AI assistants allowed', value: site.allowAiCrawlers === false ? 'No' : 'Yes', bad: site.allowAiCrawlers === false },
+    { label: 'Search Console verified', value: site.verification?.google ? 'Yes' : 'Not set', bad: !site.verification?.google },
+  ];
+
+  return (
+    <div className="rounded-xl border border-border-subtle bg-bg-base p-5">
+      <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border-subtle pb-2">
+        <h3 className="font-semibold text-brand-secondary">At a glance</h3>
+        <span className="text-[11px] text-text-secondary">
+          Live files:{' '}
+          <a href="/sitemap.xml" target="_blank" rel="noreferrer" className="text-brand-secondary hover:underline">sitemap.xml</a>
+          {' · '}
+          <a href="/robots.txt" target="_blank" rel="noreferrer" className="text-brand-secondary hover:underline">robots.txt</a>
+        </span>
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-4">
+        {checks.map((c) => (
+          <div key={c.label}>
+            <p className={`text-lg font-bold ${c.bad ? 'text-brand-primary' : 'text-text-primary'}`}>{c.value}</p>
+            <p className="text-[11px] text-text-secondary leading-tight">{c.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 /**
@@ -55,6 +129,8 @@ export function MetadataEditor({ data, setData }: Props) {
 
   return (
     <div className="space-y-6">
+      <SeoHealth data={d} />
+
       {/* Site-wide defaults */}
       <div className={card}>
         <h3 className={cardTitle}>Site-wide defaults</h3>
@@ -134,6 +210,76 @@ export function MetadataEditor({ data, setData }: Props) {
               onChange={(e) => patchSite({ ogImageAlt: e.target.value })} />
           </div>
         </div>
+
+        <KeywordsField
+          value={site.keywords}
+          onChange={(keywords) => patchSite({ keywords })}
+          hint="Used on any page that has none of its own. Google ignores this tag for ranking; Bing and several AI crawlers still read it, and it is where the terms you want to be found for are recorded. What actually moves rankings is the title and description above, the structured data this site publishes, and using those terms in the page copy itself."
+        />
+      </div>
+
+      {/* Discovery */}
+      <div className={card}>
+        <h3 className={cardTitle}>Search engines & AI assistants</h3>
+
+        <div className="space-y-2">
+          <label className="flex items-start gap-2 text-xs text-text-secondary">
+            <input type="checkbox" className="mt-0.5" checked={site.robots?.index !== false}
+              onChange={(e) => patchSite({ robots: { ...(site.robots || {}), index: e.target.checked } })} />
+            <span>
+              <span className="text-text-primary font-semibold">Allow the whole site to be indexed.</span>{' '}
+              Turning this off removes the entire site from search results. Individual pages can be
+              hidden further down instead.
+            </span>
+          </label>
+
+          <label className="flex items-start gap-2 text-xs text-text-secondary">
+            <input type="checkbox" className="mt-0.5" checked={site.allowAiCrawlers !== false}
+              onChange={(e) => patchSite({ allowAiCrawlers: e.target.checked })} />
+            <span>
+              <span className="text-text-primary font-semibold">Allow AI assistants to read the site.</span>{' '}
+              Lets ChatGPT, Claude, Perplexity, Google&apos;s AI results, Copilot and Apple Intelligence
+              read these pages so the summit can appear in their answers. Switching this off keeps
+              them out.
+            </span>
+          </label>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className={label}>Image size in search results</label>
+            <select className={input} value={site.robots?.maxImagePreview || 'large'}
+              onChange={(e) => patchSite({ robots: { ...(site.robots || {}), maxImagePreview: e.target.value } })}>
+              <option value="large">Large — recommended</option>
+              <option value="standard">Standard</option>
+              <option value="none">No image</option>
+            </select>
+          </div>
+          <div>
+            <label className={label}>Snippet length</label>
+            <select className={input} value={String(site.robots?.maxSnippet ?? -1)}
+              onChange={(e) => patchSite({ robots: { ...(site.robots || {}), maxSnippet: Number(e.target.value) } })}>
+              <option value="-1">No limit — recommended</option>
+              <option value="160">160 characters</option>
+              <option value="0">No snippet</option>
+            </select>
+          </div>
+          <div>
+            <label className={label}>Google Search Console verification code</label>
+            <input className={input} value={site.verification?.google || ''} placeholder="Paste the content value of the meta tag"
+              onChange={(e) => patchSite({ verification: { ...(site.verification || {}), google: e.target.value } })} />
+          </div>
+          <div>
+            <label className={label}>Bing Webmaster verification code</label>
+            <input className={input} value={site.verification?.bing || ''}
+              onChange={(e) => patchSite({ verification: { ...(site.verification || {}), bing: e.target.value } })} />
+          </div>
+        </div>
+        <p className="text-[11px] text-text-secondary">
+          The sitemap, robots file and the structured data describing the event, the organisation and
+          its social profiles are generated from this tab and the Global / Header tab — nothing to
+          maintain by hand.
+        </p>
       </div>
 
       {/* Per-page */}
@@ -183,6 +329,23 @@ export function MetadataEditor({ data, setData }: Props) {
                 <input className={input} value={page.ogDescription || ''} placeholder="Same as search description"
                   onChange={(e) => patchPage(i, { ogDescription: e.target.value })} />
               </div>
+            </div>
+
+            <KeywordsField
+              value={page.keywords}
+              onChange={(keywords) => patchPage(i, { keywords })}
+              hint="Leave empty to fall back to the site-wide keywords."
+            />
+
+            <div>
+              <label className={label}>Canonical address (optional)</label>
+              <input className={input} value={page.canonical || ''}
+                placeholder={`${String(site.baseUrl || '').replace(/\/$/, '')}${page.route === '/' ? '' : page.route}`}
+                onChange={(e) => patchPage(i, { canonical: e.target.value })} />
+              <p className="text-[10px] text-text-secondary mt-1">
+                Left blank, this page declares itself the original. Set it only when the same content
+                also lives at another address and that one should be the version search engines rank.
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-6 pt-1">

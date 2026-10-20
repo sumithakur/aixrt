@@ -19,7 +19,14 @@ export async function buildPageMetadata(route: string): Promise<Metadata> {
   const ogTitle: string = page.ogTitle || site.ogTitle || title;
   const ogDescription: string = page.ogDescription || site.ogDescription || description;
 
+  const keywords: string[] = (page.keywords?.length ? page.keywords : site.keywords) || [];
+  const baseUrl = String(site.baseUrl || '').replace(/\/$/, '');
+  const canonical: string = page.canonical || (baseUrl ? `${baseUrl}${route === '/' ? '' : route}` : route);
+
   return {
+    ...buildRobots(site, page),
+    ...(keywords.length ? { keywords } : {}),
+    ...(canonical ? { alternates: { canonical } } : {}),
     // An absolute title opts out of the site-wide "%s | AIX Roundtables 2026"
     // suffix, for pages whose title already names the event in full.
     title: page.absoluteTitle ? { absolute: title } : title,
@@ -50,7 +57,35 @@ export async function buildPageMetadata(route: string): Promise<Metadata> {
       description: ogDescription,
       ...(site.ogImage ? { images: [site.ogImage] } : {}),
     },
-    ...(page.noindex ? { robots: { index: false, follow: false } } : {}),
+  };
+}
+
+/**
+ * Crawler directives.
+ *
+ * A page marked "hide from search engines" is excluded outright. Everything else
+ * carries the site's preview settings, which is what lets Google show a large
+ * image and an untruncated snippet rather than deciding for itself.
+ */
+export function buildRobots(site: any, page: any): Pick<Metadata, 'robots'> {
+  if (page?.noindex) {
+    return { robots: { index: false, follow: false, nocache: true } };
+  }
+
+  const r = site?.robots || {};
+  const previews = {
+    'max-image-preview': (r.maxImagePreview || 'large') as 'none' | 'standard' | 'large',
+    'max-snippet': typeof r.maxSnippet === 'number' ? r.maxSnippet : -1,
+    'max-video-preview': typeof r.maxVideoPreview === 'number' ? r.maxVideoPreview : -1,
+  };
+
+  return {
+    robots: {
+      index: r.index !== false,
+      follow: r.follow !== false,
+      googleBot: { index: r.index !== false, follow: r.follow !== false, ...previews },
+      ...previews,
+    },
   };
 }
 

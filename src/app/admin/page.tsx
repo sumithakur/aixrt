@@ -16,6 +16,7 @@ import defaultNavigation from '@/content/navigation.json';
 import defaultGlobals from '@/content/globals.json';
 import { NavigationEditor } from '@/components/admin/NavigationEditor';
 import { GlobalsEditor } from '@/components/admin/GlobalsEditor';
+import { RoundtableDefaultsEditor, StringListEditor } from '@/components/admin/RoundtableDefaultsEditor';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { LogOut, Save, Download, RefreshCw, Plus, Trash2, ArrowUpRight } from 'lucide-react';
 
@@ -971,7 +972,15 @@ export default function AdminPage() {
             </div>
 
             <div className="space-y-4">
-              <h3 className="font-semibold text-brand-secondary">Track Cards ({roundtablesData.items?.length || 0})</h3>
+              <RoundtableDefaultsEditor data={roundtablesData} setData={setRoundtablesData} />
+
+              <h3 className="font-semibold text-brand-secondary">
+                Per-table content ({roundtablesData.items?.length || 0})
+              </h3>
+              <p className="text-xs text-text-secondary -mt-2">
+                Only what differs between tables. Timings, seat counts, the specifications panel and
+                button labels live in the shared settings above.
+              </p>
               <div className="space-y-6">
                 {(roundtablesData.items || []).map((rt: any, i: number) => (
                   <div key={rt.slug || i} className="p-6 bg-bg-base border border-border-subtle rounded-xl space-y-4">
@@ -1036,6 +1045,63 @@ export default function AdminPage() {
                         className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-xs text-text-primary h-16"
                       />
                     </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">Session</label>
+                        <select
+                          value={rt.session || 1}
+                          onChange={(e) => {
+                            const newItems = [...roundtablesData.items];
+                            newItems[i] = { ...rt, session: Number(e.target.value) };
+                            setRoundtablesData({ ...roundtablesData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm text-text-primary"
+                        >
+                          <option value={1}>Session 1</option>
+                          <option value={2}>Session 2</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-semibold text-text-muted mb-1">URL slug</label>
+                        <input
+                          type="text"
+                          value={rt.slug || ''}
+                          onChange={(e) => {
+                            const newItems = [...roundtablesData.items];
+                            newItems[i] = { ...rt, slug: e.target.value };
+                            setRoundtablesData({ ...roundtablesData, items: newItems });
+                          }}
+                          className="w-full p-2 bg-bg-surface border border-border-subtle rounded text-sm font-mono text-text-primary"
+                        />
+                        <p className="text-[10px] text-text-secondary mt-1">
+                          Changing this changes the page address and breaks existing links.
+                        </p>
+                      </div>
+                    </div>
+
+                    <StringListEditor
+                      title="Discussion Themes"
+                      items={rt.themes || []}
+                      placeholder="e.g. Fraud and financial crime"
+                      onChange={(next) => {
+                        const newItems = [...roundtablesData.items];
+                        newItems[i] = { ...rt, themes: next };
+                        setRoundtablesData({ ...roundtablesData, items: newItems });
+                      }}
+                    />
+
+                    <StringListEditor
+                      title="Who Will Be In The Room"
+                      hint="One seat per line, as shown on the roundtable page."
+                      items={rt.participantProfile || []}
+                      placeholder="e.g. Qatar Central Bank / regulatory voice"
+                      onChange={(next) => {
+                        const newItems = [...roundtablesData.items];
+                        newItems[i] = { ...rt, participantProfile: next };
+                        setRoundtablesData({ ...roundtablesData, items: newItems });
+                      }}
+                    />
                   </div>
                 ))}
               </div>

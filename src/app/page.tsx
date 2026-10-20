@@ -10,12 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
 import { CTABandLive } from '@/components/content/CTABandLive';
 import { HomeHero } from '@/components/home/HomeHero';
-import {
-  getLiveSiteConfig,
-  getLiveRoundtables,
-  getLiveAudienceData,
-  getLiveHomeContent,
-} from '@/lib/server-content';
+import { getLiveSiteConfig, getLiveRoundtables, getLiveAudienceData, getLiveHomeContent, getLiveProgramme } from '@/lib/server-content';
 import {
   ArrowRight,
   Shield,
@@ -64,8 +59,16 @@ export default async function HomePage() {
   const audience = await getLiveAudienceData();
   const homeData = await getLiveHomeContent();
 
-  const condensedProgramme =
-    homeData.programmeSection?.items ?? [];
+  // Single source of truth: the Programme tab. No second copy to keep in sync.
+  const programmeItems = await getLiveProgramme();
+  const condensedProgramme = (programmeItems as any[])
+    .filter((item) => item.showOnHome !== false)
+    .map((item) => ({
+      time: `${item.start} – ${item.end}`,
+      title: item.title,
+      desc: item.description,
+      highlight: item.emphasis === true,
+    }));
 
   return (
     <div className="min-h-screen bg-bg-base text-text-primary selection:bg-brand-secondary/30">

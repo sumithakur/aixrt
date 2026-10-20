@@ -7,6 +7,7 @@ import {
   getAboutContent,
   getPartners,
   getPartnersDataRaw,
+  getRoundtablesDataRaw,
   getAudienceData,
   getFAQs,
   getVenueData,
@@ -171,4 +172,9 @@ export async function getLiveNavigation(): Promise<any> {
 export async function getLiveGlobals(): Promise<any> {
   const firestoreData = await fetchFromFirestore<any>('globals.json');
   return firestoreData || getGlobals();
+}
+
+export async function getLiveRoundtablesDataRaw(): Promise<any> {
+  const firestoreData = await fetchFromFirestore<any>('roundtables.json');
+  return firestoreData || getRoundtablesDataRaw();
 }

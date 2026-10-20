@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { ChairSlot } from '@/components/content/ChairSlot';
 import { CTABandLive } from '@/components/content/CTABandLive';
 import { getRoundtables, getRoundtableBySlug } from '@/lib/content';
+import { getLiveRoundtables, getLiveRoundtablesDataRaw } from '@/lib/server-content';
 import {
   Users,
   Clock,
@@ -24,19 +25,19 @@ interface RoundtablePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const roundtables = getRoundtables();
-  return roundtables.map((rt) => ({ slug: rt.slug }));
-}
+// Rendered per request so CMS edits appear without a rebuild.
+export const dynamic = 'force-dynamic';
+
 
 export async function generateMetadata({ params }: RoundtablePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const rt = getRoundtableBySlug(slug);
+  const liveAll = await getLiveRoundtables();
+  const rt = liveAll.find((r: any) => r.slug === slug) ?? getRoundtableBySlug(slug);
   if (!rt) return { title: 'Roundtable Not Found' };
 
   return {
     title: `${rt.shortTitle} | Executive Roundtable`,
-    description: `AIX Summit 2026 Executive Roundtable: "${rt.title}". Addressing: "${rt.coreQuestion}". 75 minutes, 15 participants, Chatham House Rule.`,
+    description: `AIX Summit 2026 Executive Roundtable: "${rt.title}". Addressing: "${rt.coreQuestion}". ${(await getLiveRoundtablesDataRaw())?.defaults?.metaDescriptionSuffix ?? '75 minutes, 15 participants, Chatham House Rule.'}`,
     openGraph: {
       title: `${rt.shortTitle} — AIX Summit 2026 Roundtable`,
       description: rt.coreQuestion,
@@ -46,13 +47,14 @@ export async function generateMetadata({ params }: RoundtablePageProps): Promise
 
 export default async function RoundtableDetailPage({ params }: RoundtablePageProps) {
   const { slug } = await params;
-  const rt = getRoundtableBySlug(slug);
+  const allLive = await getLiveRoundtables();
+  const rt = allLive.find((r: any) => r.slug === slug) ?? getRoundtableBySlug(slug);
 
   if (!rt) {
     notFound();
   }
 
-  const allRoundtables = getRoundtables();
+  const allRoundtables = allLive.length ? allLive : getRoundtables();
   const otherRoundtables = allRoundtables.filter((item) => item.slug !== rt.slug);
 
   const accentColors: Record<string, { bar: string; text: string; badge: string }> = {
@@ -90,13 +92,19 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
   };
 
   // Structured Data subEvent JSON-LD
+  const rtDefaults: any = (await getLiveRoundtablesDataRaw())?.defaults ?? {};
+  const sessionCfg: any =
+    rtDefaults.sessions?.[String(rt.session || 1)] ??
+    { timing: '14:30 – 16:00', startIso: '2026-12-14T14:30:00+03:00', endIso: '2026-12-14T16:00:00+03:00' };
+  const sessionTiming: string = sessionCfg.timing;
+
   const subEventJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: `${rt.shortTitle}: ${rt.title}`,
     description: rt.coreQuestion,
-    startDate: rt.session === 2 ? '2026-12-14T16:30:00+03:00' : '2026-12-14T14:30:00+03:00',
-    endDate: rt.session === 2 ? '2026-12-14T18:00:00+03:00' : '2026-12-14T16:00:00+03:00',
+    startDate: sessionCfg.startIso,
+    endDate: sessionCfg.endIso,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
       '@type': 'Place',
@@ -109,7 +117,7 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
     },
   };
 
-  const sessionTiming = rt.session === 2 ? '16:30 – 18:00' : '14:30 – 16:00';
+
 
   return (
     <>
@@ -139,7 +147,7 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
               <span className={`rounded-pill border px-3 py-1 font-display text-xs font-bold uppercase tracking-wider ${currentAccent.badge}`}>
                 Table {rt.order} · {rt.shortTitle} · Session {rt.session || 1}
               </span>
-              <span className="text-xs text-text-muted">75 Minutes · 15 Seats</span>
+              <span className="text-xs text-text-muted">{rtDefaults.cardMeta ?? '75 Minutes · 15 Seats'}</span>
             </div>
 
             <Heading level={1} size="hero" className="mb-6">
@@ -221,7 +229,7 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
               {/* Discussion Themes */}
               <div>
                 <Eyebrow accent="secondary" className="mb-3">
-                  Discussion Themes
+                  {rtDefaults.themesHeading ?? 'Discussion Themes'}
                 </Eyebrow>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {rt.themes.map((theme, i) => (
@@ -239,10 +247,10 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
               {/* Sanitised Participant Profile */}
               <div>
                 <Eyebrow accent="secondary" className="mb-3">
-                  Who Will Be in the Room
+                  {rtDefaults.participantsHeading ?? 'Who Will Be In The Room'}
                 </Eyebrow>
                 <p className="mb-4 text-xs text-text-muted">
-                  Strictly senior peer executives curated by Risin Ventures and the roundtable chair:
+                  {rtDefaults.participantsIntro}
                 </p>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                   {rt.participantProfile.map((profile) => (
@@ -266,41 +274,20 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
                 </h3>
 
                 <ul className="space-y-4 text-xs text-text-secondary">
-                  <li className="flex items-start gap-3">
-                    <Clock className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-text-primary">75 Minutes Discussion</span>
-                      <p className="text-text-muted mt-0.5">{sessionTiming} in dedicated suite.</p>
-                    </div>
-                  </li>
-
-                  <li className="flex items-start gap-3">
-                    <Users className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-text-primary">Exactly 15 Seats</span>
-                      <p className="text-text-muted mt-0.5">1 chair, up to 2 sponsor leaders, 12 invited guests.</p>
-                    </div>
-                  </li>
-
-                  <li className="flex items-start gap-3">
-                    <ShieldCheck className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-text-primary">Chatham House Rule</span>
-                      <p className="text-text-muted mt-0.5">
-                        Observations recorded without attribution by designated rapporteur.
-                      </p>
-                    </div>
-                  </li>
-
-                  <li className="flex items-start gap-3">
-                    <FileText className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-text-primary">Plenary & Signals Report</span>
-                      <p className="text-text-muted mt-0.5">
-                        Findings represented on synthesis stage and published in mid-January 2027.
-                      </p>
-                    </div>
-                  </li>
+                  {(rtDefaults.facts ?? []).map((fact: any, i: number) => {
+                    const Icon = [Clock, Users, ShieldCheck, FileText][i % 4];
+                    return (
+                      <li key={fact.title} className="flex items-start gap-3">
+                        <Icon className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-semibold text-text-primary">{fact.title}</span>
+                          <p className="text-text-muted mt-0.5">
+                            {String(fact.detail ?? '').replace('{sessionTiming}', sessionTiming)}
+                          </p>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 <div className="pt-4 border-t border-border-subtle space-y-3">
@@ -310,15 +297,15 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
                     size="md"
                     className="w-full"
                   >
-                    Request a Seat
+                    {rtDefaults.requestSeatLabel ?? 'Request a Seat'}
                   </Button>
                   <Button
-                    href="/partners/become-a-partner"
+                    href={rtDefaults.chairTableHref ?? "/partners/become-a-partner"}
                     variant="secondary"
                     size="md"
                     className="w-full"
                   >
-                    Chair this Table
+                    {rtDefaults.chairTableLabel ?? 'Chair this Table'}
                   </Button>
                 </div>
               </div>

@@ -12,6 +12,8 @@ import aboutFallback from '@/content/about.json';
 import venueFallback from '@/content/venue.json';
 import signalsFallback from '@/content/signals.json';
 import contactFallback from '@/content/contact.json';
+import navigationFallback from '@/content/navigation.json';
+import globalsFallback from '@/content/globals.json';
 
 import type {
   SiteConfig,
@@ -38,6 +40,8 @@ const FALLBACK_MAP: Record<string, any> = {
   'venue.json': venueFallback,
   'signals.json': signalsFallback,
   'contact.json': contactFallback,
+  'navigation.json': navigationFallback,
+  'globals.json': globalsFallback,
 };
 
 // Global in-memory cache shared across serverless function invocations
@@ -210,4 +214,12 @@ export function getSignalsData() {
 
 export function getContactData() {
   return loadContentFile('contact.json');
+}
+
+export function getNavigation() {
+  return loadContentFile('navigation.json');
+}
+
+export function getGlobals() {
+  return loadContentFile('globals.json');
 }

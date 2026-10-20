@@ -6,7 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
-import { CTABand } from '@/components/content/CTABand';
+import { CTABandLive } from '@/components/content/CTABandLive';
 import { getLiveRoundtables } from '@/lib/server-content';
 import { getRoundtablesDataRaw } from '@/lib/content';
 import { Shield, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
@@ -224,7 +224,7 @@ export default async function RoundtablesHubPage() {
       </Section>
 
       {/* Universal Closing CTA */}
-      <CTABand />
+      <CTABandLive />
     </>
   );
 }

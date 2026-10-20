@@ -7,7 +7,7 @@ import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst, PullQuote } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { ChairSlot } from '@/components/content/ChairSlot';
-import { CTABand } from '@/components/content/CTABand';
+import { CTABandLive } from '@/components/content/CTABandLive';
 import { getRoundtables, getRoundtableBySlug } from '@/lib/content';
 import {
   Users,
@@ -372,7 +372,7 @@ export default async function RoundtableDetailPage({ params }: RoundtablePagePro
         </Container>
       </Section>
 
-      <CTABand />
+      <CTABandLive />
     </>
   );
 }

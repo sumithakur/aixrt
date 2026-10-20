@@ -1,0 +1,195 @@
+{
+  "topBar": {
+    "enabled": true,
+    "seriesLabel": "GCC Executive AI Series",
+    "activeEditionNote": "(Active Edition)",
+    "editions": [
+      {
+        "name": "QATAR",
+        "slug": "qatar",
+        "href": "/",
+        "label": "Doha · Dec 2026",
+        "isCurrent": true
+      },
+      {
+        "name": "OMAN",
+        "slug": "oman",
+        "href": "/editions/oman",
+        "label": "Muscat · Stay Tuned",
+        "isCurrent": false
+      },
+      {
+        "name": "KSA",
+        "slug": "ksa",
+        "href": "/editions/ksa",
+        "label": "Riyadh · Stay Tuned",
+        "isCurrent": false
+      },
+      {
+        "name": "UAE",
+        "slug": "uae",
+        "href": "/editions/uae",
+        "label": "Dubai / Abu Dhabi · Stay Tuned",
+        "isCurrent": false
+      }
+    ]
+  },
+  "header": {
+    "skipLinkLabel": "Skip to main content",
+    "poweredByLabel": "Powered by",
+    "registerLabel": "Register",
+    "sponsorLabel": "Become a Sponsor",
+    "mobileMenuLabel": "Open mobile navigation menu",
+    "items": [
+      {
+        "label": "About",
+        "href": "/about",
+        "type": "link"
+      },
+      {
+        "label": "Programme",
+        "href": "/programme",
+        "type": "link"
+      },
+      {
+        "label": "Roundtables",
+        "href": "/roundtables",
+        "type": "mega"
+      },
+      {
+        "label": "AI Showcase",
+        "href": "/showcase",
+        "type": "link"
+      },
+      {
+        "label": "Sponsors",
+        "href": "/partners",
+        "type": "dropdown",
+        "children": [
+          {
+            "label": "Our Sponsors",
+            "href": "/partners"
+          },
+          {
+            "label": "Become a Sponsor (Chair a Table)",
+            "href": "/partners/become-a-partner"
+          }
+        ]
+      },
+      {
+        "label": "Signals",
+        "href": "/signals",
+        "type": "link"
+      }
+    ]
+  },
+  "footer": {
+    "newsletter": {
+      "heading": "Stay updated on speaker and chair announcements",
+      "description": "Roundtable chairs, speakers and Showcase companies are announced as they are confirmed. Receive editorial updates directly.",
+      "placeholder": "Enter your work email",
+      "buttonLabel": "Get updates",
+      "successMessage": "Thank you. You will receive confirmed announcements directly.",
+      "alreadySubscribedMessage": "You are already subscribed. You will receive confirmed announcements directly.",
+      "invalidEmailMessage": "Please provide a valid work email."
+    },
+    "organisedByLabel": "Organised by",
+    "columns": [
+      {
+        "heading": "The Summit",
+        "links": [
+          {
+            "label": "The Programme",
+            "href": "/programme"
+          },
+          {
+            "label": "Six Executive Roundtables",
+            "href": "/roundtables"
+          },
+          {
+            "label": "AI Showcase & Connections",
+            "href": "/showcase"
+          },
+          {
+            "label": "Speakers & Chairs",
+            "href": "/speakers",
+            "requiresFeature": "showSpeakers"
+          },
+          {
+            "label": "AIX AI Impact Recognition",
+            "href": "/recognition",
+            "requiresFeature": "showRecognition"
+          }
+        ]
+      },
+      {
+        "heading": "Participate",
+        "links": [
+          {
+            "label": "Register",
+            "href": "",
+            "useRegisterUrl": true,
+            "emphasis": "secondary"
+          },
+          {
+            "label": "Become a Sponsor (Chair a Table)",
+            "href": "/partners/become-a-partner",
+            "emphasis": "primary"
+          },
+          {
+            "label": "Apply to Showcase",
+            "href": "/showcase/apply"
+          },
+          {
+            "label": "Contact Organising Team",
+            "href": "/contact"
+          }
+        ]
+      },
+      {
+        "heading": "More",
+        "links": [
+          {
+            "label": "About AIX Summit 2026",
+            "href": "/about"
+          },
+          {
+            "label": "Sponsors & Chairs",
+            "href": "/partners"
+          },
+          {
+            "label": "Roundtable Signals Report",
+            "href": "/signals"
+          },
+          {
+            "label": "Venue & Doha Travel",
+            "href": "/venue"
+          },
+          {
+            "label": "Frequently Asked Questions",
+            "href": "/faq"
+          },
+          {
+            "label": "Chatham House Confidentiality",
+            "href": "/legal/confidentiality"
+          }
+        ]
+      }
+    ],
+    "copyright": "© 2026 AIX Summit. Organised by {organiser}. All rights reserved.",
+    "legalLinks": [
+      {
+        "label": "Chatham House Conduct",
+        "href": "/legal/confidentiality"
+      },
+      {
+        "label": "Privacy Policy",
+        "href": "/legal/privacy"
+      },
+      {
+        "label": "Terms of Attendance",
+        "href": "/legal/terms"
+      }
+    ]
+  }
+}

@@ -12,6 +12,10 @@ import defaultVenue from '@/content/venue.json';
 import defaultSignals from '@/content/signals.json';
 import defaultContact from '@/content/contact.json';
 import defaultFaq from '@/content/faq.json';
+import defaultNavigation from '@/content/navigation.json';
+import defaultGlobals from '@/content/globals.json';
+import { NavigationEditor } from '@/components/admin/NavigationEditor';
+import { GlobalsEditor } from '@/components/admin/GlobalsEditor';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { LogOut, Save, Download, RefreshCw, Plus, Trash2, ArrowUpRight } from 'lucide-react';
 
@@ -27,6 +31,8 @@ export default function AdminPage() {
   const [signalsData, setSignalsData] = useState<any>(defaultSignals);
   const [contactData, setContactData] = useState<any>(defaultContact);
   const [faqData, setFaqData] = useState<any>(defaultFaq);
+  const [navigationData, setNavigationData] = useState<any>(defaultNavigation);
+  const [globalsData, setGlobalsData] = useState<any>(defaultGlobals);
 
   const [status, setStatus] = useState('');
   const [activeTab, setActiveTab] = useState('partners');
@@ -56,6 +62,8 @@ export default function AdminPage() {
     fetchSafe('signals.json', setSignalsData);
     fetchSafe('contact.json', setContactData);
     fetchSafe('faq.json', setFaqData);
+    fetchSafe('navigation.json', setNavigationData);
+    fetchSafe('globals.json', setGlobalsData);
   }, []);
 
   const saveFile = async (file: string, content: any) => {
@@ -138,6 +146,8 @@ export default function AdminPage() {
     { id: 'signals', label: 'Signals Report' },
     { id: 'contact', label: 'Contact' },
     { id: 'faq', label: 'FAQ' },
+    { id: 'navigation', label: 'Navigation & Footer' },
+    { id: 'globals', label: 'Global CTAs' },
     { id: 'site', label: 'Global / Header' },
   ];
 
@@ -1513,6 +1523,50 @@ export default function AdminPage() {
         )}
 
         {/* ===================== TAB: GLOBAL SETTINGS & LOGO ===================== */}
+        {activeTab === 'navigation' && (
+          <div className="space-y-8">
+            <NavigationEditor data={navigationData} setData={setNavigationData} />
+            <div className="flex items-center gap-4 pt-4">
+              <button
+                onClick={() => saveFile('navigation.json', navigationData)}
+                className="px-8 py-3 bg-brand-primary text-text-primary rounded-lg font-bold shadow-glow hover:opacity-95 transition-all text-sm flex items-center gap-2"
+              >
+                <Save className="h-4 w-4" />
+                <span>Save Navigation &amp; Footer</span>
+              </button>
+              <button
+                onClick={() => downloadJson('navigation.json', navigationData)}
+                className="px-5 py-3 border border-border-subtle rounded-lg text-sm flex items-center gap-2 hover:border-border-prominent"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download JSON</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'globals' && (
+          <div className="space-y-8">
+            <GlobalsEditor data={globalsData} setData={setGlobalsData} />
+            <div className="flex items-center gap-4 pt-4">
+              <button
+                onClick={() => saveFile('globals.json', globalsData)}
+                className="px-8 py-3 bg-brand-primary text-text-primary rounded-lg font-bold shadow-glow hover:opacity-95 transition-all text-sm flex items-center gap-2"
+              >
+                <Save className="h-4 w-4" />
+                <span>Save Global CTAs</span>
+              </button>
+              <button
+                onClick={() => downloadJson('globals.json', globalsData)}
+                className="px-5 py-3 border border-border-subtle rounded-lg text-sm flex items-center gap-2 hover:border-border-prominent"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download JSON</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {activeTab === 'site' && (
           <div className="space-y-8">
             <h2 className="text-xl font-bold mb-4 border-b border-border-subtle pb-2">Global Settings & Brand Logo</h2>

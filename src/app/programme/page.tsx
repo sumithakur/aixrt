@@ -6,7 +6,7 @@ import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { REGISTER_URL } from '@/lib/links';
 import { ProgrammeRow } from '@/components/content/ProgrammeRow';
-import { CTABand } from '@/components/content/CTABand';
+import { CTABandLive } from '@/components/content/CTABandLive';
 import {
   getLiveProgramme,
   getLiveSiteConfig,
@@ -184,7 +184,7 @@ export default async function ProgrammePage() {
         </Container>
       </Section>
 
-      <CTABand />
+      <CTABandLive />
     </>
   );
 }

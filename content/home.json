@@ -34,5 +34,127 @@
   "showcaseIntro": {
     "title": "Enterprise Startup Showcase",
     "description": "Six minutes to prove it works. Throughout the afternoon, twelve heavily-vetted Series A+ enterprise AI startups present live, working software directly to the roundtable executives."
+  },
+  "stats": {
+    "items": [
+      {
+        "valueFrom": "seats",
+        "label": "roundtable seats",
+        "colour": "brightAqua"
+      },
+      {
+        "valueFrom": "roundtablesCount",
+        "label": "sponsored executive roundtables",
+        "colour": "neonFuchsia"
+      },
+      {
+        "valueFrom": "showcaseCount",
+        "label": "AI Showcase companies",
+        "colour": "mediumSlateBlue"
+      },
+      {
+        "value": "1",
+        "label": "intensive day",
+        "colour": "electricLilac"
+      }
+    ]
+  },
+  "roundtablesSection": {
+    "eyebrow": "Two Parallel Sessions · 14:30 – 18:00",
+    "linkLabel": "Explore all table briefs",
+    "linkHref": "/roundtables",
+    "footnote": "Each roundtable seats 15 — a chair, up to two sponsor executives, and twelve invited guests. Conducted under Chatham House principles.",
+    "chairCard": {
+      "badge": "Flagship Commercial Asset",
+      "title": "Chair a Roundtable",
+      "description": "A dedicated room, 12 invited senior leaders, and strategic ownership of a key enterprise AI domain. Roundtable Chair sponsorships are the primary commercial product for 2026.",
+      "buttonLabel": "Explore Sponsorship Opportunities",
+      "buttonHref": "/partners/become-a-partner"
+    }
+  },
+  "programmeSection": {
+    "eyebrow": "One-Day Timeline",
+    "title": "The Day at a Glance",
+    "linkLabel": "Full timeline",
+    "linkHref": "/programme",
+    "items": [
+      {
+        "time": "14:00 – 14:30",
+        "title": "Arrival",
+        "desc": "Registration, networking coffee; startup booths open; host welcome.",
+        "highlight": false
+      },
+      {
+        "time": "14:30 – 16:00",
+        "title": "Roundtable Session 1",
+        "desc": "Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase.",
+        "highlight": true
+      },
+      {
+        "time": "16:00 – 16:30",
+        "title": "Networking Break",
+        "desc": "Attendees of both sessions network with each other and meet the startups at their booths.",
+        "highlight": false
+      },
+      {
+        "time": "16:30 – 18:00",
+        "title": "Roundtable Session 2",
+        "desc": "Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase.",
+        "highlight": true
+      },
+      {
+        "time": "18:00 – 18:30",
+        "title": "Networking & Booths",
+        "desc": "Optional close: booth visits and informal networking.",
+        "highlight": false
+      }
+    ]
+  },
+  "showcaseSection": {
+    "eyebrow": "Practical Innovation",
+    "primaryButtonLabel": "About the Showcase",
+    "primaryButtonHref": "/showcase",
+    "secondaryButtonLabel": "Apply to Demonstrate",
+    "secondaryButtonHref": "/showcase/apply",
+    "criteriaTitle": "Demonstration Criteria",
+    "criteria": [
+      {
+        "term": "Working software",
+        "detail": "Live product in production, zero mockups."
+      },
+      {
+        "term": "Documented outcomes",
+        "detail": "Measurable operational return on investment."
+      },
+      {
+        "term": "Enterprise scale",
+        "detail": "Security, data privacy, and architecture readiness."
+      },
+      {
+        "term": "Executive Connections",
+        "detail": "Dedicated 1-on-1 buyer meetings."
+      }
+    ]
+  },
+  "audienceSection": {
+    "eyebrow": "Curated Participation",
+    "title": "Who is in the Room",
+    "description": "An invited room of around 110 participants across six key stakeholder groups."
+  },
+  "partnersSection": {
+    "eyebrow": "Sponsorship & Engagement",
+    "title": "Six Roundtable Chair Partnerships Available",
+    "buttonLabel": "Explore Partnership Opportunities",
+    "buttonHref": "/partners/become-a-partner"
+  },
+  "signalsSection": {
+    "eyebrow": "Post-Event Research Output",
+    "title": "AIX Roundtable Signals",
+    "description": "The conversations don't end at 18:00. Each table produces an anonymised synthesis — what executives are seeing, where they're investing, and what's preventing scale — published in mid-January 2027 as an institutional research report.",
+    "buttonLabel": "Learn about Signals",
+    "buttonHref": "/signals"
+  },
+  "propositionSection": {
+    "eyebrow": "The Executive Mandate"
   }
 }

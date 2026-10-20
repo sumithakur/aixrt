@@ -6,7 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { REGISTER_URL } from '@/lib/links';
-import { CTABand } from '@/components/content/CTABand';
+import { CTABandLive } from '@/components/content/CTABandLive';
 import { getLiveSiteConfig, getLiveVenueData } from '@/lib/server-content';
 import {
   MapPin,
@@ -223,7 +223,7 @@ export default async function VenuePage() {
         </Container>
       </Section>
 
-      <CTABand />
+      <CTABandLive />
     </>
   );
 }

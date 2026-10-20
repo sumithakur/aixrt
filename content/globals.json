@@ -1,0 +1,12 @@
+{
+  "registerUrl": "https://arisio.io/DetailEventsPage/aix-roundtables-2026-doha",
+  "cta": {
+    "title": "Doha, 14 December 2026",
+    "subtitle": "An invitation-led room of around 110 senior decision-makers, six sponsored roundtables, and high-value stage moments.",
+    "primaryLabel": "Register",
+    "primaryUseRegisterUrl": true,
+    "primaryHref": "",
+    "secondaryLabel": "Become a Sponsor (Chair a Table)",
+    "secondaryHref": "/partners/become-a-partner"
+  }
+}

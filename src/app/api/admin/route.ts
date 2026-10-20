@@ -19,6 +19,8 @@ const ALLOWED_FILES = new Set([
   'signals.json',
   'contact.json',
   'faq.json',
+  'navigation.json',
+  'globals.json',
 ]);
 
 function isSafeFilePath(fileName: string | null): string | null {

@@ -4,6 +4,7 @@ import './globals.css';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { getSiteConfig } from '@/lib/content';
+import { getLiveNavigation, getLiveGlobals } from '@/lib/server-content';
 import { StoreProvider } from '@/store/StoreProvider';
 
 const ubuntu = Ubuntu({
@@ -59,12 +60,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const config = getSiteConfig();
+  const navigation = await getLiveNavigation();
+  const globals = await getLiveGlobals();
 
   // Structured Data Event JSON-LD
   const eventJsonLd = {
@@ -109,11 +112,11 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col bg-bg-base text-text-primary antialiased overflow-x-hidden">
         <StoreProvider>
-          <SiteHeader />
+          <SiteHeader navigation={navigation} registerUrl={globals?.registerUrl} />
           <main id="main-content" className="flex-1">
             {children}
           </main>
-          <SiteFooter />
+          <SiteFooter navigation={navigation} registerUrl={globals?.registerUrl} />
         </StoreProvider>
       </body>
     </html>

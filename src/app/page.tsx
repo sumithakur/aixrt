@@ -8,7 +8,7 @@ import { FadeIn } from '@/components/ui/FadeIn';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { RoundtableCard } from '@/components/content/RoundtableCard';
-import { CTABand } from '@/components/content/CTABand';
+import { CTABandLive } from '@/components/content/CTABandLive';
 import { HomeHero } from '@/components/home/HomeHero';
 import {
   getLiveSiteConfig,
@@ -64,36 +64,8 @@ export default async function HomePage() {
   const audience = await getLiveAudienceData();
   const homeData = await getLiveHomeContent();
 
-  const condensedProgramme = [
-    {
-      time: '14:00 – 14:30',
-      title: 'Arrival',
-      desc: 'Registration, networking coffee; startup booths open; host welcome.',
-    },
-    {
-      time: '14:30 – 16:00',
-      title: 'Roundtable Session 1',
-      desc: 'Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase.',
-      highlight: true,
-    },
-    {
-      time: '16:00 – 16:30',
-      title: 'Networking Break',
-      desc: 'Attendees of both sessions network with each other and meet the startups at their booths.',
-    },
-    {
-      time: '16:30 – 18:00',
-      title: 'Roundtable Session 2',
-      desc: 'Three tables in parallel: 75 minutes of discussion, then 15 minutes of startup showcase.',
-      highlight: true,
-    },
-    {
-      time: '18:00 – 18:30',
-      title: 'Networking & Booths',
-      desc: 'Optional close: booth visits and informal networking.',
-    },
-    
-  ];
+  const condensedProgramme =
+    homeData.programmeSection?.items ?? [];
 
   return (
     <div className="min-h-screen bg-bg-base text-text-primary selection:bg-brand-secondary/30">
@@ -143,7 +115,7 @@ export default async function HomePage() {
                 {config.event.seats}
               </span>
               <p className="mt-2 text-xs sm:text-sm font-medium text-text-secondary uppercase tracking-wider">
-                roundtable seats
+                {homeData.stats?.items?.[0]?.label ?? 'roundtable seats'}
               </p>
             </div>
             </FadeIn>
@@ -153,7 +125,7 @@ export default async function HomePage() {
                 {config.event.roundtablesCount}
               </span>
               <p className="mt-2 text-xs sm:text-sm font-medium text-text-secondary uppercase tracking-wider">
-                sponsored executive roundtables
+                {homeData.stats?.items?.[1]?.label ?? 'sponsored executive roundtables'}
               </p>
             </div></FadeIn>
 
@@ -162,16 +134,16 @@ export default async function HomePage() {
                 {config.event.showcaseCount}
               </span>
               <p className="mt-2 text-xs sm:text-sm font-medium text-text-secondary uppercase tracking-wider">
-                AI Showcase companies
+                {homeData.stats?.items?.[2]?.label ?? 'AI Showcase companies'}
               </p>
             </div></FadeIn>
 
             <FadeIn delay={550}><div className="rounded-lg border border-border-subtle bg-bg-raised/75 p-6 text-center sm:p-8 backdrop-blur-sm shadow-card">
               <span className="font-display text-4xl sm:text-5xl font-extrabold text-brand-electricLilac">
-                1
+                {homeData.stats?.items?.[3]?.value ?? '1'}
               </span>
               <p className="mt-2 text-xs sm:text-sm font-medium text-text-secondary uppercase tracking-wider">
-                intensive day
+                {homeData.stats?.items?.[3]?.label ?? 'intensive day'}
               </p>
             </div></FadeIn>
           </div>
@@ -184,7 +156,7 @@ export default async function HomePage() {
           <div className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <Eyebrow accent="secondary" className="mb-2">
-                Two Parallel Sessions · 14:30 – 18:00
+                {homeData.roundtablesSection?.eyebrow ?? 'Two Parallel Sessions · 14:30 – 18:00'}
               </Eyebrow>
               <Heading level={2} size="xl">
                 {homeData.roundtablesIntro.title}
@@ -195,7 +167,7 @@ export default async function HomePage() {
               href="/roundtables"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-secondary hover:underline"
             >
-              <span>Explore all table briefs</span>
+              <span>{homeData.roundtablesSection?.linkLabel ?? 'Explore all table briefs'}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -211,19 +183,19 @@ export default async function HomePage() {
             <div className="flex flex-col justify-between rounded-lg border border-brand-primary/40 bg-gradient-to-br from-bg-raised to-bg-surface p-8 shadow-card">
               <div>
                 <span className="rounded-pill border border-brand-primary/40 bg-brand-primary/10 px-3 py-1 font-display text-xs font-bold uppercase tracking-wider text-brand-primary">
-                  Flagship Commercial Asset
+                  {homeData.roundtablesSection?.chairCard?.badge ?? 'Flagship Commercial Asset'}
                 </span>
                 <h3 className="mt-4 font-display text-2xl font-bold text-text-primary">
-                  Chair a Roundtable
+                  {homeData.roundtablesSection?.chairCard?.title ?? 'Chair a Roundtable'}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                  A dedicated room, 12 invited senior leaders, and strategic ownership of a key enterprise AI domain. Roundtable Chair sponsorships are the primary commercial product for 2026.
+                  {homeData.roundtablesSection?.chairCard?.description}
                 </p>
               </div>
 
               <div className="mt-8 pt-6 border-t border-border-subtle">
                 <Button href="/partners/become-a-partner" variant="primary" size="md">
-                  <span>Explore Sponsorship Opportunities</span>
+                  <span>{homeData.roundtablesSection?.chairCard?.buttonLabel ?? 'Explore Sponsorship Opportunities'}</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -231,7 +203,7 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 rounded-pill border border-border-subtle bg-bg-base/70 p-4 text-center text-xs text-text-muted">
-            Each roundtable seats 15 — a chair, up to two sponsor executives, and twelve invited guests. Conducted under Chatham House principles.
+            {homeData.roundtablesSection?.footnote}
           </div>
         </Container>
       </Section>
@@ -242,23 +214,23 @@ export default async function HomePage() {
           <div className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <Eyebrow accent="secondary" className="mb-2">
-                One-Day Timeline
+                {homeData.programmeSection?.eyebrow ?? 'One-Day Timeline'}
               </Eyebrow>
               <Heading level={2} size="xl">
-                The Day at a Glance
+                {homeData.programmeSection?.title ?? 'The Day at a Glance'}
               </Heading>
             </div>
             <Link
               href="/programme"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-secondary hover:underline"
             >
-              <span>Full timeline</span>
+              <span>{homeData.programmeSection?.linkLabel ?? 'Full timeline'}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {condensedProgramme.map((item) => (
+            {condensedProgramme.map((item: any) => (
               <div
                 key={item.title}
                 className={`rounded-lg border p-6 transition-all duration-base ${
@@ -288,7 +260,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <div className="space-y-6 lg:col-span-7">
               <Eyebrow accent="secondary">
-                Practical Innovation
+                {homeData.showcaseSection?.eyebrow ?? 'Practical Innovation'}
               </Eyebrow>
               <Heading level={2} size="xl">
                 {homeData.showcaseIntro?.title || 'Working AI, demonstrated to the people who buy it.'}
@@ -300,10 +272,10 @@ export default async function HomePage() {
 
               <div className="flex flex-col gap-4 sm:flex-row pt-4">
                 <Button href="/showcase" variant="secondary" size="md">
-                  About the Showcase
+                  {homeData.showcaseSection?.primaryButtonLabel ?? 'About the Showcase'}
                 </Button>
                 <Button href="/showcase/apply" variant="gradient" size="md">
-                  Apply to Demonstrate
+                  {homeData.showcaseSection?.secondaryButtonLabel ?? 'Apply to Demonstrate'}
                 </Button>
               </div>
             </div>
@@ -311,25 +283,15 @@ export default async function HomePage() {
             <div className="lg:col-span-5">
               <div className="rounded-lg border border-border-prominent bg-bg-surface/90 p-8 backdrop-blur-md shadow-card space-y-4">
                 <h3 className="font-display text-base font-bold uppercase tracking-wider text-text-primary border-b border-border-subtle pb-3">
-                  Demonstration Criteria
+                  {homeData.showcaseSection?.criteriaTitle ?? 'Demonstration Criteria'}
                 </h3>
                 <ul className="space-y-3 text-xs text-text-secondary">
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <span><strong>Working software:</strong> Live product in production, zero mockups.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <span><strong>Documented outcomes:</strong> Measurable operational return on investment.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <span><strong>Enterprise scale:</strong> Security, data privacy, and architecture readiness.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
-                    <span><strong>Executive Connections:</strong> Dedicated 1-on-1 buyer meetings.</span>
-                  </li>
+                  {(homeData.showcaseSection?.criteria ?? []).map((c: any) => (
+                    <li key={c.term} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="h-4 w-4 text-brand-secondary shrink-0 mt-0.5" />
+                      <span><strong>{c.term}:</strong> {c.detail}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -342,13 +304,13 @@ export default async function HomePage() {
         <Container size="default">
           <div className="mb-12 text-center">
             <Eyebrow accent="secondary" className="mb-2">
-              Curated Participation
+              {homeData.audienceSection?.eyebrow ?? 'Curated Participation'}
             </Eyebrow>
             <Heading level={2} size="xl">
-              Who is in the Room
+              {homeData.audienceSection?.title ?? 'Who is in the Room'}
             </Heading>
             <p className="mx-auto mt-3 max-w-2xl text-sm text-text-secondary">
-              An invited room of around 110 participants across six key stakeholder groups.
+              {homeData.audienceSection?.description}
             </p>
           </div>
 
@@ -377,10 +339,10 @@ export default async function HomePage() {
       <Section variant="surface">
         <Container size="narrow" className="text-center">
           <Eyebrow accent="primary" className="mb-3">
-            Sponsorship & Engagement
+            {homeData.partnersSection?.eyebrow ?? 'Sponsorship & Engagement'}
           </Eyebrow>
           <Heading level={2} size="lg" className="mb-4">
-            Six Roundtable Chair Partnerships Available
+            {homeData.partnersSection?.title ?? 'Six Roundtable Chair Partnerships Available'}
           </Heading>
           <p className="mx-auto max-w-2xl text-sm leading-relaxed text-text-secondary">
             {homeData.roundtablesIntro.description}
@@ -388,7 +350,7 @@ export default async function HomePage() {
 
           <div className="mt-8 flex justify-center">
             <Button href="/partners/become-a-partner" variant="gradient" size="lg">
-              Explore Partnership Opportunities
+              {homeData.partnersSection?.buttonLabel ?? 'Explore Partnership Opportunities'}
             </Button>
           </div>
         </Container>
@@ -401,19 +363,19 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
               <div className="lg:col-span-8">
                 <Eyebrow accent="secondary" className="mb-2">
-                  Post-Event Research Output
+                  {homeData.signalsSection?.eyebrow ?? 'Post-Event Research Output'}
                 </Eyebrow>
                 <Heading level={2} size="lg" className="text-text-primary">
-                  AIX Roundtable Signals
+                  {homeData.signalsSection?.title ?? 'AIX Roundtable Signals'}
                 </Heading>
                 <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                  The conversations don&apos;t end at 16:30. Each table produces an anonymised synthesis — what executives are seeing, where they&apos;re investing, and what&apos;s preventing scale — published in mid-January 2027 as an institutional research report.
+                  {homeData.signalsSection?.description}
                 </p>
               </div>
 
               <div className="lg:col-span-4 flex justify-start lg:justify-end">
                 <Button href="/signals" variant="secondary" size="md">
-                  <span>Learn about Signals</span>
+                  <span>{homeData.signalsSection?.buttonLabel ?? 'Learn about Signals'}</span>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -423,7 +385,7 @@ export default async function HomePage() {
       </Section>
 
       {/* S10: Closing Universal CTA */}
-      <CTABand />
+      <CTABandLive />
     </div>
   );
 }

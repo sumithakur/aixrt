@@ -13,6 +13,8 @@ import {
   getShowcaseData,
   getSignalsData,
   getContactData,
+  getNavigation,
+  getGlobals,
 } from '@/lib/content';
 import type { SiteConfig, Roundtable, ProgrammeItem, Partner, AudienceData, FAQCategory } from '@/types/content';
 
@@ -159,4 +161,14 @@ export async function getLiveFAQs(): Promise<FAQCategory[]> {
   const items = (firestoreData?.items || []) as FAQCategory[];
   if (items.length > 0) return items;
   return getFAQs();
+}
+
+export async function getLiveNavigation(): Promise<any> {
+  const firestoreData = await fetchFromFirestore<any>('navigation.json');
+  return firestoreData || getNavigation();
+}
+
+export async function getLiveGlobals(): Promise<any> {
+  const firestoreData = await fetchFromFirestore<any>('globals.json');
+  return firestoreData || getGlobals();
 }

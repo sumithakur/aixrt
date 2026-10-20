@@ -5,7 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
-import { CTABand } from '@/components/content/CTABand';
+import { CTABandLive } from '@/components/content/CTABandLive';
 import { getShowcaseCompanies } from '@/lib/content';
 import { getLiveShowcaseData } from '@/lib/server-content';
 import {
@@ -237,7 +237,7 @@ export default async function ShowcasePage() {
         </Container>
       </Section>
 
-      <CTABand />
+      <CTABandLive />
     </>
   );
 }

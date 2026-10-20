@@ -12,6 +12,14 @@ export interface Edition {
   isCurrent?: boolean;
 }
 
+export interface TopBarContent {
+  enabled?: boolean;
+  seriesLabel?: string;
+  activeEditionNote?: string;
+  editions?: Edition[];
+}
+
+/** Used only if navigation.json is unavailable. */
 export const EDITIONS: Edition[] = [
   { name: 'QATAR', slug: 'qatar', href: '/', label: 'Doha · Dec 2026', isCurrent: true },
   { name: 'OMAN', slug: 'oman', href: '/editions/oman', label: 'Muscat · Stay Tuned' },
@@ -19,29 +27,32 @@ export const EDITIONS: Edition[] = [
   { name: 'UAE', slug: 'uae', href: '/editions/uae', label: 'Dubai / Abu Dhabi · Stay Tuned' },
 ];
 
-export function EditionTopBar() {
+export function EditionTopBar({ content }: { content?: TopBarContent }) {
   const pathname = usePathname();
 
-  const getCurrentSlug = () => {
-    if (pathname.startsWith('/editions/oman')) return 'oman';
-    if (pathname.startsWith('/editions/ksa')) return 'ksa';
-    if (pathname.startsWith('/editions/uae')) return 'uae';
-    return 'qatar';
-  };
+  const editions = content?.editions?.length ? content.editions : EDITIONS;
+  const seriesLabel = content?.seriesLabel ?? 'GCC Executive AI Series';
+  const activeNote = content?.activeEditionNote ?? '(Active Edition)';
 
-  const currentSlug = getCurrentSlug();
+  if (content?.enabled === false) return null;
+
+  const currentSlug =
+    editions.find((e) => e.href !== '/' && pathname.startsWith(e.href))?.slug ??
+    editions.find((e) => e.isCurrent)?.slug ??
+    editions[0]?.slug;
 
   return (
     <div className="w-full bg-gradient-to-r from-[#621d96] via-[#4f167e] to-[#3b0f61] text-white border-b border-purple-900/40 relative z-50">
       <div className="mx-auto flex max-w-[1536px] items-center justify-between px-4 sm:px-6 lg:px-8 h-9 sm:h-10 text-xs">
         {/* Editions list */}
         <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar py-1">
-          {EDITIONS.map((edition, index) => {
+          {editions.map((edition, index) => {
             const isActive = currentSlug === edition.slug;
             return (
               <React.Fragment key={edition.slug}>
                 <Link
                   href={edition.href}
+                  title={edition.label}
                   className={`flex items-center gap-1.5 font-bold tracking-wider uppercase transition-all duration-fast px-2 py-0.5 rounded ${
                     isActive
                       ? 'text-white bg-white/15 shadow-sm'
@@ -50,13 +61,13 @@ export function EditionTopBar() {
                   aria-current={isActive ? 'page' : undefined}
                 >
                   <span>{edition.name}</span>
-                  {edition.slug === 'qatar' && (
+                  {edition.isCurrent && activeNote && (
                     <span className="hidden md:inline text-[10px] font-medium text-brand-secondary/90 normal-case ml-0.5">
-                      (Active Edition)
+                      {activeNote}
                     </span>
                   )}
                 </Link>
-                {index < EDITIONS.length - 1 && (
+                {index < editions.length - 1 && (
                   <span className="text-brand-secondary text-[11px] sm:text-xs select-none" aria-hidden="true">
                     ✦
                   </span>
@@ -67,10 +78,12 @@ export function EditionTopBar() {
         </div>
 
         {/* Right tag / context */}
-        <div className="hidden sm:flex items-center gap-2 text-[11px] font-medium text-purple-200/80">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-secondary animate-pulse" />
-          <span>GCC Executive AI Series</span>
-        </div>
+        {seriesLabel && (
+          <div className="hidden sm:flex items-center gap-2 text-[11px] font-medium text-purple-200/80">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-secondary animate-pulse" />
+            <span>{seriesLabel}</span>
+          </div>
+        )}
       </div>
     </div>
   );

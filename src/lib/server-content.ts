@@ -16,6 +16,7 @@ import {
   getContactData,
   getNavigation,
   getGlobals,
+  getMetadataContent,
 } from '@/lib/content';
 import type { SiteConfig, Roundtable, ProgrammeItem, Partner, AudienceData, FAQCategory } from '@/types/content';
 
@@ -177,4 +178,10 @@ export async function getLiveGlobals(): Promise<any> {
 export async function getLiveRoundtablesDataRaw(): Promise<any> {
   const firestoreData = await fetchFromFirestore<any>('roundtables.json');
   return firestoreData || getRoundtablesDataRaw();
+}
+
+export async function getLiveMetadata(): Promise<any> {
+  const firestoreData = await fetchFromFirestore<any>('metadata.json');
+  if (firestoreData) return firestoreData;
+  return getMetadataContent();
 }

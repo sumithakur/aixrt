@@ -14,8 +14,11 @@ import defaultContact from '@/content/contact.json';
 import defaultFaq from '@/content/faq.json';
 import defaultNavigation from '@/content/navigation.json';
 import defaultGlobals from '@/content/globals.json';
+import defaultMetadata from '@/content/metadata.json';
 import { NavigationEditor } from '@/components/admin/NavigationEditor';
 import { GlobalsEditor } from '@/components/admin/GlobalsEditor';
+import { MetadataEditor } from '@/components/admin/MetadataEditor';
+import { FirebaseStatus } from '@/components/admin/FirebaseStatus';
 import { RoundtableDefaultsEditor, StringListEditor } from '@/components/admin/RoundtableDefaultsEditor';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { LogOut, Save, Download, RefreshCw, Plus, Trash2, ArrowUpRight } from 'lucide-react';
@@ -43,6 +46,7 @@ export default function AdminPage() {
   const [faqData, setFaqData] = useState<any>(defaultFaq);
   const [navigationData, setNavigationData] = useState<any>(defaultNavigation);
   const [globalsData, setGlobalsData] = useState<any>(defaultGlobals);
+  const [metadataData, setMetadataData] = useState<any>(defaultMetadata);
 
   const [status, setStatus] = useState('');
   const [activeTab, setActiveTab] = useState('partners');
@@ -87,6 +91,7 @@ export default function AdminPage() {
     fetchSafe('faq.json', setFaqData);
     fetchSafe('navigation.json', setNavigationData);
     fetchSafe('globals.json', setGlobalsData);
+    fetchSafe('metadata.json', setMetadataData);
   }, []);
 
   const saveFile = async (file: string, content: any) => {
@@ -100,11 +105,15 @@ export default function AdminPage() {
       const data = await res.json();
       if (res.ok) {
         if (data.firestoreSaved) {
-          setStatus(`Saved & synced live to Firestore! (${file})`);
-        } else if (data.firestoreError) {
-          setStatus(`⚠️ Saved locally, Firestore note: ${data.firestoreError}`);
+          setStatus(`Saved to Firebase — ${file} is live on the site.`);
         } else {
-          setStatus(`Saved successfully! (${file})`);
+          // A save that never reached Firebase only exists on this server and is
+          // discarded on the next deployment, so it is reported as a failure.
+          setStatus(
+            `NOT SAVED TO FIREBASE — ${file} was written to this server only and will be lost on the next deployment. ${
+              data.firestoreError || ''
+            }`
+          );
         }
       } else {
         setStatus(`Error saving: ${data.error || 'Server error'}`);
@@ -172,6 +181,7 @@ export default function AdminPage() {
     { id: 'faq', label: 'FAQ', file: 'faq.json', data: faqData },
     { id: 'navigation', label: 'Navigation & Footer', file: 'navigation.json', data: navigationData },
     { id: 'globals', label: 'Global CTAs', file: 'globals.json', data: globalsData },
+    { id: 'metadata', label: 'SEO & Metadata', file: 'metadata.json', data: metadataData },
     { id: 'site', label: 'Global / Header', file: 'site.json', data: siteData },
   ];
 
@@ -203,6 +213,8 @@ export default function AdminPage() {
           </button>
         </div>
       </div>
+
+      <FirebaseStatus onStatus={setStatus} />
 
       {/* Tabs + Save — stays on screen while editing, so Save is always one click away */}
       <div className="sticky top-0 z-50 -mx-6 md:-mx-10 mb-8 border-b border-border-subtle bg-bg-base/95 px-6 md:px-10 py-3 backdrop-blur-md">
@@ -244,7 +256,14 @@ export default function AdminPage() {
         </div>
 
         {status && (
-          <p className="mt-2 text-xs font-medium text-brand-secondary" role="status">
+          <p
+            className={`mt-2 text-xs font-medium ${
+              /NOT SAVED|Error|error|Could not|Failed|failed/.test(status)
+                ? 'text-brand-primary'
+                : 'text-brand-secondary'
+            }`}
+            role="status"
+          >
             {status}
           </p>
         )}
@@ -1700,6 +1719,36 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={() => downloadJson('globals.json', globalsData)}
+                className="px-5 py-3 border border-border-subtle rounded-lg text-sm flex items-center gap-2 hover:border-border-prominent"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download JSON</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ===================== TAB: SEO & METADATA ===================== */}
+        {activeTab === 'metadata' && (
+          <div className="space-y-8">
+            <div className="border-b border-border-subtle pb-4">
+              <h2 className="text-xl font-bold">SEO & Metadata</h2>
+              <p className="text-xs text-text-secondary mt-1">
+                The browser tab title, the description shown in search results, and the preview card
+                used when a page is shared on LinkedIn, WhatsApp or X.
+              </p>
+            </div>
+            <MetadataEditor data={metadataData} setData={setMetadataData} />
+            <div className="flex items-center gap-4 pt-4">
+              <button
+                onClick={() => saveFile('metadata.json', metadataData)}
+                className="px-8 py-3 bg-brand-primary text-text-primary rounded-lg font-bold shadow-glow hover:opacity-95 transition-all text-sm flex items-center gap-2"
+              >
+                <Save className="h-4 w-4" />
+                <span>Save SEO & Metadata</span>
+              </button>
+              <button
+                onClick={() => downloadJson('metadata.json', metadataData)}
                 className="px-5 py-3 border border-border-subtle rounded-lg text-sm flex items-center gap-2 hover:border-border-prominent"
               >
                 <Download className="h-4 w-4" />

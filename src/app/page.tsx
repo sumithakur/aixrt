@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
@@ -25,33 +26,9 @@ import {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'AIX Roundtables 2026 | Executive AI Summit, Doha, 14 December 2026',
-  description:
-    'Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.',
-  openGraph: {
-    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
-    description:
-      'Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.',
-    url: 'https://aixrt-sigma.vercel.app',
-    siteName: 'AIX Roundtables 2026',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1024,
-        height: 537,
-        alt: 'AIX Roundtables Doha 2026 - Where AI moves from ambition to action',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AIX Roundtables 2026 | Where AI moves from ambition to action',
-    description:
-      'Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.',
-    images: ['/og-image.png'],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/');
+}
 
 export default async function HomePage() {
   const config = await getLiveSiteConfig();

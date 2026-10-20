@@ -1,0 +1,180 @@
+{
+  "site": {
+    "siteName": "AIX Roundtables 2026",
+    "baseUrl": "https://aixrt-sigma.vercel.app",
+    "titleTemplate": "%s | AIX Roundtables 2026",
+    "defaultTitle": "AIX Roundtables 2026 | Executive AI Summit, Doha, 14 December 2026",
+    "defaultDescription": "AIX Roundtables 2026 is an invitation-led executive summit in Doha, Qatar on Monday 14 December 2026. Convening 110 senior decision-makers across six sponsored roundtables to move AI from ambition to action.",
+    "ogTitle": "AIX Roundtables 2026 | Where AI moves from ambition to action",
+    "ogDescription": "A one-day executive summit in Doha. Six sponsored roundtables, working AI demonstrations, and Chatham House discussions for senior leaders.",
+    "ogImage": "/og-image.png",
+    "ogImageAlt": "AIX Roundtables Doha 2026 - Where AI moves from ambition to action",
+    "ogImageWidth": 1024,
+    "ogImageHeight": 537,
+    "locale": "en_US",
+    "twitterCard": "summary_large_image"
+  },
+  "pages": [
+    {
+      "route": "/",
+      "label": "Home",
+      "absoluteTitle": true,
+      "title": "AIX Roundtables 2026 | Executive AI Summit, Doha, 14 December 2026",
+      "description": "Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.",
+      "ogTitle": "AIX Roundtables 2026 | Where AI moves from ambition to action",
+      "ogDescription": "Where AI moves from ambition to action. A one-day invitation-led executive summit in Doha, Qatar. Six sponsored roundtables, live working software demonstrations, and Chatham House peer dialogue.",
+      "noindex": false
+    },
+    {
+      "route": "/about",
+      "label": "About",
+      "title": "About AIX Summit 2026",
+      "description": "About AIX Summit 2026: A one-day executive summit in Doha built for enterprise leaders responsible for deploying, governing, funding and scaling AI.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/programme",
+      "label": "Programme",
+      "title": "The Programme | One-Day Executive Schedule",
+      "description": "Full programme for AIX Summit 2026. Monday 14 December 2026, 14:00–18:00, followed by reception to 18:00. Featuring six parallel executive roundtables and live AI demonstrations.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/roundtables",
+      "label": "Roundtables hub",
+      "title": "Six Executive Roundtables",
+      "description": "Six parallel 75-minute curated discussions of 15 senior leaders each, conducted under Chatham House principles across distinct strategic lanes.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/showcase",
+      "label": "AI Showcase",
+      "title": "AI Showcase & Enterprise Connections",
+      "description": "Live working software demonstrated to senior enterprise buyers. 4–6 selected enterprise AI companies presenting production outcomes, not pitch decks.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/showcase/apply",
+      "label": "Apply to Showcase",
+      "title": "Apply to the AI Showcase",
+      "description": "Apply for one of the selected AI Showcase places at AIX Summit 2026. Working production software demonstrated to senior enterprise buyers in Doha.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/partners",
+      "label": "Sponsors & Chairs",
+      "title": "Our Sponsors & Roundtable Chairs",
+      "description": "Institutional and strategic sponsors powering AIX Summit 2026. Executive leadership across six dedicated roundtable discussion lanes in Doha, Qatar.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/partners/become-a-partner",
+      "label": "Become a Sponsor",
+      "title": "Become a Sponsor & Chair a Roundtable",
+      "description": "Sponsorship at AIX Summit 2026 means chairing an executive roundtable in Doha: fifteen senior peers, 75 minutes, Chatham House Rule.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/signals",
+      "label": "Signals Report",
+      "title": "The Roundtable Signals Report",
+      "description": "Observations from all six AIX Summit 2026 executive roundtables, recorded without attribution under the Chatham House Rule and published in mid-January 2027.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/venue",
+      "label": "Venue & Travel",
+      "title": "Venue, Travel & Doha Delegate Guide",
+      "description": "Venue coordinates, travel planning, visa requirements, and executive delegate guidance for AIX Summit 2026 in Doha, Qatar.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/faq",
+      "label": "FAQ",
+      "title": "Frequently Asked Questions",
+      "description": "Answers on invitations, seat allocation, roundtable format, confidentiality, sponsorship and travel for AIX Summit 2026 in Doha.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/contact",
+      "label": "Contact",
+      "title": "Contact the Organising Team",
+      "description": "Reach the AIX Summit 2026 organising team at Risin Ventures for invitations, sponsorship, showcase applications and media enquiries.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/request-an-invitation",
+      "label": "Register",
+      "title": "Register",
+      "description": "AIX Summit 2026 is an invitation-led executive summit in Doha, Qatar. Register for an executive delegate seat or AI vendor / startup showcase.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/request-an-invitation/received",
+      "label": "Invitation received",
+      "title": "Invitation Request Received",
+      "description": "Your invitation request for AIX Summit 2026 has been received for curatorial review.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": true
+    },
+    {
+      "route": "/legal/confidentiality",
+      "label": "Chatham House conduct",
+      "title": "Chatham House Confidentiality & Roundtable Conduct",
+      "description": "The official governance framework and Chatham House Rule protocols governing executive roundtables at AIX Summit 2026.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/legal/privacy",
+      "label": "Privacy policy",
+      "title": "Privacy Policy",
+      "description": "AIX Summit 2026 Privacy Policy and delegate data handling protocols.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    },
+    {
+      "route": "/legal/terms",
+      "label": "Terms of attendance",
+      "title": "Terms of Attendance",
+      "description": "AIX Summit 2026 Terms of Attendance and participation conditions.",
+      "ogTitle": "",
+      "ogDescription": "",
+      "noindex": false
+    }
+  ],
+  "roundtableDetail": {
+    "label": "Roundtable detail pages",
+    "titleTemplate": "{shortTitle} | Executive Roundtable",
+    "descriptionTemplate": "AIX Summit 2026 Executive Roundtable: \"{title}\". Addressing: \"{coreQuestion}\". {suffix}",
+    "ogTitleTemplate": "{shortTitle} — AIX Summit 2026 Roundtable",
+    "ogDescriptionTemplate": "{coreQuestion}"
+  }
+}

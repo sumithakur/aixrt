@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { fillTemplate } from '@/lib/page-metadata';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
@@ -9,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { ChairSlot } from '@/components/content/ChairSlot';
 import { CTABandLive } from '@/components/content/CTABandLive';
 import { getRoundtables, getRoundtableBySlug } from '@/lib/content';
-import { getLiveRoundtables, getLiveRoundtablesDataRaw } from '@/lib/server-content';
+import { getLiveRoundtables, getLiveRoundtablesDataRaw, getLiveMetadata } from '@/lib/server-content';
 import {
   Users,
   Clock,
@@ -35,12 +36,52 @@ export async function generateMetadata({ params }: RoundtablePageProps): Promise
   const rt = liveAll.find((r: any) => r.slug === slug) ?? getRoundtableBySlug(slug);
   if (!rt) return { title: 'Roundtable Not Found' };
 
+  // One set of templates in the CMS covers all six detail pages.
+  const meta: any = (await getLiveMetadata()) || {};
+  const tpl: any = meta.roundtableDetail || {};
+  const site: any = meta.site || {};
+  const values = {
+    shortTitle: rt.shortTitle ?? '',
+    title: rt.title ?? '',
+    coreQuestion: rt.coreQuestion ?? '',
+    suffix:
+      (await getLiveRoundtablesDataRaw())?.defaults?.metaDescriptionSuffix ??
+      '75 minutes, 15 participants, Chatham House Rule.',
+  };
+
+  const title = fillTemplate(tpl.titleTemplate || '{shortTitle} | Executive Roundtable', values);
+  const description = fillTemplate(
+    tpl.descriptionTemplate ||
+      'AIX Summit 2026 Executive Roundtable: "{title}". Addressing: "{coreQuestion}". {suffix}',
+    values
+  );
+
   return {
-    title: `${rt.shortTitle} | Executive Roundtable`,
-    description: `AIX Summit 2026 Executive Roundtable: "${rt.title}". Addressing: "${rt.coreQuestion}". ${(await getLiveRoundtablesDataRaw())?.defaults?.metaDescriptionSuffix ?? '75 minutes, 15 participants, Chatham House Rule.'}`,
+    title,
+    description,
     openGraph: {
-      title: `${rt.shortTitle} — AIX Summit 2026 Roundtable`,
-      description: rt.coreQuestion,
+      title: fillTemplate(tpl.ogTitleTemplate || '{shortTitle} — AIX Summit 2026 Roundtable', values),
+      description: fillTemplate(tpl.ogDescriptionTemplate || '{coreQuestion}', values),
+      siteName: site.siteName,
+      type: 'article',
+      ...(site.ogImage
+        ? {
+            images: [
+              {
+                url: site.ogImage,
+                width: site.ogImageWidth || 1024,
+                height: site.ogImageHeight || 537,
+                alt: site.ogImageAlt || title,
+              },
+            ],
+          }
+        : {}),
+    },
+    twitter: {
+      card: site.twitterCard || 'summary_large_image',
+      title: fillTemplate(tpl.ogTitleTemplate || '{shortTitle} — AIX Summit 2026 Roundtable', values),
+      description: fillTemplate(tpl.ogDescriptionTemplate || '{coreQuestion}', values),
+      ...(site.ogImage ? { images: [site.ogImage] } : {}),
     },
   };
 }

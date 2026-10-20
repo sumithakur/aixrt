@@ -1,16 +1,18 @@
 import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 import { InvitationRequestForm } from '@/components/forms/InvitationRequestForm';
 import { Info, ShieldAlert } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Register',
-  description:
-    'AIX Summit 2026 is an invitation-led executive summit in Doha, Qatar. Register for an executive delegate seat or AI vendor / startup showcase.',
-};
+// Rendered per request so SEO edits in the CMS appear without a redeploy.
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/request-an-invitation');
+}
 
 export default function RequestInvitationPage() {
   return (

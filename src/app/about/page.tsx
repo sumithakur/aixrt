@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -22,11 +23,9 @@ import {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'About AIX Summit 2026',
-  description:
-    'About AIX Summit 2026: A one-day executive summit in Doha built for enterprise leaders responsible for deploying, governing, funding and scaling AI.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/about');
+}
 
 export default async function AboutPage() {
   const config = await getLiveSiteConfig();

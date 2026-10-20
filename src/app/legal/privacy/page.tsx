@@ -1,13 +1,16 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow, Heading, Standfirst } from '@/components/ui/Typography';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: 'AIX Summit 2026 Privacy Policy and delegate data handling protocols.',
-};
+// Rendered per request so SEO edits in the CMS appear without a redeploy.
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/legal/privacy');
+}
 
 export default function PrivacyPage() {
   return (

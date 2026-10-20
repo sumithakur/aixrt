@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/page-metadata';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -14,11 +15,9 @@ import { Shield, Clock, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: 'Six Executive Roundtables',
-  description:
-    'Six parallel 75-minute curated discussions of 15 senior leaders each, conducted under Chatham House principles across distinct strategic lanes.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata('/roundtables');
+}
 
 export default async function RoundtablesHubPage() {
   const roundtables = await getLiveRoundtables();

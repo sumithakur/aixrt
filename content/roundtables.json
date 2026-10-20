@@ -36,6 +36,8 @@
     "chairTableLabel": "Chair this Table",
     "chairTableHref": "/partners/become-a-partner",
     "metaDescriptionSuffix": "75 minutes, 15 participants, Chatham House Rule.",
+    "eventDate": "2026-12-14",
+    "timezone": "+03:00",
     "sessions": {
       "1": {
         "timing": "14:30 – 16:00",

@@ -14,6 +14,31 @@ interface Props {
   setData: (d: any) => void;
 }
 
+/** Offsets are fixed: the summit runs in December, outside every DST window listed. */
+const TIMEZONES = [
+  { label: 'Doha · Riyadh · Kuwait · Bahrain (GMT+3)', offset: '+03:00' },
+  { label: 'Dubai · Abu Dhabi · Muscat (GMT+4)', offset: '+04:00' },
+  { label: 'Cairo · Johannesburg (GMT+2)', offset: '+02:00' },
+  { label: 'India (GMT+5:30)', offset: '+05:30' },
+  { label: 'Singapore · Hong Kong (GMT+8)', offset: '+08:00' },
+  { label: 'London (GMT)', offset: '+00:00' },
+  { label: 'New York (GMT-5)', offset: '-05:00' },
+];
+
+const ISO_RE = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::\d{2})?([+-]\d{2}:\d{2})?$/;
+
+/** Splits "2026-12-14T14:30:00+03:00" into its date, time and offset parts. */
+function parseIso(iso?: string) {
+  const m = ISO_RE.exec(String(iso || ''));
+  return m ? { date: m[1], time: m[2], offset: m[3] || '+03:00' } : {};
+}
+
+const SESSION_KEYS = ['1', '2'];
+const FALLBACK_TIMES: Record<string, { start: string; end: string }> = {
+  '1': { start: '14:30', end: '16:00' },
+  '2': { start: '16:30', end: '18:00' },
+};
+
 /**
  * Edits the parts of roundtables.json that are shared by all tables:
  * session timings, the Session Specifications panel, button labels and headings.
@@ -26,8 +51,44 @@ export function RoundtableDefaultsEditor({ data, setData }: Props) {
   const sessions = defaults.sessions || {};
 
   const patch = (value: any) => setData({ ...d, defaults: { ...defaults, ...value } });
-  const patchSession = (key: string, value: any) =>
-    patch({ sessions: { ...sessions, [key]: { ...(sessions[key] || {}), ...value } } });
+
+  // The date and time zone are shared by both sessions, so they are picked once.
+  // Existing content has only ISO strings, so fall back to reading them.
+  const firstParsed = parseIso(sessions['1']?.startIso);
+  const eventDate = defaults.eventDate || firstParsed.date || '2026-12-14';
+  const timezone = defaults.timezone || firstParsed.offset || '+03:00';
+  const timeOf = (iso: string | undefined, fallback: string) => parseIso(iso).time || fallback;
+
+  /**
+   * Rebuilds every session from the pickers. The displayed timing and the two ISO
+   * strings used for calendar links are derived here, so they can never disagree.
+   */
+  const applySchedule = (change: {
+    date?: string;
+    timezone?: string;
+    key?: string;
+    start?: string;
+    end?: string;
+  }) => {
+    const date = change.date ?? eventDate;
+    const tz = change.timezone ?? timezone;
+    const next: Record<string, any> = { ...sessions };
+
+    SESSION_KEYS.forEach((key) => {
+      const s = next[key] || {};
+      const fb = FALLBACK_TIMES[key];
+      const start = change.key === key && change.start !== undefined ? change.start : timeOf(s.startIso, fb.start);
+      const end = change.key === key && change.end !== undefined ? change.end : timeOf(s.endIso, fb.end);
+      next[key] = {
+        ...s,
+        timing: start && end ? `${start} – ${end}` : s.timing || '',
+        startIso: start ? `${date}T${start}:00${tz}` : s.startIso,
+        endIso: end ? `${date}T${end}:00${tz}` : s.endIso,
+      };
+    });
+
+    patch({ eventDate: date, timezone: tz, sessions: next });
+  };
 
   return (
     <div className={card}>
@@ -39,31 +100,78 @@ export function RoundtableDefaultsEditor({ data, setData }: Props) {
       {/* Session timings */}
       <div className="space-y-3">
         <p className={label}>Session timings</p>
-        {['1', '2'].map((key) => {
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border border-border-subtle rounded p-3">
+          <div>
+            <label className={label} htmlFor="rt-event-date">Date of the roundtables</label>
+            <input
+              id="rt-event-date"
+              type="date"
+              className={input}
+              value={eventDate}
+              onChange={(e) => applySchedule({ date: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className={label} htmlFor="rt-timezone">Time zone</label>
+            <select
+              id="rt-timezone"
+              className={input}
+              value={timezone}
+              onChange={(e) => applySchedule({ timezone: e.target.value })}
+            >
+              {TIMEZONES.map((tz) => (
+                <option key={tz.offset} value={tz.offset}>
+                  {tz.label}
+                </option>
+              ))}
+              {!TIMEZONES.some((tz) => tz.offset === timezone) && (
+                <option value={timezone}>Current setting (GMT{timezone})</option>
+              )}
+            </select>
+          </div>
+        </div>
+
+        {SESSION_KEYS.map((key) => {
           const s = sessions[key] || {};
+          const fb = FALLBACK_TIMES[key];
+          const start = timeOf(s.startIso, fb.start);
+          const end = timeOf(s.endIso, fb.end);
           return (
-            <div key={key} className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end border border-border-subtle rounded p-3">
-              <div className="sm:col-span-1 text-xs font-bold text-brand-secondary pb-2">S{key}</div>
-              <div className="sm:col-span-4">
-                <label className={label}>Displayed timing</label>
-                <input className={input} value={s.timing || ''} placeholder="14:30 – 16:00"
-                  onChange={(e) => patchSession(key, { timing: e.target.value })} />
+            <div key={key} className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end border border-border-subtle rounded p-3">
+              <div className="sm:col-span-1 text-xs font-bold text-brand-secondary pb-2.5">S{key}</div>
+              <div className="sm:col-span-3">
+                <label className={label} htmlFor={`rt-s${key}-start`}>Starts</label>
+                <input
+                  id={`rt-s${key}-start`}
+                  type="time"
+                  className={input}
+                  value={start}
+                  onChange={(e) => applySchedule({ key, start: e.target.value })}
+                />
               </div>
-              <div className="sm:col-span-wide sm:col-span-3">
-                <label className={label}>Start (ISO, for calendars)</label>
-                <input className={input} value={s.startIso || ''} placeholder="2026-12-14T14:30:00+03:00"
-                  onChange={(e) => patchSession(key, { startIso: e.target.value })} />
+              <div className="sm:col-span-3">
+                <label className={label} htmlFor={`rt-s${key}-end`}>Ends</label>
+                <input
+                  id={`rt-s${key}-end`}
+                  type="time"
+                  className={input}
+                  value={end}
+                  onChange={(e) => applySchedule({ key, end: e.target.value })}
+                />
               </div>
-              <div className="sm:col-span-4">
-                <label className={label}>End (ISO)</label>
-                <input className={input} value={s.endIso || ''} placeholder="2026-12-14T16:00:00+03:00"
-                  onChange={(e) => patchSession(key, { endIso: e.target.value })} />
+              <div className="sm:col-span-5 pb-2.5">
+                <p className="text-[11px] text-text-secondary">
+                  Shown on the site as{' '}
+                  <span className="text-text-primary font-semibold">{s.timing || `${start} – ${end}`}</span>
+                </p>
               </div>
             </div>
           );
         })}
         <p className="text-[11px] text-text-secondary">
-          Each table is assigned to session 1 or 2 in its own card below.
+          Each table is assigned to session 1 or 2 in its own card below. Calendar links are generated
+          from the date, times and time zone above.
         </p>
       </div>
 

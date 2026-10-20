@@ -3,6 +3,7 @@ import { Ubuntu, Roboto } from 'next/font/google';
 import './globals.css';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
+import { PublicChrome } from '@/components/layout/PublicChrome';
 import { getSiteConfig } from '@/lib/content';
 import { getLiveNavigation, getLiveGlobals } from '@/lib/server-content';
 import { StoreProvider } from '@/store/StoreProvider';
@@ -112,11 +113,15 @@ export default async function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col bg-bg-base text-text-primary antialiased overflow-x-hidden">
         <StoreProvider>
-          <SiteHeader navigation={navigation} registerUrl={globals?.registerUrl} />
+          <PublicChrome>
+            <SiteHeader navigation={navigation} registerUrl={globals?.registerUrl} />
+          </PublicChrome>
           <main id="main-content" className="flex-1">
             {children}
           </main>
-          <SiteFooter navigation={navigation} registerUrl={globals?.registerUrl} />
+          <PublicChrome>
+            <SiteFooter navigation={navigation} registerUrl={globals?.registerUrl} />
+          </PublicChrome>
         </StoreProvider>
       </body>
     </html>

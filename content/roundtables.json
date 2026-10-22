@@ -127,30 +127,32 @@
       "session": 1
     },
     {
-      "slug": "investment-in-ai",
-      "shortTitle": "Investment in AI",
-      "title": "Capital, Valuation & Enterprise ROI",
-      "coreQuestion": "Where is institutional capital flowing across the AI stack, and how are enterprise buyers measuring genuine return on investment?",
-      "lane": "Sovereign wealth allocation, venture capital, private equity, infrastructure financing, and enterprise balance sheet allocation into AI systems and companies.",
+      "slug": "ai-in-finance",
+      "shortTitle": "AI in Finance (CFOs)",
+      "title": "The AI-Powered Finance Function",
+      "coreQuestion": "How is AI changing forecasting, close, controls and capital allocation, and where is it delivering return finance can measure?",
+      "lane": "AI inside the corporate finance function: planning and forecasting, the close, controls and assurance, treasury and capital allocation. Data protection and model governance sit with Sovereign AI & Security.",
       "themes": [
-        "Sovereign wealth fund AI mandates",
-        "Venture capital & growth equity in regional AI",
-        "Enterprise CapEx vs OpEx in AI transformation",
-        "Infrastructure and compute financing",
-        "Measuring verifiable enterprise AI ROI",
-        "M&A, consolidation, and strategic buyouts",
-        "Cross-border technology co-investments",
-        "Valuation metrics for generative & agentic AI"
+        "AI in planning, budgeting and forecasting",
+        "A faster close and continuous reporting",
+        "Controls, audit and fraud detection",
+        "Treasury, liquidity and working capital",
+        "Capital allocation and investment appraisal",
+        "Cost-to-serve and margin analytics",
+        "Finance data quality and systems readiness",
+        "Measuring return finance can defend"
       ],
       "participantProfile": [
-        "Sovereign Wealth Fund senior director",
-        "Regional Venture Capital partner",
-        "Private Equity tech investor",
-        "Family Office Chief Investment Officer",
-        "Enterprise CFO / Head of Corporate Development",
-        "Development Bank / Institutional Capital voice",
-        "Global AI fund managing director",
-        "Tech Investment Banking leader"
+        "Group Chief Financial Officer",
+        "Finance director / financial controller",
+        "Head of financial planning & analysis",
+        "Group treasurer",
+        "Head of internal audit / risk",
+        "Banking or insurance CFO",
+        "Government-owned entity finance leader",
+        "Finance transformation lead",
+        "External audit / advisory partner",
+        "Enterprise finance systems & AI provider"
       ],
       "chair": {
         "status": "pending",
@@ -162,71 +164,32 @@
       "session": 1
     },
     {
-      "slug": "ai-security-and-governance",
-      "shortTitle": "AI Security & Governance",
-      "title": "Can We Trust AI to Act?",
-      "coreQuestion": "What security controls and governance does an organisation need before it lets AI touch sensitive data, systems and decisions?",
-      "lane": "Security, assurance, risk and governance of AI systems, including responsible-AI policy, regulatory compliance, and identity and permissions for AI agents.",
+      "slug": "ai-in-marketing",
+      "shortTitle": "AI in Marketing",
+      "title": "Winning Customers, Not Just Content",
+      "coreQuestion": "Where is AI changing how brands win customers, and where is it just producing more content?",
+      "lane": "AI in customer acquisition, brand and marketing operations: personalisation, creative production, media buying and measurement. Customer data protection and consent sit with Sovereign AI & Security.",
       "themes": [
-        "AI governance frameworks and policy",
-        "Regulatory compliance",
-        "Model risk management",
-        "Identity and permissions for AI agents",
-        "Prompt injection and model abuse",
-        "Data leakage and privacy",
-        "Third-party AI risk",
-        "AI-enabled cyber defence",
-        "Incident response",
-        "Assurance and audit"
+        "Personalisation at scale",
+        "AI in creative production and brand voice",
+        "Media buying and budget efficiency",
+        "First-party customer data and consent",
+        "Being found in AI answers, not just search",
+        "Marketing operations and agent workflows",
+        "Measuring marketing return",
+        "In-house capability versus the agency model"
       ],
       "participantProfile": [
-        "Major bank / Energy / Telecom / Healthcare / Aviation CISO",
-        "Government security leader",
-        "Critical infrastructure operator",
-        "Regional GCC CISO",
-        "Chief risk / compliance officer",
-        "Government AI governance office",
-        "Data-protection regulator / AI policy voice",
-        "Privacy / legal specialist",
-        "Cybersecurity & AI security companies"
-      ],
-      "chair": {
-        "status": "pending",
-        "proposed": "TBD",
-        "organisation": "TBD"
-      },
-      "accent": "cybersecurity",
-      "order": 4,
-      "session": 2
-    },
-    {
-      "slug": "ai-infrastructure-and-sovereign-ai",
-      "shortTitle": "AI Infrastructure & Sovereign AI",
-      "title": "Building Qatar's AI Stack",
-      "coreQuestion": "What compute, data and model foundations does Qatar need to own, and what can it rent, to run AI at national scale?",
-      "lane": "Compute, data centres, sovereign cloud, data residency, Arabic and sovereign models, and the power AI needs.",
-      "themes": [
-        "Sovereign compute and data centres",
-        "Sovereign cloud and data residency",
-        "GPU capacity and access",
-        "Arabic LLMs and sovereign models",
-        "Data platforms and data sharing",
-        "Power and cooling for AI",
-        "Build, buy or partner",
-        "Talent for AI infrastructure"
-      ],
-      "participantProfile": [
-        "Government digital / data leader",
-        "National AI programme representative",
-        "Communications / data regulator",
-        "Bank / Energy / Large enterprise CIO / CTO",
-        "Telecom / network leader",
-        "Hyperscaler & Data-centre operator",
-        "Compute / GPU provider",
-        "Cooling / data-centre engineering company",
-        "Power / utility provider",
-        "Sovereign / infrastructure investor",
-        "AI research institution"
+        "Chief Marketing Officer",
+        "Head of brand & communications",
+        "Head of digital & performance marketing",
+        "Customer experience leader",
+        "E-commerce / direct-to-consumer leader",
+        "Head of customer data & insight",
+        "Head of loyalty & retention",
+        "Government communications leader",
+        "Agency / media group executive",
+        "Marketing technology & AI platform provider"
       ],
       "chair": {
         "status": "pending",
@@ -234,6 +197,45 @@
         "organisation": "TBD"
       },
       "accent": "agentic",
+      "order": 4,
+      "session": 2
+    },
+    {
+      "slug": "sovereign-ai-and-security",
+      "shortTitle": "Sovereign AI & Security",
+      "title": "Owning and Securing Qatar's AI",
+      "coreQuestion": "What must Qatar own, secure and govern before AI runs on sensitive data and national systems?",
+      "lane": "What the country and its institutions must own and control — sovereign compute, data residency, Arabic and national models — together with the security, governance and assurance required before AI touches sensitive data, systems and decisions.",
+      "themes": [
+        "Sovereign compute, data centres and power",
+        "Sovereign cloud and data residency",
+        "Arabic LLMs and national models",
+        "AI governance frameworks and regulation",
+        "Identity and permissions for AI agents",
+        "Data leakage, privacy and third-party AI risk",
+        "AI-enabled cyber defence and incident response",
+        "Assurance, audit and model risk management"
+      ],
+      "participantProfile": [
+        "Government digital / data leader",
+        "National AI programme representative",
+        "Communications / data regulator",
+        "Government security leader",
+        "Bank / telecom / healthcare CISO",
+        "Critical infrastructure operator",
+        "Chief risk / compliance officer",
+        "Data-protection regulator / AI policy voice",
+        "Hyperscaler & data-centre operator",
+        "Compute / GPU provider",
+        "Sovereign / infrastructure investor",
+        "Cybersecurity & AI security company"
+      ],
+      "chair": {
+        "status": "pending",
+        "proposed": "TBD",
+        "organisation": "TBD"
+      },
+      "accent": "cybersecurity",
       "order": 5,
       "session": 2
     },

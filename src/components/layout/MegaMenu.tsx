@@ -8,12 +8,14 @@ import { getRoundtables } from '@/lib/content';
 interface MegaMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Supplied by the layout so CMS edits to the line-up appear without a rebuild. */
+  roundtables?: any[];
 }
 
-export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
+export function MegaMenu({ isOpen, onClose, roundtables: live }: MegaMenuProps) {
   if (!isOpen) return null;
 
-  const roundtables = getRoundtables();
+  const roundtables = live?.length ? live : getRoundtables();
 
   const accentBorderColors: Record<string, string> = {
     fintech: 'hover:border-accent-fintech',

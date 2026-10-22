@@ -38,9 +38,11 @@ interface SiteHeaderProps {
   /** Supplied by the layout so Firestore edits appear without a rebuild. */
   navigation?: { header?: HeaderContent; topBar?: TopBarContent };
   registerUrl?: string;
+  /** The live roundtable line-up, for the menus. */
+  roundtables?: any[];
 }
 
-export function SiteHeader({ navigation, registerUrl }: SiteHeaderProps) {
+export function SiteHeader({ navigation, registerUrl, roundtables }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -261,12 +263,12 @@ export function SiteHeader({ navigation, registerUrl }: SiteHeaderProps) {
 
         {/* Desktop MegaMenu portal */}
         <div onMouseEnter={cancelClose} onMouseLeave={scheduleClose}>
-          <MegaMenu isOpen={isMegaMenuOpen} onClose={() => { cancelClose(); setIsMegaMenuOpen(false); }} />
+          <MegaMenu isOpen={isMegaMenuOpen} onClose={() => { cancelClose(); setIsMegaMenuOpen(false); }} roundtables={roundtables} />
         </div>
       </header>
 
       {/* Mobile Navigation Drawer */}
-      <MobileNav isOpen={isMobileNavOpen} onClose={() => setIsMobileNavOpen(false)} />
+      <MobileNav isOpen={isMobileNavOpen} onClose={() => setIsMobileNavOpen(false)} roundtables={roundtables} />
     </>
   );
 }

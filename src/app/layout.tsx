@@ -6,7 +6,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { PublicChrome } from '@/components/layout/PublicChrome';
 import { buildRobots } from '@/lib/page-metadata';
 import { getSiteConfig } from '@/lib/content';
-import { getLiveNavigation, getLiveGlobals, getLiveMetadata } from '@/lib/server-content';
+import { getLiveNavigation, getLiveGlobals, getLiveMetadata, getLiveRoundtables } from '@/lib/server-content';
 import { StoreProvider } from '@/store/StoreProvider';
 
 const ubuntu = Ubuntu({
@@ -88,6 +88,7 @@ export default async function RootLayout({
   const config = getSiteConfig();
   const navigation = await getLiveNavigation();
   const globals = await getLiveGlobals();
+  const liveRoundtables = await getLiveRoundtables();
   const seo: any = (await getLiveMetadata()) || {};
   const seoSite: any = seo.site || {};
   const siteUrl = String(seoSite.baseUrl || 'https://aixrt-sigma.vercel.app').replace(/\/$/, '');
@@ -180,7 +181,7 @@ export default async function RootLayout({
       <body className="flex min-h-screen flex-col bg-bg-base text-text-primary antialiased overflow-x-hidden">
         <StoreProvider>
           <PublicChrome>
-            <SiteHeader navigation={navigation} registerUrl={globals?.registerUrl} />
+            <SiteHeader navigation={navigation} registerUrl={globals?.registerUrl} roundtables={liveRoundtables} />
           </PublicChrome>
           <main id="main-content" className="flex-1">
             {children}

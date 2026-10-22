@@ -10,10 +10,12 @@ import { REGISTER_URL } from '@/lib/links';
 interface MobileNavProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Supplied by the layout so CMS edits to the line-up appear without a rebuild. */
+  roundtables?: any[];
 }
 
-export function MobileNav({ isOpen, onClose }: MobileNavProps) {
-  const roundtables = getRoundtables();
+export function MobileNav({ isOpen, onClose, roundtables: live }: MobileNavProps) {
+  const roundtables = live?.length ? live : getRoundtables();
 
   // Scroll lock when mobile nav is open
   useEffect(() => {

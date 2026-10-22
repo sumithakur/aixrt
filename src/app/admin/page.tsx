@@ -21,7 +21,7 @@ import { MetadataEditor } from '@/components/admin/MetadataEditor';
 import { FirebaseStatus } from '@/components/admin/FirebaseStatus';
 import { RoundtableDefaultsEditor, StringListEditor } from '@/components/admin/RoundtableDefaultsEditor';
 import { ImageUpload } from '@/components/admin/ImageUpload';
-import { LogOut, Save, Download, RefreshCw, Plus, Trash2, ArrowUpRight } from 'lucide-react';
+import { LogOut, Save, Download, Upload, RefreshCw, Plus, Trash2, ArrowUpRight } from 'lucide-react';
 
 /** Turns a roundtable's short title into the URL slug used for its page address. */
 function slugify(value: string) {
@@ -53,6 +53,8 @@ export default function AdminPage() {
 
   // Kept current on every render so the Ctrl/Cmd+S handler always saves the open tab.
   const saveCurrentRef = useRef<() => void>(() => {});
+  const currentTabRef = useRef<{ file: string; label: string }>({ file: 'partners.json', label: 'Sponsors & Partners' });
+  const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
@@ -136,6 +138,55 @@ export default function AdminPage() {
     URL.revokeObjectURL(url);
   };
 
+  /**
+   * Loads a .json backup back into the open tab.
+   *
+   * The counterpart to the download button: a content change made elsewhere —
+   * or a restore from a backup — becomes one file selection rather than
+   * retyping every field. It only fills the form; nothing is stored until Save.
+   */
+  const importJson = (file: File) => {
+    const setters: Record<string, (d: any) => void> = {
+      'site.json': setSiteData,
+      'home.json': setHomeData,
+      'about.json': setAboutData,
+      'programme.json': setProgrammeData,
+      'roundtables.json': setRoundtablesData,
+      'partners.json': setPartnersData,
+      'showcase.json': setShowcaseData,
+      'venue.json': setVenueData,
+      'signals.json': setSignalsData,
+      'contact.json': setContactData,
+      'faq.json': setFaqData,
+      'navigation.json': setNavigationData,
+      'globals.json': setGlobalsData,
+      'metadata.json': setMetadataData,
+    };
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(String(reader.result));
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+          setStatus('That file is not a content file. Expected a JSON object.');
+          return;
+        }
+        const setter = setters[currentTabRef.current.file];
+        if (!setter) {
+          setStatus(`No importer for ${currentTabRef.current.file}`);
+          return;
+        }
+        setter(parsed);
+        setStatus(
+          `Loaded ${file.name} into ${currentTabRef.current.label}. Check it, then press Save to publish.`
+        );
+      } catch (err: any) {
+        setStatus(`Could not read that file: ${err?.message || 'invalid JSON'}`);
+      }
+    };
+    reader.onerror = () => setStatus('Could not read that file.');
+    reader.readAsText(file);
+  };
+
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/logout', { method: 'POST' });
@@ -187,6 +238,7 @@ export default function AdminPage() {
 
   const currentTab = TABS.find((t) => t.id === activeTab) || TABS[0];
   saveCurrentRef.current = () => saveFile(currentTab.file, currentTab.data);
+  currentTabRef.current = { file: currentTab.file, label: currentTab.label };
 
   return (
     <div className="min-h-screen bg-bg-base text-text-primary p-6 md:p-10 max-w-7xl mx-auto">
@@ -252,6 +304,25 @@ export default function AdminPage() {
             >
               <Download className="h-4 w-4" />
             </button>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              title={`Load a ${currentTab.file} file into this tab`}
+              aria-label={`Load a ${currentTab.file} file into this tab`}
+              className="flex items-center justify-center h-[42px] w-[42px] bg-bg-surface border border-border-subtle text-text-secondary hover:text-text-primary rounded-lg"
+            >
+              <Upload className="h-4 w-4" />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="application/json,.json"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) importJson(file);
+                e.target.value = '';
+              }}
+            />
           </div>
         </div>
 

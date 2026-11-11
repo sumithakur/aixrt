@@ -550,7 +550,7 @@ export default function AdminPage() {
 
                     {/* Logo File Upload Component */}
                     <ImageUpload
-                      label="Upload Logo File (PNG, JPG, JPEG)"
+                      label="Upload Logo File (PNG, JPG, JPEG, WebP, SVG)"
                       value={item.logo}
                       onChange={(url) => {
                         const newItems = [...partnersData.items];
@@ -558,7 +558,7 @@ export default function AdminPage() {
                         setPartnersData({ ...partnersData, items: newItems });
                       }}
                       onStatusChange={setStatus}
-                      recommendedSize="Upload transparent PNG, JPG or JPEG"
+                      recommendedSize="Upload transparent PNG, JPG, WebP, or SVG"
                     />
                   </div>
                 ))}
